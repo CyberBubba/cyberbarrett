@@ -425,3 +425,21 @@ footer {
 
 /* ---- NAV JS ---- */
 /* (included via shared nav snippet) */
+
+/* ---- MOBILE TOUCH FIXES ---- */
+/* Prevent sticky hover states on touch devices */
+@media (hover: none) {
+    .hub-card:hover { transform: none; box-shadow: none; }
+    .hub-card:hover::after { opacity: 0; }
+    .topic-card:hover { transform: none; box-shadow: none; }
+    .topic-card:hover::after { opacity: 0; }
+}
+
+/* Fix grid-column span on single-column mobile layouts */
+@media (max-width: 600px) {
+    .hub-card { grid-column: span 1 !important; }
+}
+
+/* Ensure reveal elements always become visible (touch/scroll edge case fallback) */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }

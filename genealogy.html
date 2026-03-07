@@ -172,8 +172,10 @@ var toggle=document.getElementById('navToggle');
 var links=document.getElementById('navLinks');
 toggle.addEventListener('click',function(){links.classList.toggle('open');});
 links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
-var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.05,rootMargin:'0px 0px 0px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+// Fallback: ensure all reveals become visible after 800ms (handles mobile edge cases)
+setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});},800);
 </script>
 
 </body>
