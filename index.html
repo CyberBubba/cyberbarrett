@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberBarrett — Tips, Reads & More</title>
+    <meta name="description" content="My latest and greatest tips, resources, and reads. So much goodness all in one place!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ============================================================
+           RESET & VARIABLES
+        ============================================================ */
+        :root {
+            --electric:   #00aaff;
+            --cyan:       #00ffe0;
+            --navy:       #040d1c;
+            --navy-2:     #071428;
+            --card-bg:    #0a1a35;
+            --card-border: rgba(0,170,255,0.14);
+            --white:      #ffffff;
+            --muted:      #7a9bbf;
+            --glow-e:     0 0 24px rgba(0,170,255,0.45), 0 0 64px rgba(0,170,255,0.18);
+            --glow-c:     0 0 24px rgba(0,255,224,0.4);
+            --glow-card:  0 16px 48px rgba(0,0,0,0.5), 0 0 32px rgba(0,170,255,0.1);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection { background: var(--electric); color: var(--navy); }
+        ::-webkit-scrollbar { width:6px; }
+        ::-webkit-scrollbar-track { background: var(--navy); }
+        ::-webkit-scrollbar-thumb { background: var(--electric); border-radius:3px; }
+
+        /* ============================================================
+           SCANLINE / NOISE TEXTURE OVERLAY
+        ============================================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,170,255,0.015) 2px,
+                rgba(0,170,255,0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ============================================================
+           NAV
+        ============================================================ */
+        #nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 2.5rem;
+            transition: all 0.35s ease;
+        }
+
+        #nav.scrolled {
+            background: rgba(4,13,28,0.93);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(0,170,255,0.12);
+            padding: 0.7rem 2.5rem;
+        }
+
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            color: var(--white);
+        }
+
+        .nav-logo .cb {
+            background: linear-gradient(90deg, var(--electric), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        nav ul a {
+            display: block;
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            padding: 0.45rem 0.95rem;
+            border-radius: 6px;
+            transition: all 0.25s;
+            letter-spacing: 0.02em;
+        }
+
+        nav ul a:hover {
+            color: var(--electric);
+            background: rgba(0,170,255,0.08);
+        }
+
+        nav ul a.active {
+            color: var(--electric);
+        }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 22px; height: 2px;
+            background: var(--electric);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 680px) {
+            .nav-hamburger { display: flex; }
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: rgba(4,13,28,0.98);
+                border-bottom: 1px solid rgba(0,170,255,0.15);
+                padding: 0.75rem 1rem;
+            }
+            nav ul.open { display: flex; }
+            nav ul a { font-size: 1rem; padding: 0.75rem 1rem; }
+        }
+
+        /* ============================================================
+           HERO
+        ============================================================ */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 6rem 2.5rem 4rem;
+        }
+
+        /* Animated grid */
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,170,255,0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,170,255,0.055) 1px, transparent 1px);
+            background-size: 55px 55px;
+            animation: gridScroll 18s linear infinite;
+            mask-image: radial-gradient(ellipse at center, black 50%, transparent 90%);
+        }
+
+        @keyframes gridScroll {
+            from { transform: translateY(0); }
+            to   { transform: translateY(55px); }
+        }
+
+        /* Gradient blobs */
+        .blob { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+
+        .blob-1 {
+            width: 600px; height: 500px;
+            background: radial-gradient(circle, rgba(0,119,255,0.28), transparent 70%);
+            top: -80px; right: -100px;
+            animation: bFloat 10s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,255,224,0.12), transparent 70%);
+            bottom: 0; left: 30%;
+            animation: bFloat 14s ease-in-out infinite reverse;
+        }
+
+        @keyframes bFloat {
+            0%,100% { transform: translate(0,0) scale(1); }
+            50%      { transform: translate(25px,-20px) scale(1.06); }
+        }
+
+        /* Hero layout */
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-avatar-col { order: -1; }
+        }
+
+        .hero-eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            color: var(--cyan);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.3s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.45s forwards;
+        }
+
+        .hero-title .line1 { display: block; color: var(--white); }
+
+        .hero-title .line2 {
+            display: block;
+            background: linear-gradient(100deg, var(--electric) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 25px rgba(0,170,255,0.35));
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--muted);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.6s forwards;
+        }
+
+        @media (max-width: 900px) {
+            .hero-sub { margin: 0 auto 2.5rem; }
+        }
+
+        .hero-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.85rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.75s forwards;
+        }
+
+        @media (max-width: 400px) {
+            .hero-nav-grid { grid-template-columns: 1fr; }
+        }
+
+        .hn-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.9rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hn-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,170,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hn-btn:hover {
+            border-color: rgba(0,170,255,0.45);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-card);
+            color: var(--electric);
+        }
+
+        .hn-btn:hover::before { opacity: 1; }
+
+        .hn-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .hn-label { font-size: 0.95rem; }
+
+        .hn-btn.contact-btn {
+            grid-column: span 3;
+            justify-content: center;
+            border-color: rgba(0,255,224,0.25);
+            color: var(--cyan);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hn-btn.contact-btn:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            box-shadow: var(--glow-c);
+        }
+
+        @media (max-width: 400px) {
+            .hn-btn.contact-btn { grid-column: span 2; }
+        }
+
+        /* ============================================================
+           AVATAR
+        ============================================================ */
+        .hero-avatar-col {
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        .avatar-frame {
+            position: relative;
+            width: 320px;
+            max-width: 90vw;
+        }
+
+        @media (max-width: 900px) {
+            .avatar-frame {
+                width: 220px;
+                margin: 0 auto;
+            }
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            border-radius: 50%;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 1;
+            border: 3px solid transparent;
+            background:
+                linear-gradient(var(--navy-2), var(--navy-2)) padding-box,
+                linear-gradient(135deg, var(--electric), var(--cyan)) border-box;
+            box-shadow: var(--glow-e);
+        }
+
+        /* Orbit ring */
+        .avatar-ring {
+            position: absolute;
+            inset: -18px;
+            border-radius: 50%;
+            border: 1px dashed rgba(0,170,255,0.25);
+            animation: spin 20s linear infinite;
+        }
+
+        /* Dot on orbit ring */
+        .avatar-ring::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 8px; height: 8px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* Pulse glow ring */
+        .avatar-glow {
+            position: absolute;
+            inset: -40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,170,255,0.1) 0%, transparent 70%);
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%,100% { transform: scale(1); opacity: 0.6; }
+            50%      { transform: scale(1.08); opacity: 1; }
+        }
+
+        /* Status badge */
+        .avatar-status {
+            position: absolute;
+            bottom: 12px; right: 12px;
+            background: var(--card-bg);
+            border: 1px solid rgba(0,255,224,0.3);
+            border-radius: 20px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--cyan);
+            letter-spacing: 0.08em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 6px; height: 6px;
+            background: var(--cyan);
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity: 1; }
+            50%      { opacity: 0.2; }
+        }
+
+        /* ============================================================
+           SECTION — SHARED
+        ============================================================ */
+        section {
+            padding: 6rem 2.5rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.22em;
+            color: var(--electric);
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .accent {
+            background: linear-gradient(90deg, var(--electric), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.75;
+            max-width: 580px;
+        }
+
+        /* Divider line */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,170,255,0.2), transparent);
+        }
+
+        /* Reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.75s cubic-bezier(.4,0,.2,1), transform 0.75s cubic-bezier(.4,0,.2,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ============================================================
+           ABOUT STRIP
+        ============================================================ */
+        #about {
+            background: var(--navy-2);
+            padding: 4rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-inner { flex-direction: column; gap: 2rem; }
+        }
+
+        .about-quote {
+            flex: 1;
+        }
+
+        .about-quote blockquote {
+            font-size: clamp(1.05rem, 2vw, 1.3rem);
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.75;
+            border-left: 3px solid var(--electric);
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-quote cite {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            font-style: normal;
+        }
+
+        .about-pills {
+            flex: 0 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.55rem;
+        }
+
+        @media (max-width: 480px) {
+            .about-pills { grid-template-columns: 1fr; }
+        }
+
+        .pill {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-size: 0.84rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: border-color 0.25s, color 0.25s;
+        }
+
+        .pill:hover { border-color: rgba(0,170,255,0.4); color: var(--electric); }
+
+        .pill-icon { font-size: 1rem; }
+
+        /* Life Stats Strip */
+        #life-stats {
+            background: var(--navy);
+            padding: 3rem 2.5rem;
+            border-top: 1px solid rgba(0,170,255,0.08);
+            border-bottom: 1px solid rgba(0,170,255,0.08);
+        }
+
+        .stats-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 860px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 520px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.25rem 0.75rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .stat-item:hover { border-color: rgba(0,170,255,0.35); transform: translateY(-3px); }
+
+        .stat-number {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--electric), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-family: 'Space Mono', monospace;
+            line-height: 1.4;
+        }
+
+        /* ============================================================
+           TOPICS GRID
+        ============================================================ */
+        #topics {
+            background: var(--navy);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 860px) {
+            .topics-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 520px) {
+            .topics-grid { grid-template-columns: 1fr; }
+        }
+
+        .topic-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--electric), var(--cyan));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .topic-card:hover {
+            border-color: rgba(0,170,255,0.35);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-card);
+        }
+
+        .topic-card:hover::after { opacity: 1; }
+
+        .tc-icon { font-size: 2rem; line-height: 1; }
+
+        .tc-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .tc-desc {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .tc-arrow {
+            margin-top: auto;
+            padding-top: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--electric);
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* Large card for genealogy */
+        .topic-card.card-wide {
+            grid-column: span 2;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 520px) {
+            .topic-card.card-wide {
+                grid-column: span 1;
+                flex-direction: column;
+            }
+        }
+
+        .card-wide .tc-body { flex: 1; }
+
+        /* ============================================================
+           SOCIAL / CONNECT
+        ============================================================ */
+        #connect {
+            background: var(--navy-2);
+            text-align: center;
+        }
+
+        .connect-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .connect-sub {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 480px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .connect-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .soc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .soc-link:hover {
+            border-color: rgba(0,170,255,0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-card);
+        }
+
+        .soc-link.twitter:hover { border-color: #1da1f2; color: #1da1f2; }
+        .soc-link.facebook:hover { border-color: #0866ff; color: #0866ff; }
+        .soc-link.email:hover { border-color: var(--cyan); color: var(--cyan); }
+
+        .email-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--cyan);
+            text-decoration: none;
+            border: 1px solid rgba(0,255,224,0.25);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .email-chip:hover {
+            background: rgba(0,255,224,0.06);
+            border-color: var(--cyan);
+            box-shadow: var(--glow-c);
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        footer {
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding: 1.5rem 2.5rem;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-copy {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .footer-copy a { color: var(--electric); text-decoration: none; }
+
+        .footer-tag {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.18);
+        }
+
+        /* ============================================================
+           KEYFRAMES
+        ============================================================ */
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(28px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity:0; }
+            to   { opacity:1; }
+        }
+
+        /* Typing cursor on hero sub */
+        .typing-cursor::after {
+            content: '|';
+            color: var(--cyan);
+            animation: cursorBlink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes cursorBlink {
+            0%,100% { opacity:1; }
+            50%      { opacity:0; }
+        }
+
+        /* Shimmer on topic cards */
+        @keyframes shimmer {
+            0%   { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(250%) skewX(-15deg); }
+        }
+
+        .topic-card:hover .shimmer-inner {
+            animation: shimmer 0.7s ease;
+        }
+
+        .shimmer-inner {
+            position:absolute; top:0; left:0; width:40%;
+            height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
+            pointer-events:none;
+        }
+
+        /* Pill hover glow */
+        .pill {
+            transition: border-color 0.25s, color 0.25s, box-shadow 0.25s !important;
+        }
+        .pill:hover {
+            box-shadow: 0 0 14px rgba(0,170,255,0.2);
+        }
+
+        /* Stat item entrance */
+        .stat-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item:hover {
+            box-shadow: 0 0 24px rgba(0,170,255,0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         NAV
+    ============================================================ -->
+    <nav id="nav">
+        <a href="#" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+
+        <ul id="navLinks">
+            <li><a href="#topics">Topics</a></li>
+            <li><a href="documents.html">Documents</a></li>
+            <li><a href="tutorials.html">Tutorials</a></li>
+            <li><a href="genealogy.html">Genealogy</a></li>
+            <li><a href="#connect">Contact</a></li>
+        </ul>
+
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section id="hero">
+        <div class="grid-bg"></div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+
+        <div class="hero-inner">
+            <!-- Text column -->
+            <div class="hero-text">
+                <div class="hero-eyebrow">cyberbarrett.com</div>
+
+                <h1 class="hero-title">
+                    <span class="line1">Cyber</span>
+                    <span class="line2">Barrett</span>
+                </h1>
+
+                <p class="hero-sub">
+                    My latest and greatest tips, resources, and reads.<br>
+                    <strong style="color:var(--white)">So much goodness all in one place!</strong>
+                </p>
+
+                <div class="hero-nav-grid">
+                    <a href="#topics" class="hn-btn">
+                        <span class="hn-icon">💡</span>
+                        <span class="hn-label">Topics</span>
+                    </a>
+                    <a href="documents.html" class="hn-btn">
+                        <span class="hn-icon">📄</span>
+                        <span class="hn-label">Documents</span>
+                    </a>
+                    <a href="tutorials.html" class="hn-btn">
+                        <span class="hn-icon">🎓</span>
+                        <span class="hn-label">Tutorials</span>
+                    </a>
+                    <a href="genealogy.html" class="hn-btn">
+                        <span class="hn-icon">📜</span>
+                        <span class="hn-label">Genealogy</span>
+                    </a>
+                    <a href="backstage.html" class="hn-btn">
+                        <span class="hn-icon">🎸</span>
+                        <span class="hn-label">Backstage</span>
+                    </a>
+                    <a href="#connect" class="hn-btn contact-btn">
+                        <span class="hn-icon">✉</span>
+                        <span class="hn-label">Get in touch</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Avatar column -->
+            <div class="hero-avatar-col">
+                <div class="avatar-frame">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar-ring"></div>
+                    <img
+                        src="images/2026-01-08-19-08-21-286.jpg"
+                        alt="Barrett Holt — CyberBarrett"
+                    >
+                    <div class="avatar-status">
+                        <span class="status-dot"></span>
+                        Online
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT STRIP
+    ============================================================ -->
+    <section id="about">
+        <div class="about-inner reveal">
+            <div class="about-quote">
+                <blockquote>
+                    "47 years of marriage. Aircraft carrier duty, ambulance runs, sailboat races,
+                    concert stages, and a guitar I've been playing since I was 7.
+                    IT wizard, Mayflower descendant, and tie-dye enthusiast —
+                    there's always more going on than meets the eye."
+                </blockquote>
+                <cite>— Barrett Holt, CyberBarrett</cite>
+            </div>
+            <div class="about-pills">
+                <div class="pill"><span class="pill-icon">✈️</span> Private Pilot</div>
+                <div class="pill"><span class="pill-icon">⛵</span> Sailor</div>
+                <div class="pill"><span class="pill-icon">🤿</span> Advanced+ Scuba Diver</div>
+                <div class="pill"><span class="pill-icon">⚕️</span> Navy Corpsman</div>
+                <div class="pill"><span class="pill-icon">📷</span> Pro Photographer</div>
+                <div class="pill"><span class="pill-icon">🎸</span> Guitarist Since Age 7</div>
+                <div class="pill"><span class="pill-icon">📜</span> Mayflower Descendant</div>
+                <div class="pill"><span class="pill-icon">💻</span> IT Wizard</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         LIFE STATS
+    ============================================================ -->
+    <section id="life-stats">
+        <div class="stats-grid reveal">
+            <div class="stat-item">
+                <div class="stat-number" data-target="47">0</div>
+                <div class="stat-label">Years<br>Married</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="12">0</div>
+                <div class="stat-label">States<br>Lived In</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="47">0</div>
+                <div class="stat-label">States<br>Traveled</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">400<span style="font-size:1.2rem">+</span></div>
+                <div class="stat-label">Years of<br>Documented Ancestry</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">Careers &amp;<br>Passions</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         TOPICS / SECTIONS
+    ============================================================ -->
+    <section id="topics">
+        <div class="container">
+            <div class="reveal">
+                <div class="section-eyebrow">Explore</div>
+                <h2 class="section-title">What's <span class="accent">inside</span></h2>
+                <p class="section-sub">
+                    From practical tech how-tos to deep genealogy dives — there's a lot here.
+                    Pick a lane and dig in.
+                </p>
+            </div>
+
+            <div class="topics-grid">
+
+                <a href="topics.html" class="topic-card reveal" style="transition-delay:0.05s">
+                    <div class="shimmer-inner"></div>
+                    <div class="tc-icon">💡</div>
+                    <div class="tc-title">Topics</div>
+                    <div class="tc-desc">
+                        A curated collection of the things on Barrett's mind —
+                        tech, tools, life, and whatever else deserves a write-up.
+                    </div>
+                    <div class="tc-arrow">Browse topics →</div>
+                </a>
+
+                <a href="documents.html" class="topic-card reveal" style="transition-delay:0.1s">
+                    <div class="shimmer-inner"></div>
+                    <div class="tc-icon">📄</div>
+                    <div class="tc-title">Documents</div>
+                    <div class="tc-desc">
+                        Reference materials, templates, and useful files you
+                        can actually download and use.
+                    </div>
+                    <div class="tc-arrow">View documents →</div>
+                </a>
+
+                <a href="tutorials.html" class="topic-card reveal" style="transition-delay:0.15s">
+                    <div class="shimmer-inner"></div>
+                    <div class="tc-icon">🎓</div>
+                    <div class="tc-title">Tutorials</div>
+                    <div class="tc-desc">
+                        Step-by-step walkthroughs for the stuff that actually
+                        trips people up. No fluff, just the how-to.
+                    </div>
+                    <div class="tc-arrow">Start learning →</div>
+                </a>
+
+                <a href="genealogy.html" class="topic-card card-wide reveal" style="transition-delay:0.2s">
+                    <div class="shimmer-inner"></div>
+                    <div class="tc-icon" style="font-size:2.8rem">⚓</div>
+                    <div class="tc-body">
+                        <div class="tc-title">Genealogy</div>
+                        <div class="tc-desc">
+                            Tracing roots back to the 1620 Mayflower voyage as a proud member
+                            of the Alabama Society of Mayflower Descendants. Four hundred years
+                            of history — and counting. Research tips, resources, and Barrett's
+                            own family discoveries.
+                        </div>
+                        <div class="tc-arrow">Explore the lineage →</div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         CONNECT
+    ============================================================ -->
+    <section id="connect">
+        <div class="container reveal">
+            <div class="section-eyebrow" style="justify-content:center;text-align:center">Say hello</div>
+            <h2 class="connect-title">Let's <span class="accent">connect</span></h2>
+            <p class="connect-sub">
+                Find me on social, shoot me an email, or just poke around the site.
+                I'm a real person and I actually respond.
+            </p>
+
+            <div class="connect-links">
+                <a href="https://twitter.com/@Cyber_Barrett" class="soc-link twitter" target="_blank" rel="noopener">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.23,5.924c-0.736,0.326-1.527,0.547-2.357,0.646c0.847-0.508,1.498-1.312,1.804-2.27c-0.793,0.47-1.671,0.812-2.606,0.996C18.324,4.498,17.257,4,16.077,4c-2.266,0-4.103,1.837-4.103,4.103c0,0.322,0.036,0.635,0.106,0.935C8.67,8.867,5.647,7.234,3.623,4.751C3.27,5.357,3.067,6.062,3.067,6.814c0,1.424,0.724,2.679,1.825,3.415c-0.673-0.021-1.305-0.206-1.859-0.513c0,0.017,0,0.034,0,0.052c0,1.988,1.414,3.647,3.292,4.023c-0.344,0.094-0.707,0.144-1.081,0.144c-0.264,0-0.521-0.026-0.772-0.074c0.522,1.63,2.038,2.816,3.833,2.85c-1.404,1.1-3.174,1.756-5.096,1.756c-0.331,0-0.658-0.019-0.979-0.057c1.816,1.164,3.973,1.843,6.29,1.843c7.547,0,11.675-6.252,11.675-11.675c0-0.178-0.004-0.355-0.012-0.531C20.985,7.47,21.68,6.747,22.23,5.924z"/></svg>
+                    @Cyber_Barrett
+                </a>
+                <a href="https://www.facebook.com/CyberBarrett2026" class="soc-link facebook" target="_blank" rel="noopener">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"/></svg>
+                    CyberBarrett2026
+                </a>
+            </div>
+
+            <a href="mailto:contact@cyberbarrett.com" class="email-chip">
+                ✉ &nbsp;contact@cyberbarrett.com
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-copy">
+                © 2026 <a href="#">CyberBarrett</a> &mdash; cyberbarrett.com
+            </div>
+            <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         JS
+    ============================================================ -->
+    <script>
+        // Nav scroll
+        var nav = document.getElementById('nav');
+        window.addEventListener('scroll', function () {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile menu
+        var toggle = document.getElementById('navToggle');
+        var links  = document.getElementById('navLinks');
+        toggle.addEventListener('click', function () {
+            links.classList.toggle('open');
+        });
+        links.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { links.classList.remove('open'); });
+        });
+
+        // Scroll reveal
+        var ro = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    ro.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+
+        // Animated counters
+        function animateCounter(el) {
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            if (!target) return;
+            var duration = 1600;
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var progress = Math.min((ts - start) / duration, 1);
+                var ease = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(ease * target);
+                if (progress < 1) requestAnimationFrame(step);
+                else el.textContent = target;
+            }
+            requestAnimationFrame(step);
+        }
+        var counterObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    animateCounter(e.target);
+                    counterObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.stat-number[data-target]').forEach(function(el) {
+            counterObs.observe(el);
+        });
+
+        // Stat item staggered entrance
+        var statObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e, i) {
+                if (e.isIntersecting) {
+                    setTimeout(function() { e.target.classList.add('visible'); }, i * 100);
+                    statObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.stat-item').forEach(function(el) { statObs.observe(el); });
+
+        // Typewriter on hero sub
+        var heroSub = document.querySelector('.hero-sub');
+        if (heroSub) {
+            var lines = [
+                'My latest and greatest tips, resources, and reads.',
+                'Genealogy deep dives and family discoveries.',
+                'Tech tips from an IT wizard with 50+ careers.',
+                'So much goodness all in one place!'
+            ];
+            var li = 0;
+            function typewriterCycle() {
+                if (li >= lines.length) {
+                    heroSub.innerHTML = 'My latest and greatest tips, resources, and reads.<br><strong style="color:var(--white)">So much goodness all in one place!</strong>';
+                    return;
+                }
+                var text = lines[li]; var ci = 0;
+                heroSub.classList.add('typing-cursor');
+                heroSub.textContent = '';
+                var interval = setInterval(function() {
+                    heroSub.textContent += text[ci++];
+                    if (ci >= text.length) {
+                        clearInterval(interval);
+                        heroSub.classList.remove('typing-cursor');
+                        li++;
+                        setTimeout(typewriterCycle, li < lines.length ? 1800 : 0);
+                    }
+                }, 38);
+            }
+            setTimeout(typewriterCycle, 1200);
+        }
+    </script>
+
+</body>
+</html>

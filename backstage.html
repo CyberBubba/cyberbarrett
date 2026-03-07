@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backstage: The Music Life of Barrett Holt — CyberBarrett</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Page-specific styles */
+        .page-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+            border-bottom: 1px solid var(--card-border);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .page-hero .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+            background: linear-gradient(135deg, var(--electric) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 3rem 0 2rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--electric);
+            display: inline-block;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--white);
+            max-width: 900px;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 170, 255, 0.05);
+            border-left: 3px solid var(--electric);
+            border-radius: 8px;
+        }
+
+        /* Special callout boxes */
+        .artist-callout {
+            background: rgba(0, 170, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .artist-callout.charlie-daniels {
+            border-color: var(--cyan);
+            background: rgba(0, 255, 224, 0.06);
+        }
+
+        .artist-callout.randy-travis {
+            border-color: var(--electric);
+            background: rgba(0, 170, 255, 0.06);
+        }
+
+        .artist-callout h3 {
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .badge.dear-friend {
+            background: var(--cyan);
+            color: var(--navy);
+        }
+
+        .badge.classmate {
+            background: var(--electric);
+            color: var(--navy);
+        }
+
+        .callout-description {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .callout-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .photo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--electric);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+        }
+
+        .photo-card.charlie:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 224, 0.3);
+        }
+
+        .photo-card.randy:hover {
+            border-color: var(--electric);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-caption {
+            padding: 1rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--electric);
+            text-align: center;
+            position: relative;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-card.charlie .photo-caption,
+        .photo-card.randy .photo-caption {
+            color: var(--cyan);
+        }
+
+        .badge-container {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 10;
+        }
+
+        /* Reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Container width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 2rem 1rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-header {
+                font-size: 1.8rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .callout-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="nav" class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">CyberBarrett</a>
+            </div>
+            <button id="navToggle" class="nav-toggle">☰</button>
+            <div id="navLinks" class="nav-links">
+                <a href="topics.html">Topics</a>
+                <a href="documents.html">Documents</a>
+                <a href="tutorials.html">Tutorials</a>
+                <a href="genealogy.html">Genealogy</a>
+                <a href="index.html#connect">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <header class="page-hero">
+        <div class="container">
+            <div class="breadcrumb">About › Backstage</div>
+            <h1>The Backstage Life</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Section 1: The Music Life -->
+        <section class="reveal">
+            <h2 class="section-header">The Music Life</h2>
+            
+            <div class="intro-text">
+                <p>Barrett Holt wasn't just a fan watching from the audience—he was <strong>in the industry</strong>. As a Concert Promoter, Morning Radio Personality, and Disc Jockey, Barrett lived and breathed country music from the inside. He picked up a guitar at age 7, formed his first band in grammar school, and spent decades as a songwriter and musician. These weren't chance encounters with legends; they were the natural connections of someone working at the highest levels of country music. What follows is a visual record of those industry relationships, mentorships, and friendships that shaped a life dedicated to the craft.</p>
+            </div>
+        </section>
+
+        <!-- Featured Video -->
+        <section class="reveal" style="margin-bottom: 3rem;">
+            <div style="
+                background: var(--card-bg);
+                border: 1px solid rgba(0,255,224,0.25);
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 0 48px rgba(0,170,255,0.1);
+            ">
+                <!-- Label bar -->
+                <div style="
+                    display: flex; align-items: center; gap: 1rem;
+                    padding: 1rem 1.5rem;
+                    border-bottom: 1px solid rgba(0,255,224,0.12);
+                    background: rgba(0,255,224,0.04);
+                ">
+                    <span style="font-size: 1.6rem;">🎸</span>
+                    <div>
+                        <div style="
+                            font-family: 'Space Mono', monospace;
+                            font-size: 0.62rem; letter-spacing: 0.2em;
+                            text-transform: uppercase; color: var(--cyan);
+                            margin-bottom: 0.2rem;
+                        ">Live Performance · circa 1990</div>
+                        <div style="
+                            font-family: 'Space Mono', monospace;
+                            font-weight: 700; font-size: 1.1rem;
+                            color: var(--white); letter-spacing: -0.01em;
+                        ">Barrett performs <em style="color:var(--cyan)">Margaritaville</em></div>
+                    </div>
+                    <div style="
+                        margin-left: auto;
+                        font-family: 'Space Mono', monospace;
+                        font-size: 0.65rem; letter-spacing: 0.12em;
+                        color: var(--electric); text-transform: uppercase;
+                        background: rgba(0,170,255,0.1);
+                        border: 1px solid rgba(0,170,255,0.2);
+                        padding: 0.3rem 0.75rem; border-radius: 20px;
+                    ">⭐ Featured</div>
+                </div>
+
+                <!-- Video -->
+                <video
+                    controls
+                    preload="metadata"
+                    style="width:100%; display:block; max-height:520px; background:#000;"
+                    poster=""
+                >
+                    <source src="images/Barrett_Margaritaville.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+
+                <!-- Caption -->
+                <div style="
+                    padding: 1rem 1.5rem;
+                    font-size: 0.85rem; color: var(--muted);
+                    font-family: 'Space Mono', monospace;
+                    letter-spacing: 0.02em; line-height: 1.65;
+                    border-top: 1px solid rgba(0,170,255,0.08);
+                ">
+                    <strong style="color:var(--white)">Barrett Holt</strong> performing "Margaritaville" — circa 1990.
+                    Playing guitar since age 7, this was a man deep in his element.
+                    Songwriter, performer, and music industry insider — the stage was never just a hobby.
+                </div>
+            </div>
+        </section>
+
+        <!-- Charlie Daniels Callout -->
+        <section class="artist-callout charlie-daniels reveal">
+            <h3>
+                <span>Charlie Daniels</span>
+                <span class="badge dear-friend">Dear Friend</span>
+            </h3>
+            <p class="callout-description">
+                Charlie Daniels was more than a country music legend—he was a dear personal friend. These three moments capture the genuine warmth of a relationship built on mutual respect and shared love of music. From industry events to personal moments, Charlie's presence in Barrett's life represents the kind of deep friendships that defined his career in country music.
+            </p>
+            <div class="callout-gallery">
+                <div class="photo-card charlie reveal">
+                    <img src="images/Me-CharlieDaniels.jpeg" alt="Barrett with Charlie Daniels">
+                    <div class="photo-caption">Charlie Daniels</div>
+                </div>
+                <div class="photo-card charlie reveal">
+                    <img src="images/Me-CharlieDaniels002.jpeg" alt="Barrett with Charlie Daniels moment two">
+                    <div class="photo-caption">Charlie Daniels</div>
+                </div>
+                <div class="photo-card charlie reveal">
+                    <img src="images/Me-CharlieDaniels003.jpeg" alt="Barrett with Charlie Daniels moment three">
+                    <div class="photo-caption">Charlie Daniels</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Randy Travis Callout -->
+        <section class="artist-callout randy-travis reveal">
+            <h3>
+                <span>Randy Travis</span>
+                <span class="badge classmate">Junior High Classmate</span>
+            </h3>
+            <p class="callout-description">
+                Barrett and Randy Travis grew up together—they were classmates in junior high school. While their paths in country music would eventually cross at the highest levels of the industry, their connection ran deeper than any professional network. These photographs show reunions with an old friend who became a country music icon, yet never forgot where he came from.
+            </p>
+            <div class="callout-gallery">
+                <div class="photo-card randy reveal">
+                    <img src="images/Me-Randy_Travis1.jpg" alt="Barrett with Randy Travis">
+                    <div class="photo-caption">Randy Travis</div>
+                </div>
+                <div class="photo-card randy reveal">
+                    <img src="images/Me-Randy_Travis2.jpg" alt="Barrett with Randy Travis second meeting">
+                    <div class="photo-caption">Randy Travis</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Radio Days -->
+        <section class="reveal" style="margin: 3rem 0;">
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2rem 0 1.5rem 0;">
+                Radio Days
+            </h3>
+            <div class="intro-text" style="margin-bottom: 1.5rem;">
+                <p>As a Morning Radio Personality and DJ, Barrett's studio was a revolving door of country music's biggest names. These photos capture moments from the airwaves years — a life lived where music, broadcasting, and people collided daily.</p>
+            </div>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/FB_IMG_1477621040965.jpg" alt="Barrett at the radio station with a music guest">
+                    <div class="photo-caption" style="color: var(--cyan);">At the Studio</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/IMG_411334827208534.jpeg" alt="Barrett with a guest at the radio station">
+                    <div class="photo-caption" style="color: var(--cyan);">On Air</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other Country Music Legends -->
+        <section class="reveal">
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2rem 0 1.5rem 0;">
+                And More Legends of Country Music
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Me-AlanJackson.jpg" alt="Barrett with Alan Jackson">
+                    <div class="photo-caption">Alan Jackson</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-ClintBlack.jpg" alt="Barrett with Clint Black">
+                    <div class="photo-caption">Clint Black</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-ConwayTwitty.jpg" alt="Barrett with Conway Twitty">
+                    <div class="photo-caption">Conway Twitty</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-Garth.jpg" alt="Barrett with Garth Brooks">
+                    <div class="photo-caption">Garth Brooks</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-GarthBrooks.jpg" alt="Barrett with Garth Brooks moment two">
+                    <div class="photo-caption">Garth Brooks</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-GlenCampbell.jpg" alt="Barrett with Glen Campbell">
+                    <div class="photo-caption">Glen Campbell</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-Jim_Stafford.jpg" alt="Barrett with Jim Stafford">
+                    <div class="photo-caption">Jim Stafford</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-JohnnyCash.jpg" alt="Barrett with Johnny Cash">
+                    <div class="photo-caption">Johnny Cash</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-Loretta_Lynn.jpg" alt="Barrett with Loretta Lynn">
+                    <div class="photo-caption">Loretta Lynn</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-Roy_Clark.jpg" alt="Barrett with Roy Clark">
+                    <div class="photo-caption">Roy Clark</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-Tammy_Wynette.jpg" alt="Barrett with Tammy Wynette">
+                    <div class="photo-caption">Tammy Wynette</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-Tanya_Tucker.jpg" alt="Barrett with Tanya Tucker">
+                    <div class="photo-caption">Tanya Tucker</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Me-WynonnaJudd.jpg" alt="Barrett with Wynonna Judd">
+                    <div class="photo-caption">Wynonna Judd</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Beyond the Stage -->
+        <section class="reveal">
+            <h2 class="section-header" style="margin-top: 4rem;">Beyond the Stage</h2>
+            
+            <div class="intro-text">
+                <p>Beyond the concert halls and radio studios, Barrett has lived a full and adventurous life. A passionate sailor, accomplished guitarist, and devoted to the outdoors, these images capture the man behind the industry credentials—someone who pursued excellence in every aspect of his life.</p>
+            </div>
+
+            <!-- Sailing Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                Sailing Adventures
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing001jpg.jpg" alt="Barrett sailboat racing">
+                    <div class="photo-caption">On the Water</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing002.jpg" alt="Barrett sailing moment two">
+                    <div class="photo-caption">Full Sail</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing003.jpg" alt="Barrett sailing moment three">
+                    <div class="photo-caption">Racing</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing004.jpg" alt="Barrett sailing moment four">
+                    <div class="photo-caption">Open Water</div>
+                </div>
+            </div>
+
+            <!-- Guitar Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                The Guitarist
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-guitar001.jpg" alt="Barrett playing guitar">
+                    <div class="photo-caption">Crafting Music</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-guitar002.jpg" alt="Barrett with guitar performance">
+                    <div class="photo-caption">In Performance</div>
+                </div>
+            </div>
+
+            <!-- Horse Riding Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                Love of Horsemanship
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Me-LoveHorseriding.jpg" alt="Barrett horseback riding">
+                    <div class="photo-caption">Horsemanship</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Mentions -->
+        <section class="intro-text reveal" style="margin-top: 3rem;">
+            <p><strong>Additional Connections:</strong> Barrett has enjoyed a private tour of Graceland, connecting him to the roots of rock and roll, and has toured the historic Mount Vernon, reflecting his appreciation for American history and heritage. These experiences, combined with his decades in country music, paint a picture of a life richly lived.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--navy-2); padding: 2rem; text-align: center; color: var(--muted); margin-top: 4rem; border-top: 1px solid var(--card-border);">
+        <p>&copy; 2026 CyberBarrett — cyberbarrett.com | Hand-crafted HTML · GitHub Pages</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Navigation functionality
+        var nav = document.getElementById('nav');
+        window.addEventListener('scroll', function() {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        var toggle = document.getElementById('navToggle');
+        var links = document.getElementById('navLinks');
+        toggle.addEventListener('click', function() {
+            links.classList.toggle('open');
+        });
+
+        links.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', function() {
+                links.classList.remove('open');
+            });
+        });
+
+        // Reveal animation with IntersectionObserver
+        var ro = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    ro.unobserve(e.target);
+                }
+            });
+        }, {threshold: 0.08});
+
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            ro.observe(el);
+        });
+    </script>
+</body>
+</html>

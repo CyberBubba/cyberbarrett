@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veterans of the Holt Universe | CyberBarrett Genealogy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+
+    /* ---- WAR TIMELINE ---- */
+    .war-timeline {
+      max-width: 780px; margin: 0 auto;
+      padding: 1rem 2.5rem 2rem;
+      position: relative;
+    }
+
+    .war-timeline::before {
+      content: '';
+      position: absolute;
+      left: calc(2.5rem + 28px);
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg,
+        var(--electric) 0%,
+        var(--cyan) 50%,
+        rgba(0,170,255,0.1) 100%);
+    }
+
+    .war-entry {
+      display: flex;
+      gap: 1.75rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      align-items: flex-start;
+    }
+
+    .war-dot {
+      flex-shrink: 0;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      position: relative; z-index: 2;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .war-entry:hover .war-dot {
+      border-color: var(--electric);
+      box-shadow: 0 0 20px rgba(0,170,255,0.3);
+    }
+
+    .war-body {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .war-entry:hover .war-body {
+      border-color: rgba(0,170,255,0.3);
+      transform: translateX(4px);
+    }
+
+    .war-era {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--electric);
+      margin-bottom: 0.35rem;
+    }
+
+    .war-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white); letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .war-desc {
+      font-size: 0.9rem; color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .war-desc strong { color: var(--white); }
+
+    .war-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border-radius: 20px;
+      margin-top: 0.65rem;
+      background: rgba(0,170,255,0.08);
+      border: 1px solid rgba(0,170,255,0.2);
+      color: var(--electric);
+    }
+
+    .war-badge.cyan {
+      background: rgba(0,255,224,0.08);
+      border-color: rgba(0,255,224,0.2);
+      color: var(--cyan);
+    }
+
+    /* ---- TRIBUTE BOX ---- */
+    .tribute-box {
+      max-width: 780px; margin: 0 auto;
+      padding: 0 2.5rem 2rem;
+    }
+
+    .tribute-text {
+      background: linear-gradient(135deg, var(--card-bg), rgba(0,170,255,0.03));
+      border: 1px solid rgba(0,170,255,0.18);
+      border-left: 4px solid var(--electric);
+      border-radius: 0 12px 12px 0;
+      padding: 2rem 2.25rem;
+    }
+
+    .tribute-text p {
+      font-size: 1rem; color: rgba(255,255,255,0.82);
+      line-height: 1.9; margin-bottom: 1.1rem;
+    }
+
+    .tribute-text p:last-child { margin-bottom: 0; }
+
+    .tribute-text strong { color: var(--cyan); }
+
+    .tribute-close {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem; color: var(--electric);
+      margin-top: 1.5rem; font-style: italic;
+    }
+
+    /* ---- BARRETT'S SERVICE CALLOUT ---- */
+    .service-callout {
+      max-width: 780px; margin: 2rem auto 0;
+      padding: 0 2.5rem;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,255,224,0.2);
+      border-radius: 14px;
+      padding: 1.75rem 2rem;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+    }
+
+    @media (max-width: 600px) {
+      .service-card { flex-direction: column; }
+      .war-timeline::before { left: calc(1.25rem + 28px); }
+      .war-timeline { padding: 1rem 1.25rem 2rem; }
+      .tribute-box, .service-callout { padding: 0 1.25rem 2rem; }
+    }
+
+    .service-icon {
+      font-size: 2.5rem; flex-shrink: 0; line-height: 1;
+    }
+
+    .service-body h3 {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.4rem;
+    }
+
+    .service-body p {
+      color: var(--muted); font-size: 0.92rem; line-height: 1.75;
+    }
+
+    .service-body p strong { color: var(--white); }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+    <ul id="navLinks">
+      <li><a href="topics.html">Topics</a></li>
+      <li><a href="documents.html">Documents</a></li>
+      <li><a href="tutorials.html">Tutorials</a></li>
+      <li><a href="genealogy.html" class="active">Genealogy</a></li>
+      <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle"><span></span><span></span><span></span></button>
+  </nav>
+
+  <header class="page-hero">
+    <div class="hero-inner">
+      <div class="eyebrow">
+        <a href="genealogy.html">Genealogy</a>
+        <span class="sep">›</span>
+        Veterans
+      </div>
+      <h1>Veterans of the <span class="grad">Holt Universe</span></h1>
+      <div class="page-dates">Revolutionary War · Civil War · WWI · WWII · Korea · Vietnam · And Beyond</div>
+      <p class="sub">From the first shots of American independence to the conflicts of the modern era, the Holt family has answered the call in nearly every generation. We are the descendants of true American patriots.</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Tribute text -->
+    <div class="tribute-box article-wrap reveal" style="padding-top:3rem; padding-bottom:1rem; max-width:780px;">
+      <div class="tribute-text">
+        <p>
+          As we look toward the future, we take a moment to reflect on the incredible legacy of service and courage that runs through the very veins of our family history.
+          We should all feel an immense sense of pride knowing that our <strong>Holt Universe</strong> has been shaped by the sacrifices of veterans spanning nearly the entire history of our country.
+        </p>
+        <p>
+          From the earliest fight for liberty in the <strong>American Revolutionary War</strong> and the defense of our young nation in the <strong>War of 1812</strong>, our ancestors stood up for what they believed in.
+          They carried that spirit through the <strong>Mexican–American War</strong> and faced the profound divisions of the <strong>American Civil War</strong> — fighting on <em>both sides</em> — for their principles.
+        </p>
+        <p>
+          Later generations answered the call in conflicts around the globe: in the <strong>Spanish–American War</strong>, the trenches of <strong>World War I</strong>, and during the defining struggle of the <strong>World War II</strong> generation.
+          Their strength paved the way for those who served in the frozen battles of the <strong>Korean War</strong> and the complex challenges of the <strong>Vietnam War</strong>.
+          Post-Vietnam, there are a number of brave men and women who have also served in various capacities at home and abroad.
+        </p>
+        <p>
+          Every single one of these veterans — our great-great-grandparents, grandparents, aunts, uncles, and cousins — contributed to the freedom and opportunities we enjoy today.
+          Their bravery is a foundational part of who we are.
+        </p>
+        <div class="tribute-close">
+          Let's honor their memory by carrying their strength and commitment forward.<br>
+          <strong style="color:var(--white); font-style:normal;">We are the descendants of true American patriots.</strong>
+        </div>
+      </div>
+      <figure class="article-figure reveal">
+        <img src="images/war_ancestorsjpg.jpg" alt="Holt Family War Ancestors — documented military service across American history">
+        <figcaption><strong>Holt Universe Veterans</strong> — A visual record of the family's military service spanning generations of American history. From the founding era through the modern day, this family has never stopped answering the call.</figcaption>
+      </figure>
+    </div>
+
+    <!-- Barrett's own service callout -->
+    <div class="service-callout reveal">
+      <div class="service-card">
+        <div class="service-icon">⚓</div>
+        <div class="service-body">
+          <h3>The Legacy Continues — Barrett's Service</h3>
+          <p>
+            Barrett himself carries this tradition forward as a <strong>United States Navy Corpsman</strong> who served with <strong>aircraft carrier duty</strong> —
+            the most demanding and storied platform in the modern Navy.
+            Hospital Corpsmen are the combat medics of the Navy and Marine Corps, trained to serve under fire.
+            Barrett's service is the living continuation of a family legacy that stretches back to the Revolutionary War.
+          </p>
+        </div>
+      </div>
+      <figure class="article-figure reveal" style="max-width:320px; margin:1.25rem auto 0;">
+        <img src="images/Barrett_Sailor.jpg" alt="Barrett Holt — United States Navy Corpsman">
+        <figcaption><strong>Barrett Holt — U.S. Navy Corpsman</strong> — Aircraft carrier duty. The family tradition of service, continued.</figcaption>
+      </figure>
+    </div>
+
+    <!-- War timeline -->
+    <div class="article-wrap reveal" style="padding:2rem 2.5rem 0; max-width:780px; margin:0 auto;">
+      <h2 style="font-family:'Space Mono',monospace; font-size:1.1rem; color:var(--electric); letter-spacing:0.1em; text-transform:uppercase; border:none; margin:0 0 0.5rem;">The Record of Service</h2>
+      <p style="color:var(--muted); font-size:0.9rem; margin-bottom:2rem;">A conflict-by-conflict account of the Holt family's documented military involvement across American history.</p>
+    </div>
+
+    <div class="war-timeline">
+
+      <div class="war-entry reveal">
+        <div class="war-dot">🪖</div>
+        <div class="war-body">
+          <div class="war-era">1775 – 1783</div>
+          <div class="war-name">American Revolutionary War</div>
+          <div class="war-desc">
+            The birth of the nation. Holt ancestors took up arms against the British Crown to forge an independent America.
+            These are the men who laid down everything for an idea — that a people could govern themselves.
+            Their service in the Continental Army and militia units represents the oldest documented military heritage in the family line.
+          </div>
+          <div class="war-badge">🇺🇸 Founding Generation</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">⚔️</div>
+        <div class="war-body">
+          <div class="war-era">1812 – 1815</div>
+          <div class="war-name">War of 1812</div>
+          <div class="war-desc">
+            America's second war for independence. When the British returned — burning Washington and impressing American sailors —
+            Holt family members answered the call again to defend the republic they had helped create just a generation before.
+          </div>
+          <div class="war-badge">🇺🇸 Second Generation Patriots</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">🌵</div>
+        <div class="war-body">
+          <div class="war-era">1846 – 1848</div>
+          <div class="war-name">Mexican–American War</div>
+          <div class="war-desc">
+            The war that reshaped the map of North America. Holt ancestors served in the campaigns that stretched from Texas to California,
+            in a conflict that would define the nation's western borders — and plant the seeds of the Civil War to come.
+          </div>
+          <div class="war-badge">🇺🇸 Manifest Destiny Era</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">⚖️</div>
+        <div class="war-body">
+          <div class="war-era">1861 – 1865</div>
+          <div class="war-name">American Civil War</div>
+          <div class="war-desc">
+            The most personally complex chapter. The Holt family served on <strong>both sides</strong> of the Civil War —
+            a painful reality that mirrored the division of the nation itself and was deeply tied to the geography of Appalachia,
+            where loyalties were never simple.
+            <strong>Henry Holt</strong> (the family patriarch) served as a Union soldier in the 8th Tennessee Cavalry under the alias "Henry Collins" before deserting in 1863
+            — a story fully documented in the family research.
+            Other Holt and Newsom relatives served in Confederate units, reflecting the border-state tensions of Eastern Kentucky and Virginia.
+          </div>
+          <div class="war-badge cyan">⚔️ Both Sides — A Divided Nation</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">🌊</div>
+        <div class="war-body">
+          <div class="war-era">1898</div>
+          <div class="war-name">Spanish–American War</div>
+          <div class="war-desc">
+            America's emergence on the world stage. Fought in Cuba, Puerto Rico, and the Philippines,
+            this brief but pivotal conflict saw Holt descendants serve in a newly modern American military —
+            the generation that bridged 19th-century frontier service and 20th-century world warfare.
+          </div>
+          <div class="war-badge">🇺🇸 Turn of the Century</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">🪖</div>
+        <div class="war-body">
+          <div class="war-era">1914 – 1918</div>
+          <div class="war-name">World War I</div>
+          <div class="war-desc">
+            The war to end all wars — or so it was believed. Holt family members served in the trenches of France and the campaigns of Europe,
+            part of the American Expeditionary Forces that helped tip the balance of the greatest conflict the world had yet seen.
+            This generation came home to a changed country and planted the seeds of the Greatest Generation that would follow.
+          </div>
+          <div class="war-badge">🇺🇸 The Great War</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">✈️</div>
+        <div class="war-body">
+          <div class="war-era">1939 – 1945</div>
+          <div class="war-name">World War II</div>
+          <div class="war-desc">
+            The defining conflict of the 20th century. The Holt family's WWII generation — the sons and daughters of Depression-era Appalachia —
+            served across multiple theaters. They stormed beaches, flew missions, crewed ships, and staffed field hospitals.
+            Their strength and sacrifice are a foundational part of who the Holt Universe is today.
+          </div>
+          <div class="war-badge cyan">⭐ The Greatest Generation</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">❄️</div>
+        <div class="war-body">
+          <div class="war-era">1950 – 1953</div>
+          <div class="war-name">Korean War</div>
+          <div class="war-desc">
+            The Forgotten War — though no one who served there could ever forget it.
+            Fought in brutal cold against a determined enemy, Korea claimed lives and tested the limits of human endurance.
+            Holt family members served in what became one of the most demanding and least-recognized conflicts in American history.
+          </div>
+          <div class="war-badge">🇺🇸 The Forgotten War</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">🌿</div>
+        <div class="war-body">
+          <div class="war-era">1955 – 1975</div>
+          <div class="war-name">Vietnam War</div>
+          <div class="war-desc">
+            The most divisive conflict in modern American history. Holt family members served through the full span of American involvement —
+            from the early advisory years through the height of the conflict — navigating both the battlefield and a country torn apart at home.
+            Their service deserves full recognition and honor.
+          </div>
+          <div class="war-badge">🇺🇸 Vietnam Era</div>
+        </div>
+      </div>
+
+      <div class="war-entry reveal">
+        <div class="war-dot">🌐</div>
+        <div class="war-body">
+          <div class="war-era">1975 – Present</div>
+          <div class="war-name">Post-Vietnam Era &amp; Modern Service</div>
+          <div class="war-desc">
+            The family tradition of service did not end with Vietnam. A number of brave men and women from the Holt Universe have served
+            in various capacities at home and abroad since — in the Gulf War, global peacekeeping operations, the War on Terror,
+            and continuing commitments around the world.
+            <strong>Barrett himself served as a Navy Corpsman with aircraft carrier duty</strong>, continuing an unbroken chain of military service
+            that stretches back to the founding of the nation.
+          </div>
+          <div class="war-badge cyan">⚓ The Legacy Continues</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Closing honors note -->
+    <div class="article-wrap reveal" style="padding-top:0.5rem; padding-bottom:5rem;">
+      <div class="fact-card" style="border-color:rgba(0,255,224,0.15); text-align:center; padding: 2.5rem;">
+        <div style="font-size:2.5rem; margin-bottom:1rem;">🎖️</div>
+        <h3 style="color:var(--cyan); font-size:0.8rem; letter-spacing:0.2em;">IN HONOR OF ALL WHO SERVED</h3>
+        <p style="color:rgba(255,255,255,0.8); font-size:1.05rem; line-height:1.85; max-width:540px; margin:0.75rem auto 0; font-style:italic;">
+          "Every single one of these veterans — our great-great-grandparents, grandparents, aunts, uncles, and cousins —
+          contributed to the freedom and opportunities we enjoy today.
+          Their bravery is a foundational part of who we are."
+        </p>
+        <p style="color:var(--electric); font-family:'Space Mono',monospace; font-size:0.75rem; margin-top:1rem; letter-spacing:0.08em;">— Barrett Holt</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> — cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+    var nav=document.getElementById('nav');
+    window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+    var toggle=document.getElementById('navToggle');
+    var links=document.getElementById('navLinks');
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+    var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+  </script>
+</body>
+</html>

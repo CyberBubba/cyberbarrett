@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documents | CyberBarrett</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav id="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <a href="index.html">CyberBarrett</a>
+      </div>
+      <button id="navToggle" class="nav-toggle">Menu</button>
+      <div id="navLinks" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="topics.html">Topics</a>
+        <a href="tutorials.html">Tutorials</a>
+        <a href="documents.html" class="active">Documents</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="grid-bg"></div>
+    <div class="blob-hero"></div>
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">CyberBarrett</div>
+      <h1 class="page-title"><span class="grad">Documents</span></h1>
+      <div class="page-dates">Coming Soon</div>
+      <p class="page-sub">Reference materials, templates, and downloadable files you can actually use.</p>
+    </div>
+  </section>
+
+  <section style="padding: 5rem 2.5rem;">
+    <div style="max-width: 600px; margin: auto; background: var(--card-bg); border: var(--card-border); border-radius: 16px; padding: 3rem; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 1.5rem;">📄</div>
+      <h2 style="font-family: 'Space Mono', monospace; color: var(--electric); margin-bottom: 1rem; font-size: 1.5rem;">Documents Coming Soon</h2>
+      <p style="color: var(--muted); margin-bottom: 2rem; line-height: 1.6;">A library of reference materials, research templates, and useful downloads is being prepared. Genealogy research templates and tech reference documents are planned.</p>
+      <a href="index.html" style="display: inline-flex; border: 1px solid var(--electric); color: var(--electric); padding: .85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: .95rem;">← Back to Home</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> — cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+  var nav=document.getElementById('nav');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+  var toggle=document.getElementById('navToggle');
+  var links=document.getElementById('navLinks');
+  toggle.addEventListener('click',function(){links.classList.toggle('open');});
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+  </script>
+</body>
+</html>

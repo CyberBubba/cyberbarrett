@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Famous Connections | CyberBarrett Genealogy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ---- PAGE-SPECIFIC ---- */
+    .fc-intro {
+      max-width: 780px; margin: 0 auto;
+      padding: 3.5rem 2.5rem 0;
+      font-size: 1.05rem; color: var(--muted); line-height: 1.85;
+    }
+
+    /* Section label banners */
+    .fc-section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 2.5rem 1rem;
+    }
+
+    .fc-section-label {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      text-transform: uppercase; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 30px;
+      margin-bottom: 1rem;
+    }
+
+    .fc-section-label.ancestor {
+      background: rgba(0,255,224,0.08);
+      border: 1px solid rgba(0,255,224,0.3);
+      color: var(--cyan);
+    }
+
+    .fc-section-label.cousin {
+      background: rgba(0,170,255,0.08);
+      border: 1px solid rgba(0,170,255,0.3);
+      color: var(--electric);
+    }
+
+    .fc-section h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .fc-section h2 .grad {
+      background: linear-gradient(90deg, var(--electric), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .fc-section p.fc-desc {
+      color: var(--muted); max-width: 660px; line-height: 1.75;
+      font-size: 0.95rem; margin-bottom: 2rem;
+    }
+
+    /* Cards grid */
+    .fc-grid {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Ancestor card — cyan accent */
+    .fc-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: all 0.3s ease; position: relative; overflow: hidden;
+    }
+
+    .fc-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .fc-card:hover { transform: translateY(-4px); box-shadow: var(--glow-card); }
+    .fc-card:hover::after { opacity: 1; }
+
+    .fc-card.ancestor-card {
+      border: 1px solid rgba(0,255,224,0.18);
+    }
+    .fc-card.ancestor-card::after {
+      background: linear-gradient(90deg, var(--cyan), var(--electric));
+    }
+    .fc-card.ancestor-card:hover {
+      border-color: rgba(0,255,224,0.4);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 32px rgba(0,255,224,0.1);
+    }
+
+    .fc-card.cousin-card {
+      border: 1px solid var(--card-border);
+    }
+    .fc-card.cousin-card::after {
+      background: linear-gradient(90deg, var(--electric), var(--cyan));
+    }
+    .fc-card.cousin-card:hover {
+      border-color: rgba(0,170,255,0.35);
+    }
+
+    .fc-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+      padding: 0.3rem 0.8rem; border-radius: 20px; width: fit-content;
+      margin-bottom: 0.25rem;
+    }
+
+    .fc-badge.anc {
+      background: rgba(0,255,224,0.1);
+      border: 1px solid rgba(0,255,224,0.25);
+      color: var(--cyan);
+    }
+
+    .fc-badge.cuz {
+      background: rgba(0,170,255,0.1);
+      border: 1px solid rgba(0,170,255,0.2);
+      color: var(--electric);
+    }
+
+    .fc-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.25rem; font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.2;
+    }
+
+    .fc-dates {
+      font-size: 0.75rem; color: var(--muted);
+      font-family: 'Space Mono', monospace; letter-spacing: 0.06em;
+    }
+
+    .fc-relation {
+      font-size: 0.9rem; color: var(--white); font-weight: 600;
+      padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin: 0.25rem 0;
+    }
+
+    .fc-ancestor-label { color: var(--cyan); }
+    .fc-cousin-label { color: var(--electric); }
+
+    .fc-shared {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+    }
+
+    .fc-shared strong { color: rgba(255,255,255,0.75); }
+
+    .fc-chain {
+      font-size: 0.78rem; color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      background: rgba(0,0,0,0.2); border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      line-height: 1.7; border: 1px solid rgba(255,255,255,0.04);
+      margin-top: auto;
+    }
+
+    .fc-chain .step { color: rgba(255,255,255,0.5); }
+    .fc-chain .arrow { color: var(--electric); margin: 0 0.2rem; }
+    .fc-chain .you, .fc-chain .them { color: var(--cyan); font-weight: 700; }
+
+    /* Divider between sections */
+    .fc-divider {
+      max-width: 1100px; margin: 1rem 2.5rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,170,255,0.2), transparent);
+    }
+
+    @media (max-width: 600px) {
+      .fc-grid { grid-template-columns: 1fr; padding: 0 1.25rem 2rem; }
+      .fc-section { padding: 2rem 1.25rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+    <ul id="navLinks">
+      <li><a href="topics.html">Topics</a></li>
+      <li><a href="documents.html">Documents</a></li>
+      <li><a href="tutorials.html">Tutorials</a></li>
+      <li><a href="genealogy.html" class="active">Genealogy</a></li>
+      <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle"><span></span><span></span><span></span></button>
+  </nav>
+
+  <header class="page-hero">
+    <div class="hero-inner">
+      <div class="eyebrow">
+        <a href="genealogy.html">Genealogy</a>
+        <span class="sep">›</span>
+        Famous Connections
+      </div>
+      <h1>Famous <span class="grad">Connections</span></h1>
+      <div class="page-dates">Royalty · Legends · Presidents · Icons</div>
+      <p class="sub">Four hundred years of documented ancestry reveals some remarkable relatives — from Mayflower passengers and Native American royalty to rock &amp; roll legends and Founding Fathers. There's an important distinction: some are <strong style="color:var(--cyan)">direct ancestors</strong> Barrett is literally descended from, and others are <strong style="color:var(--electric)">famous cousins</strong> who share a common ancestor.</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         SECTION 1: DIRECT ANCESTORS
+    ============================================================ -->
+    <div class="fc-section reveal">
+      <div class="fc-section-label ancestor">⬆ Direct Ancestors</div>
+      <h2>In Barrett's <span class="grad">Direct Line</span></h2>
+      <p class="fc-desc">These are people Barrett is literally descended from — they appear in his family tree as great-grandparents, going back many generations. Their blood runs in his veins.</p>
+    </div>
+
+    <div class="fc-grid">
+
+      <div class="fc-card ancestor-card reveal">
+        <div class="fc-badge anc">⬆ Direct Ancestor</div>
+        <div class="fc-name">Pocahontas</div>
+        <div class="fc-dates">Rebecca Rolfe · abt. 1596 – 1617</div>
+        <div class="fc-relation"><span class="fc-ancestor-label">16th Great-Grandmother</span> (via Bolling line)</div>
+        <div class="fc-shared">The famous Powhatan princess who befriended the Jamestown colonists. Her son Thomas Rolfe and granddaughter Jane Rolfe are the bridge into Barrett's Tackett and Holt ancestry through the Virginia Bolling family.</div>
+        <div class="fc-chain">
+          <span class="them">Pocahontas</span>
+          <span class="arrow">→</span><span class="step">Thomas Rolfe → Jane Rolfe → John Bolling</span>
+          <span class="arrow">→</span><span class="step">…Tackett line…</span>
+          <span class="arrow">→</span><span class="you">Barrett</span>
+        </div>
+      </div>
+
+      <div class="fc-card ancestor-card reveal">
+        <div class="fc-badge anc">⬆ Direct Ancestor</div>
+        <div class="fc-name">Edward Doty</div>
+        <div class="fc-dates">Mayflower Passenger · abt. 1599 – 1655</div>
+        <div class="fc-relation"><span class="fc-ancestor-label">10th Great-Grandfather</span> (Mayflower, 1620)</div>
+        <div class="fc-shared">One of the 102 passengers aboard the Mayflower. Edward Doty was an indentured servant who later became a freeman and landowner in Plymouth Colony. His line descends through Barrett's great-grandmother Matilda Baldwin via her mother Sarah Elliott — the documented basis for membership in the Alabama Society of Mayflower Descendants.</div>
+        <div class="fc-chain">
+          <span class="them">Edward Doty</span>
+          <span class="arrow">→</span><span class="step">…Elliott line → Sarah Elliott → Matilda Baldwin</span>
+          <span class="arrow">→</span><span class="step">Henry &amp; Matilda Holt → Perian Holt → Landon Holt</span>
+          <span class="arrow">→</span><span class="you">Barrett</span>
+        </div>
+      </div>
+
+      <div class="fc-card ancestor-card reveal">
+        <div class="fc-badge anc">⬆ Direct Ancestor</div>
+        <div class="fc-name">Richard Warren</div>
+        <div class="fc-dates">Mayflower Passenger · abt. 1578 – 1628</div>
+        <div class="fc-relation"><span class="fc-ancestor-label">10th Great-Grandfather</span> (Mayflower, 1620)</div>
+        <div class="fc-shared">One of the most prominent Mayflower passengers, Richard Warren was a London merchant who sailed alone and later brought his family to Plymouth. He is among the most prolifically descended Mayflower passengers — millions of Americans count him as an ancestor, including Barrett through the Newsom line.</div>
+        <div class="fc-chain">
+          <span class="them">Richard Warren</span>
+          <span class="arrow">→</span><span class="step">…Newsom / Sherburne line</span>
+          <span class="arrow">→</span><span class="step">Martha Tackett → Landon Holt → Romaine Holt</span>
+          <span class="arrow">→</span><span class="you">Barrett</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="max-width:900px; margin:0 auto; padding:0 2.5rem 1rem;">
+      <figure class="article-figure reveal">
+        <img src="images/Pocahontas_Tree001.jpg" alt="Pocahontas family tree showing ancestry documentation">
+        <figcaption><strong>Pocahontas (Rebecca Rolfe) Family Tree</strong> — Ancestry documentation showing the Bolling/Rolfe descent line connecting Barrett to the famous Powhatan princess through 17 documented generations.</figcaption>
+      </figure>
+
+      <figure class="article-figure reveal">
+        <img src="images/Doty001.jpg" alt="Edward Doty, Mayflower Passenger from 1620">
+        <figcaption><strong>Edward Doty</strong> — Mayflower Passenger, 1620. One of the 102 souls who made the crossing aboard the Mayflower. Barrett's documented descent through the Elliott-Baldwin line provides the basis for his membership in the Alabama Society of Mayflower Descendants.</figcaption>
+      </figure>
+    </div>
+
+    <div class="fc-divider"></div>
+
+    <!-- ============================================================
+         SECTION 2: FAMOUS COUSINS
+    ============================================================ -->
+    <div class="fc-section reveal">
+      <div class="fc-section-label cousin">↔ Famous Cousins</div>
+      <h2>Famous <span class="grad">Relatives</span></h2>
+      <p class="fc-desc">These people are not direct ancestors — they are cousins, sharing a common ancestor with Barrett but branching off into their own famous lines. The connection is real and documented on Ancestry.</p>
+    </div>
+
+    <div class="fc-grid">
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 9th Cousins</div>
+        <div class="fc-name">Dolly Parton</div>
+        <div class="fc-dates">b. 1946 · Country Music Legend</div>
+        <div class="fc-relation"><span class="fc-cousin-label">9th Cousins</span> — Shared Ancestor: Cecily (Collmore) Bohannon</div>
+        <div class="fc-shared">Both Barrett and Dolly descend from <strong>Cecily (Collmore) Bohannon (abt. 1637–aft. 1678)</strong>, making Cecily Barrett's 8th great-grandmother.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">…Tackett → Bohannon → Cecily Bohannon</span>
+          <span class="arrow">←</span><span class="step">Dolly's Bohannon line</span>
+          <span class="arrow">←</span><span class="them">Dolly</span>
+        </div>
+      </div>
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 12 Degrees</div>
+        <div class="fc-name">Elvis Presley</div>
+        <div class="fc-dates">1935 – 1977 · The King of Rock &amp; Roll</div>
+        <div class="fc-relation"><span class="fc-cousin-label">12 Degrees of Separation</span> — via Tackett / Mansell line</div>
+        <div class="fc-shared">The path runs through Barrett's Tackett line, connecting to the <strong>Mansell family</strong> of Appalachian Virginia — the same Mansell bloodline that flows into Elvis through his maternal grandmother, Doll Mansell. The Mansell family appears in many documented <a href="melungeons.html" style="color:var(--cyan); text-decoration:underline;">Melungeon</a> family trees, and it has long been <em>hypothesized</em> among <a href="melungeons.html" style="color:var(--cyan); text-decoration:underline;">Melungeon researchers</a> — though not definitively established — that Elvis carried Melungeon heritage. His dark coloring, high cheekbones, and deep Appalachian roots are consistent with this theory. Given that Barrett's own Tackett line runs through the same <a href="melungeons.html" style="color:var(--cyan); text-decoration:underline;">Melungeon</a> ancestral communities, the two share more than just degrees of separation.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">Tackett line → John Tackett → Abner Tackett</span>
+          <span class="arrow">→</span><span class="step">Martha → Doll Mansell → Gladys Smith</span>
+          <span class="arrow">→</span><span class="them">Elvis</span>
+        </div>
+      </div>
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 4th Cousin 8× Removed</div>
+        <div class="fc-name">George Washington</div>
+        <div class="fc-dates">1732 – 1799 · 1st President of the United States</div>
+        <div class="fc-relation"><span class="fc-cousin-label">4th Cousin, 8× Removed</span> — Shared Ancestor: Isabel (Sherburne) Towneley</div>
+        <div class="fc-shared">Barrett and the Father of our Nation both descend from <strong>Isabel (Sherburne) Towneley (abt. 1425–aft. 1462)</strong>. Washington's line runs through Lawrence and Augustine Washington; Barrett's runs through the Sherburne–Newsom–Tackett chain — making Isabel Barrett's 16th great-grandmother.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">Newsom → Sherburne/Towneley → Isabel Towneley</span>
+          <span class="arrow">←</span><span class="step">Mary Warner → Augustine Washington</span>
+          <span class="arrow">←</span><span class="them">Washington</span>
+        </div>
+      </div>
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 6th Cousin 4× Removed</div>
+        <div class="fc-name">Franklin D. Roosevelt</div>
+        <div class="fc-dates">1882 – 1945 · 32nd President of the United States</div>
+        <div class="fc-relation"><span class="fc-cousin-label">6th Cousin, 4× Removed</span> — via the Holt / Church / Delano line</div>
+        <div class="fc-shared">This connection runs directly through the <strong>Holt line</strong> Barrett has already researched. William Kendrick Holt (a Holt family relative) connects to the Church family, which ties to the Warren Delano line — FDR's mother's side — making this one of the most personally significant famous cousin connections.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">Henry Holt → W.K. Holt → Church / Delano branch</span>
+          <span class="arrow">→</span><span class="step">Warren Delano → Sara Delano Roosevelt</span>
+          <span class="arrow">→</span><span class="them">FDR</span>
+        </div>
+      </div>
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 8th Cousin 1× Removed</div>
+        <div class="fc-name">Merle Haggard</div>
+        <div class="fc-dates">1937 – 2016 · Country Music Icon</div>
+        <div class="fc-relation"><span class="fc-cousin-label">8th Cousins, Once Removed</span> — Shared Ancestor: Cecily (Collmore) Bohannon</div>
+        <div class="fc-shared">Like Dolly Parton, Merle Haggard also connects to Barrett through <strong>Cecily Bohannon</strong> — the same 1637 ancestor. Cecily is Barrett's 8th great-grandmother and Merle's 7th great-grandmother, making the branches slightly offset by one generation.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">…Bohannon → Cecily Bohannon</span>
+          <span class="arrow">←</span><span class="step">Bohannon → Harp → Flossie Mae Harp</span>
+          <span class="arrow">←</span><span class="them">Merle</span>
+        </div>
+      </div>
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 8th Cousin 1× Removed</div>
+        <div class="fc-name">Jacqueline Kennedy</div>
+        <div class="fc-dates">Jacqueline Lee Bouvier · 1929 – 1994</div>
+        <div class="fc-relation"><span class="fc-cousin-label">8th Cousins, Once Removed</span> — Shared Ancestor: Joseph Wickes (1620–1692)</div>
+        <div class="fc-shared">Barrett and Jackie Kennedy both descend from <strong>Joseph Wickes</strong>, an early colonial American. Jackie's line runs through the Bouvier family; Barrett's through the Elliott line connected to his Mayflower research.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">…Elliott → Wickes → Joseph Wickes (1620)</span>
+          <span class="arrow">←</span><span class="step">…Bouvier line</span>
+          <span class="arrow">←</span><span class="them">Jackie</span>
+        </div>
+      </div>
+
+      <div class="fc-card cousin-card reveal">
+        <div class="fc-badge cuz">↔ 9th Cousin 2× Removed</div>
+        <div class="fc-name">Walt Disney</div>
+        <div class="fc-dates">Walter Elias Disney · 1901 – 1966</div>
+        <div class="fc-relation"><span class="fc-cousin-label">9th Cousins, Twice Removed</span> — Shared Ancestor: Bennett Eliot (1552–1621)</div>
+        <div class="fc-shared">The connection to the man who built the Magic Kingdom runs through <strong>Bennett Eliot</strong> (1552–1621). Barrett's line descends through the Elliott–Tackett chain; Walt's descends through Philip Eliot and ultimately the Disney family who emigrated from England.</div>
+        <div class="fc-chain">
+          <span class="you">Barrett</span>
+          <span class="arrow">→</span><span class="step">Elliott → Bennett Eliot (1552)</span>
+          <span class="arrow">←</span><span class="step">Philip Eliot → … → Elias Charles Disney</span>
+          <span class="arrow">←</span><span class="them">Walt</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="max-width:900px; margin:0 auto; padding:0 2.5rem 1rem;">
+      <figure class="article-figure reveal">
+        <img src="images/Elvis001.jpg" alt="Elvis Presley, The King of Rock and Roll">
+        <figcaption><strong>Elvis Presley</strong> — Barrett is 12 degrees of separation from The King via the Tackett/Mansell line. The Mansell connection is particularly significant: among <a href="melungeons.html" style="color:var(--cyan); text-decoration:underline;">Melungeon researchers</a>, it is <em>sometimes claimed</em> or <em>hypothesized</em> that Elvis carried <a href="melungeons.html" style="color:var(--cyan); text-decoration:underline;">Melungeon heritage</a> through this same Appalachian lineage — a theory lent circumstantial weight by the fact that Barrett's own Tackett line runs through the same documented <a href="melungeons.html" style="color:var(--cyan); text-decoration:underline;">Melungeon</a> communities. Barrett has had a private tour of Graceland, walking the same halls as his documented relative.</figcaption>
+      </figure>
+
+      <figure class="article-figure reveal">
+        <img src="images/Jefferwson_Tree001.jpg" alt="Thomas Jefferson family tree showing ancestry documentation">
+        <figcaption><strong>Thomas Jefferson Family Tree</strong> — Ancestry documentation showing the relationship path between Barrett Holt and the 3rd President of the United States.</figcaption>
+      </figure>
+
+      <figure class="article-figure reveal">
+        <img src="images/Madison_Tree001.jpg" alt="James Madison family tree showing ancestry documentation">
+        <figcaption><strong>James Madison Family Tree</strong> — Ancestry documentation showing the relationship path between Barrett Holt and the 4th President of the United States, Father of the Constitution.</figcaption>
+      </figure>
+    </div>
+
+    <!-- What does "Removed" mean? -->
+    <div class="article-wrap reveal" style="padding-top:1rem; padding-bottom:0;">
+      <div class="fact-card" style="border-color:rgba(0,170,255,0.2); background: linear-gradient(135deg, var(--card-bg), rgba(0,170,255,0.03));">
+        <h3>📖 WHAT DOES "ONCE REMOVED" ACTUALLY MEAN?</h3>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.85; margin-bottom:1rem;">
+          This trips up nearly everyone — but once you get it, it clicks forever.
+          <strong style="color:var(--white)">"Removed" has nothing to do with how distant the relationship is.</strong>
+          It's purely about <strong style="color:var(--cyan)">generational difference</strong>.
+        </p>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.85; margin-bottom:1rem;">
+          When two people are in the <strong style="color:var(--white)">same generation</strong> — like two people who both share a great-grandparent — they are simply cousins: 1st, 2nd, 3rd, and so on. No "removed."
+          The cousin number tells you <em>how far back you have to go</em> to find the shared ancestor.
+        </p>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.85; margin-bottom:1rem;">
+          <strong style="color:var(--white)">"Once removed"</strong> means there is exactly <strong style="color:var(--cyan)">one generation of difference</strong> between the two people.
+          So Barrett's 1st cousin's <em>child</em> is Barrett's 1st cousin <em>once removed</em> — same cousin relationship, but one rung lower on the generational ladder.
+          Go two rungs down and it's "twice removed." That's it.
+        </p>
+        <p style="color:var(--muted); font-size:0.95rem; line-height:1.85; margin-bottom:0.5rem;">
+          Think of it this way:
+        </p>
+        <table class="cb-table" style="margin:0.5rem 0 1rem;">
+          <thead>
+            <tr>
+              <th>Relationship</th>
+              <th>What it means</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--electric)">4th cousin</strong></td>
+              <td style="color:var(--muted)">Same generation — you both share a 4× great-grandparent. Neither is older or younger in the family tree.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--electric)">4th cousin, once removed</strong></td>
+              <td style="color:var(--muted)">One of you is one generation older or younger than the other. The <em>cousin number</em> still describes the type of relationship; <em>removed</em> just accounts for the generational offset.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--electric)">4th cousin, 8× removed</strong></td>
+              <td style="color:var(--muted)">Eight full generations apart — like Barrett and George Washington. Washington was born in 1732; they share the same ancestral line, just in wildly different eras of history.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.75; margin:0;">
+          <strong style="color:var(--white)">The bottom line:</strong> "Removed" is a <em>calendar correction</em>, not a measure of closeness.
+          A 3rd cousin once removed is not farther away than a plain 3rd cousin — they're just from a different generation of the same branch.
+          When you see "8× removed," that's simply history catching up — centuries of generations separating the same shared bloodline.
+        </p>
+      </div>
+    </div>
+
+    <!-- Research note -->
+    <div class="article-wrap reveal" style="padding-top:1.5rem; padding-bottom:4rem;">
+      <div class="fact-card" style="border-color:rgba(0,255,224,0.15);">
+        <h3 style="color:var(--cyan)">A NOTE ON THE RESEARCH</h3>
+        <p style="color:var(--muted); font-size:0.9rem; margin:0; line-height:1.75;">
+          All connections on this page are sourced from Barrett's documented Ancestry family tree and cross-referenced against public genealogical databases.
+          <strong style="color:var(--white)">Direct ancestors</strong> are individuals who appear in the unbroken parent-child chain from Barrett back through history — their DNA literally contributed to his.
+          <strong style="color:var(--white)">Famous cousins</strong> share a common ancestor but branched into separate family lines generations ago.
+          Neither type of connection is more remarkable than the other — but they mean very different things genealogically.
+          Barrett holds documented membership in the <strong style="color:var(--cyan)">Alabama Society of Mayflower Descendants</strong> based on the Edward Doty line.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> — cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+    var nav=document.getElementById('nav');
+    window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+    var toggle=document.getElementById('navToggle');
+    var links=document.getElementById('navLinks');
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+    var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+  </script>
+</body>
+</html>
