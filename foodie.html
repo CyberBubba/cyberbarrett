@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Foodie | CyberBarrett</title>
+  <meta name="description" content="Barrett Holt — award-winning competitive cook, 1,600+ Yelp reviews, 18,000+ food photos, and a lifetime of eating and cooking really well.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+
+    /* ---- FOODIE HERO ---- */
+    .fd-hero {
+      position: relative;
+      background: var(--navy);
+      padding: 7rem 2.5rem 5rem;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(0,170,255,0.1);
+    }
+
+    .fd-hero .grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,170,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,170,255,0.04) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: radial-gradient(ellipse at 60% 40%, black 30%, transparent 80%);
+    }
+
+    .fd-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 860px; margin: 0 auto;
+    }
+
+    .fd-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      color: var(--cyan); text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .fd-headline {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.03em; margin-bottom: 1.25rem;
+    }
+
+    .fd-headline .accent {
+      background: linear-gradient(100deg, #ff8c00, #ffcc00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .fd-sub {
+      font-size: 1.1rem; color: var(--muted);
+      line-height: 1.75; max-width: 620px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Yelp stat strip */
+    .fd-stats {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .fd-stat {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      min-width: 130px;
+      flex: 1;
+    }
+
+    .fd-stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.6rem; font-weight: 700;
+      background: linear-gradient(135deg, #ff8c00, #ffcc00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1; margin-bottom: 0.3rem;
+    }
+
+    .fd-stat-label {
+      font-size: 0.68rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ---- STORY SECTION ---- */
+    .fd-section {
+      padding: 5rem 2.5rem;
+    }
+
+    .fd-section-inner {
+      max-width: 800px; margin: 0 auto;
+    }
+
+    .fd-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.2em;
+      color: var(--electric); text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .fd-section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .fd-story p {
+      font-size: 1rem; color: rgba(255,255,255,0.88);
+      line-height: 1.85; margin-bottom: 1.4rem;
+    }
+
+    .fd-story p strong { color: var(--white); }
+
+    .fd-story .pullquote {
+      border-left: 4px solid #ff8c00;
+      padding: 1rem 1.5rem;
+      background: rgba(255,140,0,0.06);
+      border-radius: 0 10px 10px 0;
+      margin: 2rem 0;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.7;
+    }
+
+    /* Trophy badge */
+    .trophy-row {
+      display: flex; gap: 1.25rem; flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    .trophy-badge {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: rgba(255,204,0,0.08);
+      border: 1px solid rgba(255,204,0,0.25);
+      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+    }
+
+    .trophy-badge .trophy-icon { font-size: 1.8rem; }
+
+    .trophy-badge .trophy-text strong {
+      display: block;
+      font-size: 0.9rem; color: #ffcc00;
+    }
+
+    .trophy-badge .trophy-text span {
+      font-size: 0.78rem; color: var(--muted);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ---- YELP SECTION ---- */
+    .fd-yelp {
+      background: var(--navy-2);
+      border-top: 1px solid rgba(0,170,255,0.08);
+      border-bottom: 1px solid rgba(0,170,255,0.08);
+      padding: 5rem 2.5rem;
+    }
+
+    .yelp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem; margin-top: 2.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .yelp-grid { grid-template-columns: 1fr; }
+    }
+
+    .yelp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 1.75rem;
+    }
+
+    .yelp-card .yelp-card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+
+    .yelp-card h4 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.5rem; color: var(--white);
+    }
+
+    .yelp-card p {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .yelp-award-chip {
+      display: inline-block;
+      background: rgba(255,204,0,0.1);
+      border: 1px solid rgba(255,204,0,0.3);
+      border-radius: 20px;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.75rem;
+      color: #ffcc00;
+      font-family: 'Space Mono', monospace;
+      margin: 0.25rem 0.2rem;
+    }
+
+    /* ---- RECIPES SECTION ---- */
+    .fd-recipes {
+      padding: 5rem 2.5rem;
+      background: var(--navy);
+    }
+
+    .fd-coming-soon {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px; max-width: 600px;
+      margin: 2.5rem auto 0;
+    }
+
+    .fd-coming-soon .cs-icon { font-size: 3.5rem; display: block; margin-bottom: 1rem; }
+
+    .fd-coming-soon h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem; color: #ff8c00;
+      margin-bottom: 0.75rem;
+    }
+
+    .fd-coming-soon p {
+      color: var(--muted); font-size: 0.92rem;
+      line-height: 1.7; max-width: 420px; margin: 0 auto;
+    }
+
+    /* divider */
+    .fd-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,140,0,0.2), transparent);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <div class="nav-brand"><a href="index.html">CyberBarrett</a></div>
+      <button id="navToggle" class="nav-toggle">Menu</button>
+      <div id="navLinks" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="topics.html">Topics</a>
+        <a href="soapbox.html">Soap Box</a>
+        <a href="foodie.html" class="active">Foodie</a>
+        <a href="backstage.html">Backstage</a>
+        <a href="genealogy.html">Genealogy</a>
+        <a href="documents.html">Documents</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="fd-hero">
+    <div class="grid-bg"></div>
+    <div class="fd-hero-inner">
+      <div class="fd-eyebrow">Apron. Hat. Competition. Table.</div>
+      <h1 class="fd-headline">The <span class="accent">Foodie</span></h1>
+      <p class="fd-sub">
+        Award-winning competitive cook. Two-time chili champion. Nearly two decades of Yelp
+        reviews. Thousands of restaurants, meals, and kitchens later — Barrett's love of
+        food is as deep as his love of music. Maybe deeper.
+      </p>
+
+      <div class="fd-stats">
+        <div class="fd-stat">
+          <div class="fd-stat-num">1,600<span style="font-size:1rem">+</span></div>
+          <div class="fd-stat-label">Yelp Reviews</div>
+        </div>
+        <div class="fd-stat">
+          <div class="fd-stat-num">18,000<span style="font-size:1rem">+</span></div>
+          <div class="fd-stat-label">Food Photos Posted</div>
+        </div>
+        <div class="fd-stat">
+          <div class="fd-stat-num">1M<span style="font-size:1rem">+</span></div>
+          <div class="fd-stat-label">Yelp Interactions / Year</div>
+        </div>
+        <div class="fd-stat">
+          <div class="fd-stat-num">83M<span style="font-size:1rem">+</span></div>
+          <div class="fd-stat-label">Google Review Interactions</div>
+        </div>
+        <div class="fd-stat">
+          <div class="fd-stat-num">2</div>
+          <div class="fd-stat-label">Chili Competition Wins</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="fd-divider"></div>
+
+  <!-- COOKING COMPETITION STORY -->
+  <section class="fd-section">
+    <div class="fd-section-inner">
+      <div class="fd-section-label reveal">Origin Story</div>
+      <h2 class="fd-section-title reveal">How a Radio Host Became a <span style="color: #ff8c00;">Chili Champion</span></h2>
+
+      <div class="fd-story reveal">
+        <p>
+          Being a real foodie is not something Barrett keeps a secret. Everybody at the radio station knew it —
+          the producers, the suits, the sales team, everyone. So when the city of Providence was putting on a
+          <strong>celebrity chili cook-off</strong>, it wasn't exactly a surprise when management came looking for a volunteer.
+        </p>
+
+        <p>
+          "The suits approached me with a proposition," Barrett recalls. He was deep into his morning host run
+          at the station — ratings up, audience loyal, name well known in the market. A food competition
+          attached to a celebrity for charity? Made sense. Barrett's answer was predictable: <em>"Well sure,
+          why not, of course I did."</em>
+        </p>
+
+        <div class="pullquote">
+          "There were local quote-unquote celebrities, a number of local chefs — and long story short,
+          I entered the competition not expecting much. But lo and behold, I won the thing."
+        </div>
+
+        <p>
+          First time out of the gate. No prior competition experience. Just a man, a recipe, and a very
+          strong opinion about what chili should taste like. The crowd agreed.
+        </p>
+
+        <p>
+          Word got around. He was coached into a second competition — again for chili. Same result.
+          <strong>Won that one too.</strong>
+        </p>
+
+        <div class="trophy-row reveal">
+          <div class="trophy-badge">
+            <span class="trophy-icon">🏆</span>
+            <div class="trophy-text">
+              <strong>1st Place — Celebrity Chili Cook-Off</strong>
+              <span>Providence, Rhode Island</span>
+            </div>
+          </div>
+          <div class="trophy-badge">
+            <span class="trophy-icon">🏆</span>
+            <div class="trophy-text">
+              <strong>1st Place — Chili Competition</strong>
+              <span>Back-to-back Champion</span>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          "I'm really not tooting my own horn here, but I do make a damn good chili." — Barrett laughs.
+          Then pauses. "Okay, it sounds like a really big toot." The laugh track is implied.
+        </p>
+
+        <p>
+          The recipe itself? Coming soon to this page — along with some other all-stars from Barrett's
+          kitchen. Until then, you'll just have to imagine how good it is.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="fd-divider"></div>
+
+  <!-- YELP EMPIRE -->
+  <section class="fd-yelp">
+    <div class="fd-section-inner">
+      <div class="fd-section-label reveal">Nearly Two Decades in the Field</div>
+      <h2 class="fd-section-title reveal">The <span style="color: #ff8c00;">Yelp Empire</span></h2>
+
+      <div class="fd-story reveal">
+        <p>
+          Barrett has been Yelping for <strong>nearly two decades</strong> — long before posting restaurant reviews was
+          fashionable, and well before every influencer with a phone decided they were a food critic.
+          He's put in the work: over <strong>1,600 reviews</strong>, more than <strong>18,000 photos</strong>, and
+          upwards of a <strong>million interactions per year</strong> from his Yelp content alone.
+        </p>
+        <p>
+          The community noticed. Over the years Barrett has taken home multiple Yelp awards — recognition from
+          the platform for the quality, depth, and consistency of his contributions:
+        </p>
+      </div>
+
+      <div class="reveal" style="margin: 1.5rem 0 2rem;">
+        <span class="yelp-award-chip">🏅 Best Reviewer</span>
+        <span class="yelp-award-chip">🏅 Best Overall Yelper</span>
+        <span class="yelp-award-chip">🏅 Best Commenter</span>
+      </div>
+
+      <div class="yelp-grid reveal">
+        <div class="yelp-card">
+          <div class="yelp-card-icon">📸</div>
+          <h4>18,000+ Photos</h4>
+          <p>
+            Every dish, every plating, every "this is too beautiful to eat" moment captured and posted.
+            Barrett's photo archive alone could fill several coffee table books.
+          </p>
+        </div>
+        <div class="yelp-card">
+          <div class="yelp-card-icon">📝</div>
+          <h4>1,600+ Written Reviews</h4>
+          <p>
+            Not just star ratings — actual words. Context, story, comparison. The kind of review
+            you read before you decide whether to make a reservation.
+          </p>
+        </div>
+        <div class="yelp-card">
+          <div class="yelp-card-icon">🌐</div>
+          <h4>83M Google Review Interactions</h4>
+          <p>
+            Barrett is the first to admit he's not that active on Google Reviews or TripAdvisor.
+            Yet his limited Google posting has apparently generated somewhere in the neighborhood
+            of <strong>83 million interactions</strong>. He figures he should probably do more there.
+          </p>
+        </div>
+        <div class="yelp-card">
+          <div class="yelp-card-icon">🍽️</div>
+          <h4>The Philosophy</h4>
+          <p>
+            Great food is a story — where it came from, who made it, what it does to the person
+            eating it. Barrett's reviews try to capture that. A good meal deserves more than three stars
+            and "nice atmosphere."
+          </p>
+        </div>
+      </div>
+
+      <div class="fd-story reveal" style="margin-top: 2.5rem;">
+        <p>
+          Award photos and some favorite Yelp moments coming soon to this page.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="fd-divider"></div>
+
+  <!-- RECIPES COMING SOON -->
+  <section class="fd-recipes">
+    <div class="fd-section-inner">
+      <div class="fd-section-label reveal">From Barrett's Kitchen</div>
+      <h2 class="fd-section-title reveal">Favorite <span style="color: #ff8c00;">Recipes</span></h2>
+
+      <div class="fd-coming-soon reveal">
+        <span class="cs-icon">🌶️</span>
+        <h3>The Good Stuff Is Coming</h3>
+        <p>
+          The chili recipe. The Gulf Coast staples. The crowd-pleasers from decades behind the stove.
+          Barrett's working on bringing his best recipes to this page — with the stories behind them,
+          because every great dish has one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> &mdash; cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function () { nav.classList.toggle('scrolled', window.scrollY > 50); });
+    var toggle = document.getElementById('navToggle');
+    var links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', function () { links.classList.toggle('open'); });
+    links.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { links.classList.remove('open'); }); });
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+    }, { threshold: 0.05, rootMargin: '0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { ro.observe(el); });
+    setTimeout(function () { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); }); }, 800);
+  </script>
+
+</body>
+</html>
