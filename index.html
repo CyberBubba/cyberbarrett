@@ -256,19 +256,40 @@
 
         .hero-title .line1 {
             display: block;
-            color: var(--electric);
-            -webkit-text-fill-color: var(--electric);
-            -webkit-text-stroke: 1.5px rgba(255,255,255,0.7);
-            paint-order: stroke fill;
+            background:
+                radial-gradient(ellipse at 10% 20%, #ff1493 0%, transparent 50%),
+                radial-gradient(ellipse at 78% 10%, #8b00ff 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 85%, #00bfff 0%, transparent 45%),
+                radial-gradient(ellipse at 88% 88%, #ff6600 0%, transparent 40%),
+                radial-gradient(ellipse at 35% 50%, #ff4500 0%, transparent 38%),
+                linear-gradient(135deg, #ff1493, #8b00ff, #00bfff, #ff6600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter:
+                drop-shadow(2px 2px 0 #1a0030)
+                drop-shadow(4px 4px 0 #0d0020)
+                drop-shadow(6px 6px 0 rgba(0,0,0,0.75))
+                drop-shadow(9px 10px 14px rgba(0,0,0,0.55));
         }
 
         .hero-title .line2 {
             display: block;
-            color: var(--cyan);
-            -webkit-text-fill-color: var(--cyan);
-            -webkit-text-stroke: 1.5px var(--electric);
-            paint-order: stroke fill;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7)) drop-shadow(0 0 18px rgba(0,255,224,0.2));
+            background:
+                radial-gradient(ellipse at 15% 75%, #ff1493 0%, transparent 45%),
+                radial-gradient(ellipse at 72% 18%, #00ffe0 0%, transparent 45%),
+                radial-gradient(ellipse at 28% 28%, #ff4500 0%, transparent 40%),
+                radial-gradient(ellipse at 88% 80%, #9b2dff 0%, transparent 45%),
+                radial-gradient(ellipse at 55% 55%, #ffcc00 0%, transparent 38%),
+                linear-gradient(135deg, #00ffe0, #ff1493, #9b2dff, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter:
+                drop-shadow(2px 2px 0 #002211)
+                drop-shadow(4px 4px 0 #001408)
+                drop-shadow(6px 6px 0 rgba(0,0,0,0.75))
+                drop-shadow(9px 10px 14px rgba(0,0,0,0.55));
         }
 
         .hero-sub {
