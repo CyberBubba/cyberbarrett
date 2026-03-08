@@ -396,6 +396,9 @@ footer {
 .footer-copy { font-family:'Space Mono',monospace; font-size:0.75rem; color:var(--muted); }
 .footer-copy a { color:var(--electric); text-decoration:none; }
 .footer-tag { font-size:0.75rem; color:rgba(255,255,255,0.18); }
+.footer-disclaimer { font-size:0.72rem; color:rgba(255,255,255,0.28); margin-top:0.3rem; }
+.footer-disclaimer a { color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
+.footer-disclaimer a:hover { color:var(--electric); }
 
 /* ---- ARTICLE FIGURES ---- */
 .article-figure {
