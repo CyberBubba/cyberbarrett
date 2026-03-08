@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warning: Something's Fishy | The Soap Box</title>
+  <meta name="description" content="Barrett Holt on Swai — what it is, where it really comes from, why restaurants serve it, and why you should probably pass.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .sb-post-page {
+      padding: 7rem 2.5rem 5rem;
+      background: var(--navy);
+      min-height: 80vh;
+    }
+    .sb-post-page-inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .sb-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--electric);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      transition: gap 0.2s;
+    }
+    .sb-back-link:hover { gap: 0.85rem; }
+    .sb-back-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .sb-post {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .sb-post-hero-img {
+      width: 100%; max-height: 420px;
+      object-fit: cover; display: block;
+    }
+
+    .sb-post-inner { padding: 2.5rem; }
+    @media (max-width: 600px) { .sb-post-inner { padding: 1.5rem; } }
+
+    .sb-post-meta {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      align-items: center; margin-bottom: 1.25rem;
+    }
+    .sb-post-tag {
+      background: rgba(0,170,255,0.08);
+      border: 1px solid rgba(0,170,255,0.2);
+      color: var(--electric);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem; border-radius: 20px;
+    }
+    .sb-post-tag.hot {
+      background: rgba(0,255,224,0.06);
+      border-color: rgba(0,255,224,0.2);
+      color: var(--cyan);
+    }
+    .sb-post-tag.warn {
+      background: rgba(255,120,0,0.08);
+      border-color: rgba(255,120,0,0.25);
+      color: #ff8c40;
+    }
+    .sb-post-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 0.05em; margin-left: auto;
+    }
+
+    .sb-post-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      line-height: 1.15; margin-bottom: 2rem;
+      color: var(--white);
+    }
+    .sb-post-title-sub {
+      background: linear-gradient(100deg, #ff6b35, #ffaa00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block; font-size: 0.65em;
+      margin-top: 0.3rem;
+    }
+
+    .sb-post-body p {
+      font-size: 1rem; color: rgba(255,255,255,0.88);
+      line-height: 1.88; margin-bottom: 1.5rem;
+    }
+    .sb-post-body p strong { color: var(--white); }
+
+    .sb-post-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--electric);
+      margin: 2.5rem 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0,170,255,0.15);
+    }
+
+    /* Standard pullquote */
+    .sb-pullquote {
+      border-left: 4px solid var(--electric);
+      padding: 1rem 1.5rem;
+      background: rgba(0,170,255,0.05);
+      border-radius: 0 10px 10px 0;
+      margin: 2rem 0;
+      font-style: italic;
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.75;
+    }
+
+    /* Danger/warning pullquote */
+    .sb-pullquote.danger {
+      border-left-color: #ff4444;
+      background: rgba(255,68,68,0.06);
+    }
+    .sb-pullquote.danger strong { color: #ff6b6b; }
+
+    /* Short answer card */
+    .sb-short-answer {
+      background: rgba(255,120,0,0.06);
+      border: 1px solid rgba(255,120,0,0.2);
+      border-left: 4px solid #ff8c00;
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem 1.75rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .sb-short-answer-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #ff8c40;
+      margin-bottom: 0.5rem;
+    }
+    .sb-short-answer p {
+      color: rgba(255,255,255,0.92) !important;
+      font-style: italic;
+      margin-bottom: 0 !important;
+    }
+
+    /* Fish name aliases grid */
+    .sb-alias-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0 1.75rem;
+    }
+    .sb-alias-chip {
+      background: rgba(255,120,0,0.06);
+      border: 1px solid rgba(255,120,0,0.2);
+      border-radius: 20px;
+      padding: 0.35rem 0.9rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: #ff8c40;
+      letter-spacing: 0.04em;
+    }
+
+    /* Contaminant warning cards */
+    .sb-warn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+    .sb-warn-card {
+      background: rgba(255,68,68,0.04);
+      border: 1px solid rgba(255,68,68,0.15);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+    }
+    .sb-warn-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .sb-warn-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; font-weight: 700;
+      color: #ff7070;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+    .sb-warn-body {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.55;
+    }
+
+    /* Historical names grid (reused from GOA) */
+    .sb-name-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 0.6rem; margin: 1.25rem 0 1.75rem;
+    }
+    .sb-name-chip {
+      background: rgba(0,170,255,0.04);
+      border: 1px solid rgba(0,170,255,0.12);
+      border-radius: 8px; padding: 0.6rem 0.85rem;
+      font-size: 0.82rem; color: rgba(255,255,255,0.8);
+      line-height: 1.45;
+    }
+
+    /* Reference list */
+    .sb-ref-list {
+      list-style: none;
+      padding: 0; margin: 1rem 0 1.5rem;
+    }
+    .sb-ref-list li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .sb-ref-list li:last-child { border-bottom: none; }
+    .sb-ref-list a {
+      color: var(--electric);
+      text-decoration: none;
+    }
+    .sb-ref-list a:hover { text-decoration: underline; }
+    .sb-ref-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; color: var(--electric);
+      margin-right: 0.6rem;
+    }
+
+    /* Criminal case highlight box */
+    .sb-case-box {
+      background: rgba(255,68,68,0.05);
+      border: 1px solid rgba(255,68,68,0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .sb-case-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #ff6b6b;
+      margin-bottom: 0.6rem;
+    }
+    .sb-case-box p {
+      margin-bottom: 0.75rem !important;
+    }
+    .sb-case-box p:last-child { margin-bottom: 0 !important; }
+
+    .sb-post-footer { margin-top: 3rem; text-align: center; }
+    .sb-return-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,170,255,0.08);
+      border: 1px solid rgba(0,170,255,0.25);
+      color: var(--electric);
+      padding: 0.85rem 2rem; border-radius: 8px;
+      text-decoration: none; font-weight: 600;
+      font-size: 0.88rem; transition: all 0.25s;
+      font-family: 'Space Mono', monospace;
+    }
+    .sb-return-btn:hover {
+      background: rgba(0,170,255,0.14);
+      box-shadow: 0 0 20px rgba(0,170,255,0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+    <ul id="navLinks">
+        <li><a href="index.html#topics">Topics</a></li>
+        <li><a href="soapbox.html" class="active">Soap Box</a></li>
+        <li><a href="documents.html">Documents</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="genealogy.html">Genealogy</a></li>
+        <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="sb-post-page">
+    <div class="sb-post-page-inner">
+
+      <a href="soapbox.html" class="sb-back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to the Soap Box
+      </a>
+
+      <article class="sb-post reveal">
+
+        <img src="images/Swai001.jpg" alt="Swai fish — Warning: Something's Fishy" class="sb-post-hero-img">
+
+        <div class="sb-post-inner">
+
+          <div class="sb-post-meta">
+            <span class="sb-post-tag warn">Food Safety</span>
+            <span class="sb-post-tag hot">Consumer Advocacy</span>
+            <span class="sb-post-tag">Gulf Coast Living</span>
+            <span class="sb-post-tag">Nutrition</span>
+            <span class="sb-post-date">Decades in the making · Still urgent</span>
+          </div>
+
+          <h1 class="sb-post-title">Warning: Something's Fishy<span class="sb-post-title-sub">Why You Should Avoid Swai</span></h1>
+
+          <div class="sb-short-answer">
+            <div class="sb-short-answer-label">The short answer</div>
+            <p>Swai is a poor quality protein for several reasons. Typical conditions for growing it make this fish a far greater hazard to health than it's worth — high levels of antibiotics, environmental contaminants, and a supply chain designed to obscure what you're actually eating.</p>
+          </div>
+
+          <div class="sb-post-body">
+
+            <p>
+              This is a bit of a long read — but if you're at all concerned about what you eat, or curious about
+              where your food comes from, it is not a waste of your time. I have long avoided a number of different
+              foods, but the issue that should make everyone angry is being deceived. The practice of passing off
+              something at a restaurant that can potentially be harmful to you and your family is reprehensible.
+            </p>
+
+            <p>
+              I'm going to share an experience that is not uncommon for me — visiting a new restaurant that has
+              just <em>"fish"</em> on their menu. I inquired what kind, and the answer was Swai. When I asked
+              where it comes from, I was told Taiwan. Some folks think that might be a better option than Vietnam,
+              but unfortunately that is not the case. Taiwan imports over <strong>842 tons of Pangasius fillets
+              per quarter</strong> from Vietnam — accounting for <strong>99.38%</strong> of Taiwan's total
+              Pangasius import market share. The remaining fraction is sourced from China.
+            </p>
+
+            <div class="sb-post-section-label">The Name Game</div>
+
+            <p>
+              <em>Pangasius pangasius</em> is the formal name of this fish. Depending on the restaurant or region,
+              it travels under a remarkable number of aliases — and the one that ticks me off most is when a
+              restaurant simply calls it <strong>"White Fish."</strong> I've had other restaurants tell me it was
+              "like catfish" and farm-raised. It is also called Vietnamese catfish, basa fish, and iridescent shark
+              — but it is neither a basa nor any kind of shark.
+            </p>
+
+            <div class="sb-alias-grid">
+              <span class="sb-alias-chip">Swai</span>
+              <span class="sb-alias-chip">Basa</span>
+              <span class="sb-alias-chip">Tra</span>
+              <span class="sb-alias-chip">Panga</span>
+              <span class="sb-alias-chip">Pangus</span>
+              <span class="sb-alias-chip">White Fish</span>
+              <span class="sb-alias-chip">Vietnamese Catfish</span>
+              <span class="sb-alias-chip">Iridescent Shark</span>
+              <span class="sb-alias-chip">Asian Catfish</span>
+              <span class="sb-alias-chip">Pangasius</span>
+            </div>
+
+            <p>
+              It's noteworthy that due to increasing concerns about the sustainability of the wild Swai population,
+              much of the fish available today is farmed rather than wild-caught — which raises its own questions
+              about quality and safety. Many of those "farm" fish still draw their water from the Mekong Delta.
+              And that's a problem. Vietnam leads the world in production and export of Swai, with the Mekong Delta
+              region as the primary source.
+            </p>
+
+            <div class="sb-post-section-label">Let's Talk About That Water</div>
+
+            <p>The water in the Mekong Delta is contaminated with a range of pollutants:</p>
+
+            <div class="sb-warn-grid">
+              <div class="sb-warn-card">
+                <span class="sb-warn-icon">🌿</span>
+                <div class="sb-warn-title">Organic Pollutants</div>
+                <div class="sb-warn-body">Agricultural pesticides, herbicides, and fertilizers that find their way directly into the river system.</div>
+              </div>
+              <div class="sb-warn-card">
+                <span class="sb-warn-icon">🔵</span>
+                <div class="sb-warn-title">Excess Nutrients</div>
+                <div class="sb-warn-body">Nitrogen and phosphorus from human activities cause algal blooms that deplete oxygen and harm aquatic life.</div>
+              </div>
+              <div class="sb-warn-card">
+                <span class="sb-warn-icon">🦠</span>
+                <div class="sb-warn-title">Microorganisms</div>
+                <div class="sb-warn-body">Bacteria and pathogens enter the river through untreated sewage and animal waste, posing direct health risks.</div>
+              </div>
+              <div class="sb-warn-card">
+                <span class="sb-warn-icon">🌊</span>
+                <div class="sb-warn-title">Salinity Intrusion</div>
+                <div class="sb-warn-body">Rising sea levels push saltwater further inland, threatening freshwater resources and agricultural ecosystems.</div>
+              </div>
+              <div class="sb-warn-card">
+                <span class="sb-warn-icon">⚠️</span>
+                <div class="sb-warn-title">Heavy Metals</div>
+                <div class="sb-warn-body">Lead, mercury, and arsenic accumulate in river sediments and enter the food chain through fish and aquatic organisms.</div>
+              </div>
+              <div class="sb-warn-card">
+                <span class="sb-warn-icon">🗑️</span>
+                <div class="sb-warn-title">Plastic Waste</div>
+                <div class="sb-warn-body">Non-biodegradable plastic is a major pollution source in the Delta, harming wildlife and contaminating the water column.</div>
+              </div>
+            </div>
+
+            <div class="sb-pullquote danger">
+              <strong>To be perfectly clear:</strong> these waters can contain pesticides, herbicides, fertilizers,
+              bacteria and other pathogens, non-biodegradable plastic, untreated raw sewage, mercury, and arsenic.
+              This fish is a <strong>HARD pass</strong> for me.
+            </div>
+
+            <div class="sb-post-section-label">What the Authorities Say</div>
+
+            <p>
+              You don't have to take my word for it. In 2023, the European Parliament issued an alert about
+              <em>Pangasius pangasius</em>:
+            </p>
+
+            <div class="sb-pullquote">
+              "It is mainly fished in the Mekong, one of the world's most polluted rivers, where it is exposed
+              to highly toxic micro-organisms and discharges containing heavy metals, plastics and pesticide residues,
+              which is particularly alarming. Another cause for concern is the veterinary use on fish farms of
+              pharmacological substances that are banned in the EU. Several large retail chains in Italy and in
+              Europe have already banned the sale thereof."
+            </div>
+
+            <p>
+              I guess they're passing too. On the regulatory front, the US FDA did act — in <strong>2003</strong>,
+              they passed a law stating that only fish in the <em>Ictaluridae</em> family (which includes American
+              catfish, but not Swai) can be labeled or advertised as catfish. That's a start. But the two varieties
+              of Vietnamese catfish sold in the US — Swai and Basa — aren't technically considered catfish by the
+              federal government and therefore <strong>aren't held to the same inspection rules</strong> that other
+              imported catfish are.
+            </p>
+
+            <p>
+              Nearly <strong>90% of the catfish imported to the US comes from Vietnam</strong>, where use of
+              antibiotics that are banned in the US is widespread. And for what it's worth, antibiotic overuse is
+              also a documented problem with imported shrimp.
+            </p>
+
+            <div class="sb-post-section-label">The Economics — Why Restaurants Serve It</div>
+
+            <p>
+              I know of quite a few local Baldwin County restaurants that serve this fish, because I've been there
+              in person. No names will be mentioned here — but rest assured, just like the restaurant I started
+              this discussion with, I made every effort to make my case. I tried to talk to the chef, the owner,
+              the manager, or anyone who would listen — sharing these facts and encouraging them to make an
+              informed decision about keeping Swai on the menu.
+            </p>
+
+            <p>
+              Why do they serve it? I can only assume it's the money. Swai can cost as little as
+              <strong>$2 per pound</strong>. Frozen Vietnamese Swai fillets are sold for
+              <strong>38% to 55% less</strong> than frozen US catfish fillets. So yeah — unfortunate indeed.
+            </p>
+
+            <p>
+              On the other hand, there are more establishments recognized for their commitment to fresh, local
+              seafood than those that aren't — and that's a very good thing. I mean seriously, we're on the Gulf.
+              Flounder, triggerfish, Red Snapper, Pompano, Sheepshead, Grouper, King Mackerel, Cobia — why serve Swai?
+            </p>
+
+            <div class="sb-post-section-label">The Alabama Law — Good News, With Caveats</div>
+
+            <p>
+              Governor Kay Ivey recently signed a bill requiring grocery store delis and restaurants in Alabama to
+              label whether seafood is imported or domestically produced. The law also requires establishments to
+              designate whether seafood is wild-caught or farm-raised, and went into effect
+              <strong>October 1, 2024</strong> — enforced by the Alabama State Department of Public Health.
+              Thanks, Mee Maw. 😊
+            </p>
+
+            <p>
+              But beware — the new law does not apply to any retailer already required to inform consumers of
+              country of origin under federal law. Grocery stores, supermarkets, and club warehouses are subject
+              to the Perishable Agricultural Commodities Act. However, restaurants and in-store delis are exempt
+              from the federal law, so they <em>would</em> be required to comply with Alabama's new law. It's progress.
+            </p>
+
+            <div class="sb-post-section-label">It Gets Worse — The Criminal Case</div>
+
+            <div class="sb-case-box">
+              <div class="sb-case-label">⚖️ Prosecution · Mississippi · 2002–2019</div>
+              <p>
+                Scientists at the University of Hawaiʻi at Mānoa School of Life Sciences found that
+                <strong>21% of seafood sold in the greater Honolulu area is mislabeled</strong> — and the most
+                common mislabeled fish was Swai, sold as a more expensive fish under various names. Seafood
+                mislabeling has been documented worldwide.
+              </p>
+              <p>
+                This is not just poor business practice — it is proven criminal activity. A Mississippi seafood
+                giant sold <strong>thousands of pounds of imported frozen fish</strong> and billed it as fresh-caught
+                local snapper, operating from 2002 through November 2019. The Mississippi Attorney General and the
+                Federal DOJ prosecuted <strong>Quality Poultry and Seafood Inc.</strong>, which pleaded guilty to
+                selling frozen fish imported from Africa, South America, and India as substitutes for local fish.
+              </p>
+              <p>
+                <strong>Mary Mahoney's Old French House</strong> in Biloxi was also indicted for conspiracy,
+                admitting that between December 2013 and November 2019 it fraudulently sold approximately
+                <strong>58,750 pounds</strong> of fish as local premium species when it was not. QPS supplied
+                seafood to Mary Mahoney's, other restaurants, and retailers — and even served it in their own café.
+              </p>
+              <p>
+                As US Attorney Todd Gee put it: <em>"This kind of mislabeling fraud hurts the overall local seafood
+                market and rips off restaurant customers who were paying extra to eat a premium local product."</em>
+              </p>
+            </div>
+
+            <div class="sb-post-section-label">The Bigger Picture</div>
+
+            <p>
+              I have been alerting people about fraudulently labeled and potentially harmful imported seafood for
+              decades. It started with a personal experience many years ago and has remained an issue I feel
+              compelled to discuss. The health risks from seafood misrepresentation are real — misrepresented
+              seafood can expose people to allergens, toxins, and environmental contaminants with severe
+              consequences.
+            </p>
+
+            <p>
+              To combat these issues, more stringent seafood traceability must be implemented across the entire
+              supply chain — DNA testing, detailed documentation, greater transparency. Until then, our best
+              protection is our own knowledge. By understanding the origin and authenticity of our seafood
+              purchases, we can drive positive change and hold businesses accountable.
+            </p>
+
+            <div class="sb-post-section-label">Bottom Line</div>
+
+            <div class="sb-pullquote danger">
+              Imported fish are rarely — <strong>RARELY</strong> — inspected for filth (which includes rat and
+              human hair and insects). Nearly 90% of the catfish imported to the US comes from Vietnam, where
+              antibiotics banned in the US are in widespread use. Swai and Basa aren't considered catfish by the
+              federal government and therefore aren't held to the same inspection rules as other imported catfish.
+              <strong>Choose wisely.</strong>
+            </div>
+
+            <p>
+              My goal is always to help educate my fellow foodies about common types of seafood fraud — species
+              substitution, mislabeling of production methods, country of origin deception. This knowledge lets
+              all of us make informed decisions. Read the articles below. Share this post. Ask your restaurant
+              what kind of fish they're serving. And if the answer is Swai — you'll know what to say.
+            </p>
+
+            <div class="sb-post-section-label">Further Reading</div>
+
+            <ul class="sb-ref-list">
+              <li><span class="sb-ref-num">01</span><a href="https://draxe.com/nutrition/swai-fish/" target="_blank" rel="noopener">Swai Fish: Healthy or Unhealthy to Eat</a> — Draxe.com</li>
+              <li><span class="sb-ref-num">02</span><a href="https://www.verywellhealth.com/swai-fish-8374893" target="_blank" rel="noopener">Swai Fish: How to Decide If It's Safe</a> — Verywellhealth.com</li>
+              <li><span class="sb-ref-num">03</span><a href="https://www.welzo.com/blogs/health/swai-fish" target="_blank" rel="noopener">Swai Fish: Unveiling Risks and Benefits</a> — Welzo.com</li>
+              <li><span class="sb-ref-num">04</span><a href="https://www.healthline.com/nutrition/swai-fish" target="_blank" rel="noopener">Swai Fish: Should You Eat or Avoid It?</a> — Healthline.com</li>
+              <li><span class="sb-ref-num">05</span><a href="https://www.mindbodygreen.com/articles/swai-fish" target="_blank" rel="noopener">Swai Fish: Benefits, Downsides &amp; How to Avoid Mislabelling</a> — Mindbodygreen.com</li>
+              <li><span class="sb-ref-num">06</span><a href="https://www.hawaii.edu/news/2020/11/23/is-that-fish-what-the-label-said/" target="_blank" rel="noopener">Is That Fish You're Eating What the Label Said?</a> — University of Hawaiʻi at Mānoa</li>
+              <li><span class="sb-ref-num">07</span><a href="https://fortune.com/2024/08/27/mississippi-seafood-giant-sold-thousands-of-pounds-of-imported-frozen-fish-and-billed-it-as-fresh-caught-local-snapper/" target="_blank" rel="noopener">Mississippi Seafood Giant Sold Thousands of Pounds of Imported Fish as Fresh Local Snapper</a> — Fortune, 2024</li>
+            </ul>
+
+          </div><!-- /.sb-post-body -->
+        </div><!-- /.sb-post-inner -->
+      </article>
+
+      <div class="sb-post-footer">
+        <a href="soapbox.html" class="sb-return-btn">← More from the Soap Box</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> &mdash; cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+var toggle=document.getElementById('navToggle');
+var links=document.getElementById('navLinks');
+if(toggle&&links){
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+}
+var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.05,rootMargin:'0px 0px 0px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});},800);
+  </script>
+
+</body>
+</html>
