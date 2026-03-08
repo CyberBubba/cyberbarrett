@@ -73,16 +73,21 @@ body::before {
 
 #nav ul { list-style:none; display:flex; gap:0.15rem; }
 
-#nav ul a {
-    display:block; color:rgba(255,255,255,0.88); text-decoration:none;
+/* Shared link styles — covers both <ul><li><a> (homepage) and <div.nav-links><a> (sub-pages) */
+#nav ul a,
+.nav-links a {
+    display:block; color:rgba(255,255,255,0.92); text-decoration:none;
     font-size:0.92rem; font-weight:500;
     padding:0.45rem 0.95rem; border-radius:6px;
     transition:all 0.25s; letter-spacing:0.02em;
 }
 
-#nav ul a:hover, #nav ul a.active {
+#nav ul a:hover, #nav ul a.active,
+.nav-links a:hover, .nav-links a.active {
     color:var(--electric); background:rgba(0,170,255,0.08);
 }
+
+.nav-links { display:flex; gap:0.15rem; align-items:center; }
 
 .nav-hamburger {
     display:none; flex-direction:column; gap:5px;
@@ -96,15 +101,16 @@ body::before {
 
 @media (max-width:680px) {
     .nav-hamburger { display:flex; }
-    #nav ul {
+    #nav ul,
+    .nav-links {
         display:none; position:absolute; top:100%; left:0; right:0;
         flex-direction:column; gap:0;
         background:rgba(4,13,28,0.98);
         border-bottom:1px solid rgba(0,170,255,0.15);
         padding:0.75rem 1rem;
     }
-    #nav ul.open { display:flex; }
-    #nav ul a { font-size:1rem; padding:0.75rem 1rem; }
+    #nav ul.open, .nav-links.open { display:flex; }
+    #nav ul a, .nav-links a { font-size:1rem; padding:0.75rem 1rem; }
 }
 
 /* ---- PAGE HERO (for sub-pages) ---- */
