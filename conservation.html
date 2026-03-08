@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gulf Guardians | CyberBarrett</title>
+  <meta name="description" content="Barrett Holt on manatees, sea turtles, and three decades of loving and protecting the creatures of the Gulf Coast.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ---- HERO ---- */
+    .gg-hero {
+      position: relative;
+      background: var(--navy);
+      padding: 7rem 2.5rem 4rem;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(0,200,180,0.15);
+    }
+    .gg-hero .grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,180,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,180,0.04) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+      animation: gridScroll 22s linear infinite;
+    }
+    @keyframes gridScroll { from{transform:translateY(0)} to{transform:translateY(55px)} }
+
+    .gg-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
+    }
+    @media(max-width:768px){
+      .gg-hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .gg-hero-photo { margin: 0 auto; }
+    }
+
+    .gg-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      color: #00c8b4; text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .gg-hero h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1.05; color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .gg-hero h1 .accent {
+      background: linear-gradient(100deg, #00c8b4, #00ffe0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gg-hero-sub {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.7; max-width: 520px;
+      margin-bottom: 0;
+    }
+    .gg-hero-photo img {
+      width: 340px; max-width: 90vw;
+      border-radius: 16px;
+      box-shadow: 0 8px 48px rgba(0,200,180,0.25), 0 4px 20px rgba(0,0,0,0.6);
+      display: block;
+    }
+
+    /* ---- SHARED SECTION WRAPPER ---- */
+    .gg-section {
+      padding: 5rem 2.5rem;
+    }
+    .gg-section.alt { background: var(--navy-2); }
+    .gg-inner { max-width: 900px; margin: 0 auto; }
+
+    .gg-section-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .gg-section-eyebrow.teal { color: #00c8b4; }
+    .gg-section-eyebrow.sand { color: #d4a04a; }
+
+    .gg-section h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      color: var(--white); margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .gg-body p {
+      font-size: 1rem; color: rgba(255,255,255,0.85);
+      line-height: 1.88; margin-bottom: 1.4rem;
+    }
+    .gg-body p strong { color: var(--white); }
+
+    .gg-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin: 2.5rem 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .gg-label.teal { color: #00c8b4; border-color: rgba(0,200,180,0.2); }
+    .gg-label.sand { color: #d4a04a; border-color: rgba(212,160,74,0.2); }
+
+    /* ---- PHOTO FEATURE (manatee swimming) ---- */
+    .gg-photo-feature {
+      margin: 2rem 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    .gg-photo-feature img {
+      width: 100%; display: block;
+      max-height: 500px; object-fit: cover;
+    }
+    .gg-photo-caption {
+      background: rgba(0,200,180,0.06);
+      border-top: 1px solid rgba(0,200,180,0.15);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.8rem; color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ---- BAMA STORY CARD ---- */
+    .gg-bama-card {
+      background: rgba(0,200,180,0.05);
+      border: 1px solid rgba(0,200,180,0.18);
+      border-left: 4px solid #00c8b4;
+      border-radius: 0 14px 14px 0;
+      padding: 1.75rem 2rem;
+      margin: 2rem 0;
+    }
+    .gg-bama-card .gg-bama-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #00c8b4;
+      margin-bottom: 0.75rem;
+    }
+    .gg-bama-card p {
+      font-size: 1rem; color: rgba(255,255,255,0.88);
+      line-height: 1.85; margin-bottom: 1rem;
+    }
+    .gg-bama-card p:last-child { margin-bottom: 0; }
+    .gg-bama-card strong { color: var(--white); }
+
+    /* ---- ORG INFO CARD ---- */
+    .gg-org-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+    }
+    @media(max-width:600px){ .gg-org-card { grid-template-columns: 1fr; } }
+
+    .gg-org-item-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .gg-org-item-value {
+      font-size: 0.9rem; color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+    .gg-org-item-value a {
+      color: #00c8b4; text-decoration: none;
+    }
+    .gg-org-item-value a:hover { text-decoration: underline; }
+    .gg-org-item-value.sand a { color: #d4a04a; }
+
+    /* ---- TURTLE STATS ROW ---- */
+    .gg-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin: 1.5rem 0 2rem;
+    }
+    @media(max-width:580px){ .gg-stats { grid-template-columns: 1fr; } }
+
+    .gg-stat-card {
+      background: rgba(212,160,74,0.05);
+      border: 1px solid rgba(212,160,74,0.18);
+      border-radius: 12px;
+      padding: 1.25rem; text-align: center;
+    }
+    .gg-stat-number {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700; color: #d4a04a;
+      line-height: 1.1; margin-bottom: 0.3rem;
+    }
+    .gg-stat-label {
+      font-size: 0.8rem; color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* ---- TURTLE TIPS GRID ---- */
+    .gg-tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.85rem; margin: 1.25rem 0 2rem;
+    }
+    .gg-tip-card {
+      background: rgba(212,160,74,0.04);
+      border: 1px solid rgba(212,160,74,0.14);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .gg-tip-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .gg-tip-text { font-size: 0.85rem; color: rgba(255,255,255,0.78); line-height: 1.6; }
+
+    /* ---- EMERGENCY HOTLINE ---- */
+    .gg-hotline {
+      background: rgba(255,68,68,0.05);
+      border: 1px solid rgba(255,68,68,0.2);
+      border-left: 4px solid #ff4444;
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      display: flex; align-items: center; gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .gg-hotline-icon { font-size: 2rem; flex-shrink: 0; }
+    .gg-hotline-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #ff7070;
+      margin-bottom: 0.25rem;
+    }
+    .gg-hotline-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white); letter-spacing: 0.02em;
+    }
+    .gg-hotline-sub {
+      font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem;
+    }
+
+    /* ---- BACK LINK ---- */
+    .gg-back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: #00c8b4; text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem; transition: gap 0.2s;
+    }
+    .gg-back-link:hover { gap: 0.85rem; }
+    .gg-back-link svg { width: 16px; height: 16px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+    <ul id="navLinks">
+        <li><a href="index.html#topics">Topics</a></li>
+        <li><a href="soapbox.html">Soap Box</a></li>
+        <li><a href="documents.html">Documents</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="genealogy.html">Genealogy</a></li>
+        <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="gg-hero">
+    <div class="grid-bg"></div>
+    <div class="gg-hero-inner">
+      <div>
+        <div class="gg-eyebrow">Gulf Coast · Conservation · 30+ Years</div>
+        <h1>Gulf <span class="accent">Guardians</span></h1>
+        <p class="gg-hero-sub">
+          Manatees are my spirit animal. Sea turtles have been roaming Earth for over 100 million years.
+          Both need our help. Barrett and his wife have spent decades in the water, on the beach, and on
+          the front lines for these extraordinary Gulf Coast neighbors.
+        </p>
+      </div>
+      <div class="gg-hero-photo reveal">
+        <img src="images/Manatees_together001.jpg" alt="Barrett swimming with a manatee">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MANATEES SECTION ===== -->
+  <section class="gg-section">
+    <div class="gg-inner">
+
+      <div class="gg-section-eyebrow teal">My Spirit Animal</div>
+      <h2>🐾 Manatees — The Gentle Giants</h2>
+
+      <div class="gg-body">
+        <p>
+          It's no secret that I'm a huge fan of manatees. They are my spirit animal, after all — and I have
+          been swimming, diving, and following them for <strong>over 30 years</strong>. Sea cows, floaty
+          potatoes, mermaids, gentle giants — whatever nickname you prefer, these animals have held a piece
+          of my heart for as long as I can remember.
+        </p>
+      </div>
+
+      <!-- The big photo -->
+      <div class="gg-photo-feature reveal">
+        <img src="images/Manatees_together001.jpg" alt="Barrett swimming alongside a manatee in crystal clear water">
+        <div class="gg-photo-caption">In the water with a manatee — exactly where I want to be. Three decades of these encounters and they never get old.</div>
+      </div>
+
+      <div class="gg-label teal">Save the Manatee Club</div>
+      <div class="gg-body">
+        <p>
+          This organization has made a profound and positive impact on these adorable sea cows over the past
+          four decades. Located in Longwood, Florida, the <strong>Save the Manatee Club (SMC)</strong> is a
+          beacon of hope for the conservation of the beloved and endangered manatee.
+        </p>
+        <p>
+          Founded in <strong>1981 by Jimmy Buffett and former Florida Governor Bob Graham</strong>, SMC was
+          established at a time when manatee populations were rapidly declining due to boat strikes, habitat
+          loss, and water pollution. Today, the organization has over <strong>40,000 active members</strong>
+          and continues to work tirelessly to safeguard manatees and their ecosystems through advocacy,
+          education, research, rescue and rehabilitation, and legal action.
+        </p>
+        <p>
+          One of their most popular initiatives is the <strong>Adopt-A-Manatee program</strong> — which lets
+          individuals symbolically adopt a real, living manatee. Participants receive a personalized adoption
+          certificate, a photo and biography of their manatee, and regular updates on their animal's progress.
+          Funds raised support habitat restoration, public awareness campaigns, and rescue and rehabilitation
+          programs. Sound familiar? Read on.
+        </p>
+      </div>
+
+      <!-- Bama Story -->
+      <div class="gg-label teal">Bama &amp; Catherine — A Gift from the Heart</div>
+      <div class="gg-bama-card reveal">
+        <div class="gg-bama-label">💙 An Annual Tradition</div>
+        <img src="images/Manatees_Catherine001.jpg" alt="Catherine with manatees" style="width:100%;max-height:380px;object-fit:cover;border-radius:10px;margin-bottom:1.25rem;display:block;">
+        <p>
+          When my amazing daughter <strong>Catherine</strong> first surprised me with the adoption of
+          <strong>Bama the Manatee</strong> several years ago, I was deeply touched by her thoughtfulness and
+          the bond we both felt with these gentle giants. Each year since, she has renewed the adoption in my
+          name — providing me with a constant reminder of the beauty and wonder of these remarkable animals.
+        </p>
+        <p>
+          <strong>Bama made history in 2009</strong> as the first manatee ever captured and tagged in
+          Alabama waters. He typically migrates from Alabama to Florida's west coast each winter. Knowing
+          that Catherine has chosen to honor our relationship by contributing to the well-being of these
+          extraordinary animals is a powerful testament to her character — and to her commitment to making
+          a difference in the world.
+        </p>
+        <p>
+          In the end, the adoption of Bama represents far more than a thoughtful gift. It is a symbol of hope,
+          love, and the potential we all possess to create a brighter future. Through Catherine's generosity
+          and the ongoing work of organizations like Save the Manatee Club, we can help ensure that these
+          beautiful creatures continue to grace our waterways for years to come. And for that, I am
+          eternally grateful.
+        </p>
+      </div>
+
+      <!-- SMC Contact Info -->
+      <div class="gg-label teal">Get Involved — Save the Manatee Club</div>
+      <div class="gg-org-card">
+        <div>
+          <div class="gg-org-item-label">Address</div>
+          <div class="gg-org-item-value">317 Wekiva Springs Rd., Ste. 100<br>Longwood, FL 32779</div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Phone</div>
+          <div class="gg-org-item-value">800-432-5646 · 407-539-0990</div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Website</div>
+          <div class="gg-org-item-value"><a href="https://savethemanatee.org" target="_blank" rel="noopener">savethemanatee.org</a></div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Facebook</div>
+          <div class="gg-org-item-value"><a href="https://www.facebook.com/savethemanateeclub" target="_blank" rel="noopener">facebook.com/savethemanateeclub</a></div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Live Webcams</div>
+          <div class="gg-org-item-value"><a href="https://savethemanatee.org/manatees/webcams/" target="_blank" rel="noopener">savethemanatee.org/manatees/webcams</a></div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Adopt a Manatee</div>
+          <div class="gg-org-item-value"><a href="https://savethemanatee.org/adopt/" target="_blank" rel="noopener">Adopt-A-Manatee Program →</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SEA TURTLES SECTION ===== -->
+  <section class="gg-section alt">
+    <div class="gg-inner">
+
+      <div class="gg-section-eyebrow sand">Share the Beach · Alabama Gulf Coast Volunteers</div>
+      <h2>🐢 Sea Turtles — Ancient &amp; Incredible</h2>
+
+      <div class="gg-body">
+        <p>
+          I have been fascinated by sea turtles since I first learned just how ancient they really are.
+          These creatures have been on Earth for <strong>more than 100 million years</strong> — they
+          survived the mass extinction that wiped out the dinosaurs. They were navigating the world's
+          oceans long before humans existed. And honestly? I also just think they're adorable. 🐢
+        </p>
+        <p>
+          My wife and I are proud volunteers for <strong>Share the Beach</strong> — Alabama's official sea
+          turtle conservation program, founded in 2005 by the Friends of the Bon Secour Wildlife Refuge.
+          Every season, from May through October, we join fellow volunteers on the sand to protect the
+          turtles that come to our beaches to lay their eggs.
+        </p>
+      </div>
+
+      <!-- Turtle Photo Feature -->
+      <div class="gg-photo-feature reveal">
+        <img src="images/Turtles001.jpg" alt="Sea turtles on the Alabama Gulf Coast">
+        <div class="gg-photo-caption" style="border-left-color:#d4a04a;">On the sand with Alabama's ancient visitors — Share the Beach volunteers protect every nest like it's the only one.</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="gg-label sand">The Numbers</div>
+      <div class="gg-stats reveal">
+        <div class="gg-stat-card">
+          <div class="gg-stat-number">1 in 1,000</div>
+          <div class="gg-stat-label">hatchlings estimated to survive to adulthood — making every egg count</div>
+        </div>
+        <div class="gg-stat-card">
+          <div class="gg-stat-number">47 miles</div>
+          <div class="gg-stat-label">of Alabama Gulf Coast monitored daily from May 1 through October 31</div>
+        </div>
+        <div class="gg-stat-card">
+          <div class="gg-stat-number">22,240</div>
+          <div class="gg-stat-label">eggs laid on AL beaches in 2016 — 15,035 yielded viable hatchlings</div>
+        </div>
+      </div>
+
+      <!-- Share the Beach info -->
+      <div class="gg-label sand">About Share the Beach</div>
+      <div class="gg-body">
+        <p>
+          Share the Beach works to mitigate human-related impacts to nesting sea turtles, monitor nests
+          and hatchlings, and promote conservation through public outreach and education. Volunteers give
+          their time to search for nests, assist during hatchling events (known as "boils"), give talks for
+          school groups, and educate the public on how to share the beach responsibly.
+        </p>
+        <p>
+          The program follows protocols set forth by the <strong>U.S. Fish and Wildlife Service</strong>
+          under the federal endangered species recovery permit. It receives no federal funding — it runs
+          entirely on donations from sponsors and the <strong>Adopt-a-Nest program</strong>.
+        </p>
+      </div>
+
+      <!-- Tips Grid -->
+      <div class="gg-label sand">How You Can Help</div>
+      <div class="gg-tips-grid reveal">
+        <div class="gg-tip-card">
+          <span class="gg-tip-icon">🔦</span>
+          <span class="gg-tip-text"><strong>No flash or bright lights at night.</strong> Light disorients nesting females and hatchlings. Avoid flashlights, flash photography, fires, and even light-colored clothing on the beach at night.</span>
+        </div>
+        <div class="gg-tip-card">
+          <span class="gg-tip-icon">🚫</span>
+          <span class="gg-tip-text"><strong>Never disturb a nest.</strong> If you come across a marked turtle nest, keep your distance and leave it undisturbed. The stakes couldn't be higher.</span>
+        </div>
+        <div class="gg-tip-card">
+          <span class="gg-tip-icon">🏖️</span>
+          <span class="gg-tip-text"><strong>Leave only footprints.</strong> Clean up completely after a beach day. Litter and debris are hazards to turtles and hatchlings navigating to the water.</span>
+        </div>
+        <div class="gg-tip-card">
+          <span class="gg-tip-icon">💡</span>
+          <span class="gg-tip-text"><strong>Turn off patio lights.</strong> Any outside lights that shine onto the beach at night can disorient turtles. Close blinds and turn off exterior lights during nesting season.</span>
+        </div>
+        <div class="gg-tip-card">
+          <span class="gg-tip-icon">🕳️</span>
+          <span class="gg-tip-text"><strong>Fill in holes before you leave.</strong> Holes dug in the sand are traps for hatchlings making their way to the water. Always fill them before leaving the beach.</span>
+        </div>
+        <div class="gg-tip-card">
+          <span class="gg-tip-icon">🚗</span>
+          <span class="gg-tip-text"><strong>No vehicles on nesting beaches.</strong> Vehicles compact the sand over nests and can kill eggs and hatchlings. Stay off nesting areas entirely.</span>
+        </div>
+      </div>
+
+      <!-- Emergency Hotline -->
+      <div class="gg-hotline reveal">
+        <span class="gg-hotline-icon">🆘</span>
+        <div>
+          <div class="gg-hotline-label">Sea Turtle in Distress? Call Immediately</div>
+          <div class="gg-hotline-number">866-SEA-TURTLE &nbsp;·&nbsp; (866) 732-8878</div>
+          <div class="gg-hotline-sub">Alabama Sea Turtle Stranding &amp; Salvage Network Hotline</div>
+        </div>
+      </div>
+
+      <!-- STB Contact Info -->
+      <div class="gg-label sand">Get Involved — Share the Beach</div>
+      <div class="gg-org-card">
+        <div>
+          <div class="gg-org-item-label">Website</div>
+          <div class="gg-org-item-value sand"><a href="https://www.joinacf.org/stb" target="_blank" rel="noopener" style="color:#d4a04a;">joinacf.org/stb</a></div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Facebook</div>
+          <div class="gg-org-item-value sand"><a href="https://facebook.com/ShareTheBeachAlabamaSeaTurtles/" target="_blank" rel="noopener" style="color:#d4a04a;">Share the Beach Alabama Sea Turtles</a></div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Season</div>
+          <div class="gg-org-item-value">May 1 – October 31, annually</div>
+        </div>
+        <div>
+          <div class="gg-org-item-label">Coverage</div>
+          <div class="gg-org-item-value">All 47 miles of the Alabama Gulf Coast</div>
+        </div>
+      </div>
+
+      <div class="gg-body" style="margin-top: 1rem;">
+        <p style="font-size:1.05rem; color:var(--white); font-weight:600;">
+          Sea turtles are pretty darn awesome — and they need our help and respect.
+          Please do your part to help our little ancient friends. 🐢
+        </p>
+        <p style="font-size:0.78rem; color:var(--muted); font-style:italic;">
+          All footage and photography obtained with approval of U.S. Fish &amp; Wildlife Service under conditions not harmful to sea turtles.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLOSING BRIDGE IMAGE -->
+  <section style="background: #020d1a; padding: 0; line-height: 0;">
+    <div style="position:relative; max-height:480px; overflow:hidden;">
+      <img src="images/Turtle_n_Mantee.jpg" alt="A sea turtle and a manatee sharing the same water — Gulf Coast neighbors" style="width:100%; max-height:480px; object-fit:cover; display:block; opacity:0.88;">
+      <div style="position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(2,13,26,0.92)); padding:2rem 2rem 1.5rem; line-height:1.5;">
+        <p style="margin:0; font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.5);">Gulf Coast · Two Species · One Fight</p>
+        <p style="margin:0.3rem 0 0; font-size:1.1rem; color:rgba(255,255,255,0.9); font-weight:600;">Same waters. Same threats. Same reason to care.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">For informational purposes only — not medical advice. <a href="disclaimer.html">Full Disclaimer &rarr;</a></div>
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> &mdash; cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+var toggle=document.getElementById('navToggle');
+var links=document.getElementById('navLinks');
+if(toggle&&links){
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+}
+var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.05,rootMargin:'0px 0px 0px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});},800);
+  </script>
+
+</body>
+</html>
