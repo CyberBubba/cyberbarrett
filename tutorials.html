@@ -12,18 +12,20 @@
 </head>
 <body>
   <nav id="nav">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <a href="index.html">CyberBarrett</a>
-      </div>
-      <button id="navToggle" class="nav-toggle">Menu</button>
-      <div id="navLinks" class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="topics.html">Topics</a>
-        <a href="tutorials.html" class="active">Tutorials</a>
-        <a href="documents.html">Documents</a>
-      </div>
-    </div>
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+
+    <ul id="navLinks">
+        <li><a href="index.html#topics">Topics</a></li>
+        <li><a href="soapbox.html">Soap Box</a></li>
+        <li><a href="documents.html">Documents</a></li>
+        <li><a href="tutorials.html" class="active">Tutorials</a></li>
+        <li><a href="genealogy.html">Genealogy</a></li>
+        <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+
+    <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <section class="page-hero">
@@ -54,12 +56,14 @@
   </footer>
 
   <script>
-  var nav=document.getElementById('nav');
-  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
-  var toggle=document.getElementById('navToggle');
-  var links=document.getElementById('navLinks');
-  toggle.addEventListener('click',function(){links.classList.toggle('open');});
-  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+var toggle=document.getElementById('navToggle');
+var links=document.getElementById('navLinks');
+if(toggle&&links){
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+}
   </script>
 </body>
 </html>

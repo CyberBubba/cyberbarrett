@@ -234,19 +234,20 @@
 <body>
     <!-- Navigation -->
     <nav id="nav" class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <a href="index.html">CyberBarrett</a>
-            </div>
-            <button id="navToggle" class="nav-toggle">☰</button>
-            <div id="navLinks" class="nav-links">
-                <a href="topics.html">Topics</a>
-                <a href="documents.html">Documents</a>
-                <a href="tutorials.html">Tutorials</a>
-                <a href="genealogy.html">Genealogy</a>
-                <a href="index.html#connect">Connect</a>
-            </div>
-        </div>
+        <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+
+        <ul id="navLinks">
+            <li><a href="index.html#topics">Topics</a></li>
+            <li><a href="soapbox.html">Soap Box</a></li>
+            <li><a href="documents.html">Documents</a></li>
+            <li><a href="tutorials.html">Tutorials</a></li>
+            <li><a href="genealogy.html">Genealogy</a></li>
+            <li><a href="index.html#connect">Contact</a></li>
+        </ul>
+
+        <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
     <!-- Page Hero -->
@@ -613,37 +614,16 @@
 
     <!-- JavaScript -->
     <script>
-        // Navigation functionality
-        var nav = document.getElementById('nav');
-        window.addEventListener('scroll', function() {
-            nav.classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        var toggle = document.getElementById('navToggle');
-        var links = document.getElementById('navLinks');
-        toggle.addEventListener('click', function() {
-            links.classList.toggle('open');
-        });
-
-        links.querySelectorAll('a').forEach(function(a) {
-            a.addEventListener('click', function() {
-                links.classList.remove('open');
-            });
-        });
-
-        // Reveal animation with IntersectionObserver
-        var ro = new IntersectionObserver(function(entries) {
-            entries.forEach(function(e) {
-                if (e.isIntersecting) {
-                    e.target.classList.add('visible');
-                    ro.unobserve(e.target);
-                }
-            });
-        }, {threshold: 0.08});
-
-        document.querySelectorAll('.reveal').forEach(function(el) {
-            ro.observe(el);
-        });
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+var toggle=document.getElementById('navToggle');
+var links=document.getElementById('navLinks');
+if(toggle&&links){
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+}
+var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
     </script>
 </body>
 </html>
