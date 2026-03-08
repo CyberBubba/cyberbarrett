@@ -260,153 +260,182 @@
       color: var(--cyan);
     }
 
-    /* ---- POST STYLES ---- */
-    .sb-post {
+    /* ---- FEATURED POST (published) ---- */
+    .sb-featured {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
       overflow: hidden;
+      margin-bottom: 4rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .sb-featured:hover {
+      border-color: rgba(0,170,255,0.4);
+      box-shadow: 0 8px 48px rgba(0,170,255,0.12);
     }
 
-    .sb-post-hero-img {
-      width: 100%; max-height: 340px;
+    .sb-featured-img {
+      width: 100%; max-height: 320px;
       object-fit: cover; display: block;
     }
 
-    .sb-post-inner {
-      padding: 2.5rem;
-    }
+    .sb-featured-inner { padding: 2rem 2.25rem 2.25rem; }
 
-    .sb-post-meta {
+    .sb-featured-meta {
       display: flex; flex-wrap: wrap; gap: 0.5rem;
-      align-items: center; margin-bottom: 1.25rem;
+      align-items: center; margin-bottom: 1rem;
     }
 
-    .sb-post-tag {
+    .sb-feat-tag {
       background: rgba(0,170,255,0.08);
       border: 1px solid rgba(0,170,255,0.2);
       color: var(--electric);
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem; letter-spacing: 0.1em;
+      font-size: 0.62rem; letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0.3rem 0.75rem; border-radius: 20px;
+      padding: 0.25rem 0.7rem; border-radius: 20px;
     }
-
-    .sb-post-tag.hot {
+    .sb-feat-tag.hot {
       background: rgba(0,255,224,0.06);
       border-color: rgba(0,255,224,0.2);
       color: var(--cyan);
     }
-
-    .sb-post-date {
+    .sb-feat-date {
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem; color: var(--muted);
-      letter-spacing: 0.05em; margin-left: auto;
+      font-size: 0.62rem; color: var(--muted);
+      margin-left: auto;
     }
 
-    .sb-post-title {
+    .sb-featured-title {
       font-family: 'Space Mono', monospace;
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
       font-weight: 700; letter-spacing: -0.02em;
-      line-height: 1.15; margin-bottom: 2rem;
-      color: var(--white);
+      line-height: 1.2; color: var(--white);
+      margin-bottom: 0.25rem;
     }
-
-    .sb-post-title-sub {
+    .sb-featured-sub {
       background: linear-gradient(100deg, var(--electric), var(--cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      display: block; font-size: 0.65em;
-      margin-top: 0.3rem;
-    }
-
-    .sb-post-body p {
-      font-size: 1rem; color: rgba(255,255,255,0.88);
-      line-height: 1.88; margin-bottom: 1.5rem;
-    }
-
-    .sb-post-body p strong { color: var(--white); }
-
-    .sb-post-section-label {
+      display: block; font-size: 0.62em;
       font-family: 'Space Mono', monospace;
-      font-size: 0.65rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--electric);
-      margin: 2.5rem 0 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(0,170,255,0.15);
+      font-weight: 400;
+      margin-bottom: 1rem;
     }
 
-    .sb-pullquote {
-      border-left: 4px solid var(--electric);
-      padding: 1rem 1.5rem;
-      background: rgba(0,170,255,0.05);
-      border-radius: 0 10px 10px 0;
-      margin: 2rem 0;
-      font-style: italic;
-      font-size: 1.02rem;
-      color: rgba(255,255,255,0.9);
+    .sb-featured-excerpt {
+      color: var(--muted);
+      font-size: 0.95rem;
       line-height: 1.75;
+      margin-bottom: 1.5rem;
     }
 
-    /* Historical names grid */
-    .sb-name-grid {
+    .sb-read-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0,170,255,0.1);
+      border: 1px solid rgba(0,170,255,0.3);
+      color: var(--electric);
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      font-family: 'Space Mono', monospace;
+      transition: all 0.2s;
+    }
+    .sb-featured:hover .sb-read-btn {
+      background: rgba(0,170,255,0.18);
+    }
+
+    /* ---- ON THE HORIZON divider ---- */
+    .sb-horizon-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .sb-horizon-label::before,
+    .sb-horizon-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(0,170,255,0.15);
+    }
+    .sb-horizon-label span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ---- COMING SOON CARDS GRID ---- */
+    .sb-coming-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 0.6rem; margin: 1.25rem 0 1.75rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.1rem;
+    }
+    @media (max-width: 580px) {
+      .sb-coming-grid { grid-template-columns: 1fr; }
     }
 
-    .sb-name-chip {
-      background: rgba(0,170,255,0.04);
-      border: 1px solid rgba(0,170,255,0.12);
-      border-radius: 8px; padding: 0.6rem 0.85rem;
-      font-size: 0.82rem; color: rgba(255,255,255,0.8);
-      line-height: 1.45;
+    .sb-coming-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .sb-coming-card:hover {
+      border-color: rgba(0,170,255,0.25);
     }
 
-    .sb-name-year {
-      display: block;
+    .sb-coming-banner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .sb-coming-body { padding: 1.1rem 1.25rem 1.25rem; }
+
+    .sb-coming-cat {
       font-family: 'Space Mono', monospace;
-      font-size: 0.62rem; color: var(--electric);
-      letter-spacing: 0.08em; margin-bottom: 0.2rem;
+      font-size: 0.58rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--electric);
+      margin-bottom: 0.35rem;
     }
 
-    /* Coastline cards */
-    .sb-coast-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 1rem; margin: 1.25rem 0 1.75rem;
+    .sb-coming-title {
+      font-weight: 700;
+      font-size: 0.97rem;
+      color: var(--white);
+      margin-bottom: 0.45rem;
+      line-height: 1.3;
     }
 
-    .sb-coast-card {
-      background: rgba(0,170,255,0.05);
-      border: 1px solid rgba(0,170,255,0.15);
-      border-radius: 12px; padding: 1.25rem;
-      text-align: center;
+    .sb-coming-teaser {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
     }
 
-    .sb-coast-flag { font-size: 2rem; margin-bottom: 0.4rem; }
-
-    .sb-coast-country {
-      font-weight: 700; font-size: 0.92rem;
-      color: var(--white); margin-bottom: 0.4rem;
-    }
-
-    .sb-coast-miles {
+    .sb-coming-badge {
       font-family: 'Space Mono', monospace;
-      font-size: 1.2rem; color: var(--electric);
-      font-weight: 700; margin-bottom: 0.1rem;
-    }
-
-    .sb-coast-km {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem; color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .sb-coast-states {
-      font-size: 0.75rem; color: var(--muted);
-      line-height: 1.5;
+      font-size: 0.58rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 0.18rem 0.6rem;
+      display: inline-block;
     }
   </style>
 </head>
@@ -486,175 +515,164 @@
         <h2>Barrett's Latest Rants &amp; Observations</h2>
       </div>
 
-      <!-- POST #1 -->
-      <article class="sb-post reveal">
-
-        <img src="images/GOA.jpg" alt="Gulf of America" class="sb-post-hero-img">
-
-        <div class="sb-post-inner">
-        <div class="sb-post-meta">
-          <span class="sb-post-tag">American History</span>
-          <span class="sb-post-tag hot">Politics &amp; Society</span>
-          <span class="sb-post-tag">Gulf Coast Living</span>
-          <span class="sb-post-date">Originally written 2024 · Still relevant</span>
+      <!-- FEATURED POST -->
+      <a href="soapbox-gulf-of-america.html" class="sb-featured reveal">
+        <img src="images/GOA.jpg" alt="Gulf of America" class="sb-featured-img">
+        <div class="sb-featured-inner">
+          <div class="sb-featured-meta">
+            <span class="sb-feat-tag">American History</span>
+            <span class="sb-feat-tag hot">Politics &amp; Society</span>
+            <span class="sb-feat-tag">Gulf Coast Living</span>
+            <span class="sb-feat-date">Originally written 2024 · Still relevant</span>
+          </div>
+          <h2 class="sb-featured-title">Gulf of America<span class="sb-featured-sub">A Fact Check Worth Reading</span></h2>
+          <p class="sb-featured-excerpt">
+            Since I proudly live on the Gulf of America, it was interesting to observe the kerfuffle in the media.
+            Over a year later it still pops up — and most people are still missing the real story. Let me fix that.
+          </p>
+          <span class="sb-read-btn">Read This Post →</span>
         </div>
+      </a>
 
-        <h2 class="sb-post-title">Gulf of America</h2>
-
-        <div class="sb-post-body">
-
-          <p>
-            Since I proudly live on the Gulf of America, it was interesting to observe the kerfuffle
-            in the media. Now, over a year later, it still pops up in interesting conversations. As
-            for the fans and detractors, as usual, there's a lot of uninformed rhetoric. Then and now,
-            I was — and remain — happy to put my 2 cents in (plus a few bucks' worth) with a fact check
-            on the matter.
-          </p>
-
-          <div class="sb-post-section-label">History</div>
-
-          <p>
-            The gulf took shape approximately <strong>300 million years ago</strong> as a result of
-            plate tectonics. The gulf's name ultimately derived from <em>Mexica</em>, the Nahuatl term
-            for the Aztecs. Though there is no formal protocol on the general naming of international
-            waters, the Gulf of Mexico was officially recognized by the
-            <strong>International Hydrographic Organization</strong> — which seeks to standardize the
-            names of international maritime features and counts all three adjacent countries (USA,
-            Mexico, Cuba) as member states. However, in 2020 the IHO agreed to replace names with
-            numerical identifiers, which has led to considerable debate about what to call certain
-            bodies of water — raising concerns about its impact on education, tourism, and national identity.
-          </p>
-
-          <p>
-            Early 16th-century maps by Juan de la Cosa and Martin Waldseemüller depicted the gulf but
-            left it unlabeled. It has gone by a remarkable number of names over the centuries:
-          </p>
-
-          <div class="sb-name-grid">
-            <div class="sb-name-chip"><span class="sb-name-year">1584</span>"Sea of the North" — Abraham Ortelius</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Cortés</span>"Mar del Norte" — Spanish dispatches</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Early</span>"Gulf of Florida"</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Early</span>"Gulf of Cortés"</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Latin</span>"Sinus S. Michaelis" — Gulf of St. Michael</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Early</span>"Gulf of Yucatán"</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Early</span>"Great Antillean Gulf"</div>
-            <div class="sb-name-chip"><span class="sb-name-year">Early</span>"Gulf of New Spain"</div>
-          </div>
-
-          <p>
-            The name <strong>"Gulf of Mexico"</strong> first appeared on a world map in <strong>1550</strong>
-            and in a historical account in 1552. It became the most common name from the mid-17th century
-            onward — when it was still considered a Spanish sea. French Jesuits were using it as early
-            as 1672.
-          </p>
-
-          <div class="sb-post-section-label">Contemporary History</div>
-
-          <p>
-            In December 2023, the World Court issued a decision giving nations sovereignty over waters
-            above their land shelves — ruling they were <strong>not international waters</strong>. This
-            is the legal foundation everything else rests on.
-          </p>
-
-          <p>
-            On his first day in office, President Trump issued <strong>Executive Order 14172</strong>
-            ordering the Gulf of Mexico to be renamed the Gulf of America. He later signed a proclamation
-            declaring February 9 as the inaugural "Gulf of America Day."
-          </p>
-
-          <div class="sb-pullquote">
-            Here's what most people missed: the renaming isn't renaming the whole gulf. It is renaming
-            the area above our land shelves — our territory. You can't put signs or border walls in the
-            middle of the ocean. For legal reasons, we need to identify these changes on the map so that
-            new borders are made clear to maritime traffic.
-          </div>
-
-          <p>
-            Those new maps will set the latitude and longitude of where our border begins — the Gulf of
-            America — so all maritime traffic knows when they are leaving international waters. This is
-            most importantly about <strong>strengthening our borders</strong> and ensuring all maritime
-            traffic understands the changes that happened in 2023. Putting legal protections in place
-            to help enforce any military actions or incursions in the future.
-          </p>
-
-          <p>
-            How many people do you think realized the US grew by thousands of square miles?
-          </p>
-
-          <div class="sb-post-section-label">The Numbers</div>
-
-          <p>The total coastline bordering the Gulf spans approximately <strong>5,000 miles</strong> across three nations:</p>
-
-          <div class="sb-coast-grid">
-            <div class="sb-coast-card">
-              <div class="sb-coast-flag">🇺🇸</div>
-              <div class="sb-coast-country">United States</div>
-              <div class="sb-coast-miles">~1,700 mi</div>
-              <div class="sb-coast-km">2,735 km</div>
-              <div class="sb-coast-states">Florida · Alabama · Mississippi · Louisiana · Texas</div>
-            </div>
-            <div class="sb-coast-card">
-              <div class="sb-coast-flag">🇲🇽</div>
-              <div class="sb-coast-country">Mexico</div>
-              <div class="sb-coast-miles">~1,840 mi</div>
-              <div class="sb-coast-km">2,960 km</div>
-              <div class="sb-coast-states">Longest single-nation coastline on the Gulf</div>
-            </div>
-            <div class="sb-coast-card">
-              <div class="sb-coast-flag">🇨🇺</div>
-              <div class="sb-coast-country">Cuba</div>
-              <div class="sb-coast-miles">~1,500 mi</div>
-              <div class="sb-coast-km">2,414 km</div>
-              <div class="sb-coast-states">Northern coastline facing the Gulf</div>
-            </div>
-          </div>
-
-          <p>
-            The Gulf itself covers approximately <strong>600,000 square miles</strong>
-            (1,550,000 km²). And notably — it's named the Gulf of <em>America</em>, not the
-            Gulf of the United States. The Americas as a whole covers approximately
-            <strong>16,429,000 square miles</strong> — about 28% of Earth's total land surface,
-            home to over one billion people.
-          </p>
-
-          <div class="sb-post-section-label">Opinion</div>
-
-          <p>
-            So the largest gulf on the planet, named after the largest continent on the planet,
-            kinda makes perfect sense. Besides — <em>Gulf of New Spain</em> is so very 16th century.
-          </p>
-
-          <p>
-            This is where knowing what's actually happening in the world helps you filter out
-            the drama and understand the legalities in your own country. Knowing the history,
-            the legal context, and the actual geography puts you miles ahead of the shouting
-            heads on either side.
-          </p>
-
-          <p style="font-size: 1.05rem; color: var(--white); font-weight: 600;">
-            Now you know. 😁
-          </p>
-
-        </div><!-- /.sb-post-body -->
-        </div><!-- /.sb-post-inner -->
-      </article>
-
-      <!-- MORE COMING -->
-      <div class="sb-more-coming reveal" style="margin-top: 4rem; text-align: center; padding: 2.5rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;">
-        <div style="font-size: 2rem; margin-bottom: 0.75rem;">📣</div>
-        <h3 style="font-family: 'Space Mono', monospace; font-size: 1rem; color: var(--electric); margin-bottom: 0.75rem;">More on the way</h3>
-        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.65;">Topics likely to get airtime next:</p>
-        <div class="sb-topics">
-          <span class="sb-topic-chip hot">AI &amp; Tech</span>
-          <span class="sb-topic-chip">Nutrition &amp; Health</span>
-          <span class="sb-topic-chip">Music &amp; Culture</span>
-          <span class="sb-topic-chip">Genealogy Surprises</span>
-          <span class="sb-topic-chip hot">Politics &amp; Society</span>
-          <span class="sb-topic-chip">Navy &amp; Veterans</span>
-          <span class="sb-topic-chip">The Environment</span>
-          <span class="sb-topic-chip hot">Tie-Dye Philosophy</span>
-        </div>
+      <!-- ON THE HORIZON -->
+      <div class="sb-horizon-label reveal">
+        <span>On the horizon</span>
       </div>
+
+      <!-- COMING SOON GRID -->
+      <div class="sb-coming-grid">
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1a0a2e, #4a0080, #8b00ff, #4a0080, #1a0a2e);">🌈</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Culture &amp; Life</div>
+            <div class="sb-coming-title">The Tie-Dye Philosophy</div>
+            <div class="sb-coming-teaser">People see a hobby. I see a worldview. Controlled chaos, unpredictable beauty, and why that's the perfect metaphor for everything.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #0a1628, #0d2447, #1a3a6b, #0d2447);">⚓</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Military &amp; Service</div>
+            <div class="sb-coming-title">The Navy Made Me</div>
+            <div class="sb-coming-teaser">A few years in uniform changes your perspective permanently. Some lessons you can only learn at sea — and at 3 AM on watch.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1a0a28, #3d0070, #7b1fa2, #3d0070);">📻</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Media &amp; Music</div>
+            <div class="sb-coming-title">My Life in Radio</div>
+            <div class="sb-coming-teaser">The mic, the music, and the midnight shift. What years behind the board taught me about connecting with people you'll never meet.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #0a1e1a, #0d4a3a, #006b52, #0d4a3a);">⛵</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Adventure</div>
+            <div class="sb-coming-title">Scuba, Sails &amp; Sea</div>
+            <div class="sb-coming-teaser">From 60 feet down to the helm in a gale. Racing sailboats, captaining vessels, and why the ocean has always been my reset button.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1e1200, #4a2e00, #8b5e00, #4a2e00);">🎸</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Music &amp; Life</div>
+            <div class="sb-coming-title">Guitar at 7</div>
+            <div class="sb-coming-teaser">Six strings since second grade. Music is the one thread that runs through every chapter — the Navy, radio, the road, all of it.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1e0a0a, #4a1010, #8b1a1a, #4a1010);">🚑</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Medicine &amp; Service</div>
+            <div class="sb-coming-title">What Paramedics See</div>
+            <div class="sb-coming-teaser">What you witness on the job stays with you permanently. This one's for the first responders — and the people who have no idea what they do.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #0e1e00, #1e4200, #336b00, #1e4200);">🌳</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Genealogy</div>
+            <div class="sb-coming-title">The Mayflower Files</div>
+            <div class="sb-coming-teaser">My bloodline runs through 400 years of American history — and the genealogy gets genuinely wild the deeper you dig.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1e0e00, #4a2200, #8b4500, #4a2200);">🍳</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Food &amp; Nutrition</div>
+            <div class="sb-coming-title">Food Is Love</div>
+            <div class="sb-coming-teaser">Home cooking, nutrition research, and the belief that what you feed people — and yourself — is one of the most intentional things you can do.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #001e14, #004a2e, #007a4a, #004a2e);">💻</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Tech</div>
+            <div class="sb-coming-title">The Computer Store Days</div>
+            <div class="sb-coming-teaser">I opened a computer store before most people owned one. The wild west of personal computing — I was there for the whole crazy ride.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1e1400, #4a3400, #8b6200, #4a3400);">✈️</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Adventure</div>
+            <div class="sb-coming-title">Why I Learned to Fly</div>
+            <div class="sb-coming-teaser">Getting a pilot's license isn't just about the plane. It's about discipline, decision-making under pressure, and the view from up there.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #0e0e1e, #1e2a4a, #2a3f7a, #1e2a4a);">💍</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Family</div>
+            <div class="sb-coming-title">47 Years &amp; Counting</div>
+            <div class="sb-coming-teaser">What a real marriage actually looks like from the inside — the full picture, not the Instagram version.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #1a1400, #3d3000, #6b5200, #3d3000);">✝️</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Faith &amp; Ceremony</div>
+            <div class="sb-coming-title">The Minister Has Thoughts</div>
+            <div class="sb-coming-teaser">Being a ULC Minister means I've stood at the altar for some of life's most sacred moments. It also means I have opinions about what those moments actually mean.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="sb-coming-card reveal">
+          <div class="sb-coming-banner" style="background: linear-gradient(135deg, #001828, #003a5a, #006b9e, #003a5a);">🏗️</div>
+          <div class="sb-coming-body">
+            <div class="sb-coming-cat">Building Things</div>
+            <div class="sb-coming-title">The General Contractor Years</div>
+            <div class="sb-coming-teaser">Running a construction operation teaches you more about human nature, project management, and problem-solving than any MBA ever could.</div>
+            <span class="sb-coming-badge">Coming Soon</span>
+          </div>
+        </div>
+
+      </div><!-- /.sb-coming-grid -->
 
     </div>
   </section>
