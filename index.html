@@ -1088,9 +1088,156 @@
             </div>
         </div>
         <div style="text-align: center; margin-top: 3rem; padding: 0 1rem;">
-            <img src="images/PlacesLived.jpg" alt="Places Barrett Has Lived — 12 States" style="max-width: 820px; width: 100%; border-radius: 14px; box-shadow: 0 8px 40px rgba(0,170,255,0.15), 0 4px 24px rgba(0,0,0,0.5);">
-            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; font-style: italic;">12 states called home — from Alabama to Arizona and beyond</p>
+            <div id="places-map" style="max-width: 860px; margin: 0 auto; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,170,255,0.15), 0 4px 24px rgba(0,0,0,0.5);"></div>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; font-style: italic;">17 cities across 12 states — from Rhode Island to California and beyond</p>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+        <script>
+        (function () {
+            var W = 860, H = 520;
+
+            var svg = d3.select('#places-map')
+                .append('svg')
+                .attr('viewBox', '0 0 ' + W + ' ' + H)
+                .attr('width', '100%')
+                .style('background', '#040d1c')
+                .style('display', 'block');
+
+            var projection = d3.geoAlbersUsa().scale(1080).translate([W / 2, H / 2]);
+            var geoPath   = d3.geoPath().projection(projection);
+
+            /* Cities in the order provided — arrows connect each to the next */
+            var cities = [
+                { lat: 41.50, lon: -81.70 },   /* Cleveland, OH      */
+                { lat: 35.23, lon: -80.84 },   /* Charlotte, NC      */
+                { lat: 33.75, lon: -84.39 },   /* Atlanta, GA        */
+                { lat: 32.22, lon: -110.97 },  /* Tucson, AZ         */
+                { lat: 35.27, lon: -81.19 },   /* Gastonia, NC       */
+                { lat: 33.89, lon: -91.49 },   /* Dumas, AR          */
+                { lat: 31.99, lon: -102.08 },  /* Midland, TX        */
+                { lat: 34.02, lon: -117.95 },  /* La Puente, CA      */
+                { lat: 39.76, lon: -84.19 },   /* Dayton, OH         */
+                { lat: 41.13, lon: -85.13 },   /* Ft. Wayne, IN      */
+                { lat: 42.30, lon: -87.84 },   /* Great Lakes, IL    */
+                { lat: 36.85, lon: -76.29 },   /* Norfolk, VA        */
+                { lat: 41.88, lon: -87.63 },   /* Chicago, IL        */
+                { lat: 39.95, lon: -75.17 },   /* Philadelphia, PA   */
+                { lat: 41.72, lon: -71.42 },   /* Warwick, RI        */
+                { lat: 35.04, lon: -89.68 },   /* Collierville, TN   */
+                { lat: 30.25, lon: -87.70 }    /* Gulf Shores, AL    */
+            ];
+
+            var arcColors = [
+                '#ff1493','#00ffe0','#ff6600','#9b2dff',
+                '#00bfff','#ffcc00','#ff4500','#00ff88',
+                '#ff69b4','#1e90ff','#ff8c00','#7fff00',
+                '#da70d6','#00ced1','#ff4444','#ffd700'
+            ];
+
+            var defs = svg.append('defs');
+
+            /* Glow filter */
+            var glow = defs.append('filter').attr('id', 'cb-glow').attr('x', '-30%').attr('y', '-30%').attr('width', '160%').attr('height', '160%');
+            glow.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '3').attr('result', 'blur');
+            var fm = glow.append('feMerge');
+            fm.append('feMergeNode').attr('in', 'blur');
+            fm.append('feMergeNode').attr('in', 'SourceGraphic');
+
+            /* Dot glow */
+            var dotGlow = defs.append('filter').attr('id', 'dot-glow').attr('x', '-80%').attr('y', '-80%').attr('width', '360%').attr('height', '360%');
+            dotGlow.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '4').attr('result', 'blur');
+            var fm2 = dotGlow.append('feMerge');
+            fm2.append('feMergeNode').attr('in', 'blur');
+            fm2.append('feMergeNode').attr('in', 'SourceGraphic');
+
+            /* One arrowhead marker per arc color */
+            arcColors.forEach(function (col, i) {
+                defs.append('marker')
+                    .attr('id', 'arr' + i)
+                    .attr('markerWidth', 7).attr('markerHeight', 7)
+                    .attr('refX', 6).attr('refY', 3)
+                    .attr('orient', 'auto')
+                    .append('path')
+                    .attr('d', 'M0,0 L0,6 L7,3 Z')
+                    .attr('fill', col).attr('opacity', 0.9);
+            });
+
+            /* Load US TopoJSON */
+            d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function (us) {
+
+                /* State fills */
+                svg.append('g').selectAll('path')
+                    .data(topojson.feature(us, us.objects.states).features)
+                    .join('path')
+                    .attr('d', geoPath)
+                    .attr('fill', 'rgba(0,120,255,0.07)')
+                    .attr('stroke', 'rgba(0,170,255,0.22)')
+                    .attr('stroke-width', 0.6);
+
+                /* Nation border */
+                svg.append('path')
+                    .datum(topojson.mesh(us, us.objects.states, function (a, b) { return a === b; }))
+                    .attr('d', geoPath)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'rgba(0,200,255,0.45)')
+                    .attr('stroke-width', 1.2);
+
+                /* Project cities — filter nulls (AK/HI outside AlbersUSA) */
+                var pts = cities.map(function (c) { return projection([c.lon, c.lat]); });
+
+                /* Draw arching arrows */
+                var arcG = svg.append('g');
+                for (var i = 0; i < pts.length - 1; i++) {
+                    var s = pts[i], t = pts[i + 1];
+                    if (!s || !t) continue;
+
+                    var mx = (s[0] + t[0]) / 2;
+                    var my = (s[1] + t[1]) / 2;
+
+                    /* Arc height proportional to distance, always curving upward */
+                    var dist = Math.sqrt(Math.pow(t[0]-s[0],2) + Math.pow(t[1]-s[1],2));
+                    var lift = Math.max(40, dist * 0.38);
+
+                    /* Perpendicular offset for control point (always above the midpoint) */
+                    var dx = t[0] - s[0], dy = t[1] - s[1];
+                    var len = Math.sqrt(dx*dx + dy*dy) || 1;
+                    var cx = mx - (dy/len) * lift;
+                    var cy = my - Math.abs(dx/len) * lift - 20;
+
+                    /* Shorten endpoint so arrowhead sits just outside the dot */
+                    var ex = t[0] - (t[0]-cx)/Math.sqrt(Math.pow(t[0]-cx,2)+Math.pow(t[1]-cy,2))*9;
+                    var ey = t[1] - (t[1]-cy)/Math.sqrt(Math.pow(t[0]-cx,2)+Math.pow(t[1]-cy,2))*9;
+
+                    var col = arcColors[i % arcColors.length];
+                    arcG.append('path')
+                        .attr('d', 'M'+s[0]+','+s[1]+' Q'+cx+','+cy+' '+ex+','+ey)
+                        .attr('fill', 'none')
+                        .attr('stroke', col)
+                        .attr('stroke-width', 1.6)
+                        .attr('opacity', 0.72)
+                        .attr('stroke-linecap', 'round')
+                        .attr('marker-end', 'url(#arr' + (i % arcColors.length) + ')')
+                        .attr('filter', 'url(#cb-glow)');
+                }
+
+                /* Draw city dots on top */
+                var dotG = svg.append('g');
+                pts.forEach(function (p, i) {
+                    if (!p) return;
+                    var col = arcColors[i % arcColors.length];
+                    /* Outer glow ring */
+                    dotG.append('circle').attr('cx', p[0]).attr('cy', p[1]).attr('r', 7)
+                        .attr('fill', col).attr('opacity', 0.25).attr('filter', 'url(#dot-glow)');
+                    /* Dot */
+                    dotG.append('circle').attr('cx', p[0]).attr('cy', p[1]).attr('r', 4)
+                        .attr('fill', col)
+                        .attr('stroke', '#040d1c').attr('stroke-width', 1.5)
+                        .attr('filter', 'url(#dot-glow)');
+                });
+            });
+        })();
+        </script>
     </section>
 
     <div class="divider"></div>
