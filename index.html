@@ -256,18 +256,19 @@
 
         .hero-title .line1 {
             display: block;
-            color: var(--white);
-            -webkit-text-stroke: 1.5px var(--electric);
+            color: var(--electric);
+            -webkit-text-fill-color: var(--electric);
+            -webkit-text-stroke: 1.5px rgba(255,255,255,0.7);
             paint-order: stroke fill;
         }
 
         .hero-title .line2 {
             display: block;
-            color: var(--white);
-            -webkit-text-fill-color: var(--white);
-            -webkit-text-stroke: 1.5px rgba(255,255,255,0.7);
+            color: var(--cyan);
+            -webkit-text-fill-color: var(--cyan);
+            -webkit-text-stroke: 1.5px var(--electric);
             paint-order: stroke fill;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7)) drop-shadow(0 0 18px rgba(255,255,255,0.15));
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7)) drop-shadow(0 0 18px rgba(0,255,224,0.2));
         }
 
         .hero-sub {
