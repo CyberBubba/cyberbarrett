@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Culinary Roots | CyberBarrett</title>
+  <meta name="description" content="The story of how Barrett's love of cooking was sparked by a remarkable woman — Bessie Elizabeth Mooney McCraw — and the grandmothers around the world who shaped his kitchen forever.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+
+    /* ---- HERO ---- */
+    .cr-hero {
+      position: relative;
+      background: var(--navy);
+      padding: 7rem 2.5rem 5rem;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,140,0,0.12);
+    }
+
+    .cr-hero .grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,140,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,140,0,0.03) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: radial-gradient(ellipse at 50% 60%, black 30%, transparent 80%);
+    }
+
+    .cr-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 800px; margin: 0 auto;
+    }
+
+    .cr-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      color: #ff8c00; text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .cr-headline {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.03em; margin-bottom: 1.25rem;
+    }
+
+    .cr-headline .accent {
+      background: linear-gradient(100deg, #ff8c00, #ffcc00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cr-sub {
+      font-size: 1.1rem; color: var(--muted);
+      line-height: 1.75; max-width: 640px;
+    }
+
+    /* ---- SECTIONS ---- */
+    .cr-section {
+      padding: 5rem 2.5rem;
+    }
+
+    .cr-section-inner {
+      max-width: 800px; margin: 0 auto;
+    }
+
+    .cr-section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.2em;
+      color: #ff8c00; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .cr-section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.75rem; line-height: 1.2;
+    }
+
+    .cr-story p {
+      font-size: 1rem; color: rgba(255,255,255,0.88);
+      line-height: 1.88; margin-bottom: 1.5rem;
+    }
+
+    .cr-story p strong { color: var(--white); }
+
+    .cr-pullquote {
+      border-left: 4px solid #ff8c00;
+      padding: 1.1rem 1.5rem;
+      background: rgba(255,140,0,0.06);
+      border-radius: 0 10px 10px 0;
+      margin: 2rem 0;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.75;
+    }
+
+    /* ---- MEMORIAL CARD ---- */
+    .memorial-card {
+      background: linear-gradient(135deg, rgba(255,140,0,0.06), rgba(255,204,0,0.04));
+      border: 1px solid rgba(255,140,0,0.25);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin: 2.5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memorial-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, #ff8c00, #ffcc00, transparent);
+    }
+
+    .memorial-name {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-weight: 700; color: #ffcc00;
+      margin-bottom: 0.4rem; letter-spacing: -0.01em;
+    }
+
+    .memorial-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; color: #ff8c00;
+      letter-spacing: 0.12em; margin-bottom: 1.25rem;
+    }
+
+    .memorial-quote {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.75;
+      max-width: 520px; margin: 0 auto 0.75rem;
+    }
+
+    .memorial-location {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ---- HISTORY GRID ---- */
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.85rem;
+      margin: 2rem 0;
+    }
+
+    .history-chip {
+      background: rgba(255,140,0,0.06);
+      border: 1px solid rgba(255,140,0,0.18);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+    }
+
+    .history-chip .hc-event {
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.2rem;
+    }
+
+    .history-chip .hc-age {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: #ff8c00;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---- GRANDMOTHERS GRID ---- */
+    .grandmothers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .gma-card {
+      background: rgba(255,140,0,0.04);
+      border: 1px solid rgba(255,140,0,0.15);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .gma-card .gma-origin {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #ff8c00;
+      margin-bottom: 0.3rem;
+    }
+
+    .gma-card .gma-name {
+      font-size: 0.92rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.4rem;
+    }
+
+    .gma-card .gma-taught {
+      font-size: 0.83rem; color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ---- DARK ALT SECTION ---- */
+    .cr-section-alt {
+      background: rgba(255,140,0,0.02);
+      border-top: 1px solid rgba(255,140,0,0.08);
+      border-bottom: 1px solid rgba(255,140,0,0.08);
+    }
+
+    /* ---- DIVIDER ---- */
+    .cr-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,140,0,0.2), transparent);
+    }
+
+    /* ---- BACK LINK ---- */
+    .cr-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: #ff8c00; text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .cr-back:hover { color: #ffcc00; gap: 0.75rem; }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+    <ul id="navLinks">
+        <li><a href="index.html#topics">Topics</a></li>
+        <li><a href="soapbox.html">Soap Box</a></li>
+        <li><a href="documents.html">Documents</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="genealogy.html">Genealogy</a></li>
+        <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="cr-hero">
+    <div class="grid-bg"></div>
+    <div class="cr-hero-inner">
+      <div class="cr-eyebrow">Food · Family · Memory</div>
+      <h1 class="cr-headline">Culinary <span class="accent">Roots</span></h1>
+      <p class="cr-sub">
+        Every great cook traces their passion back to a kitchen, a moment, and a person.
+        For Barrett, it starts with a wood stove, a stool, and one of the most remarkable
+        women he has ever known.
+      </p>
+    </div>
+  </section>
+
+  <div class="cr-divider"></div>
+
+  <!-- GRANNY BESSIE -->
+  <section class="cr-section">
+    <div class="cr-section-inner">
+      <a href="foodie.html" class="cr-back reveal">← Back to The Foodie</a>
+
+      <div class="cr-section-label reveal">The Woman Who Lit the Fire</div>
+      <h2 class="cr-section-title reveal">Bessie Elizabeth Mooney McCraw</h2>
+
+      <div class="cr-story">
+
+        <div class="memorial-card reveal">
+          <img src="images/Granny.jpg" alt="Bessie Elizabeth Mooney McCraw — Granny"
+               style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%;
+                      border: 3px solid rgba(255,140,0,0.5);
+                      box-shadow: 0 0 28px rgba(255,140,0,0.25), 0 4px 20px rgba(0,0,0,0.5);
+                      margin-bottom: 1.25rem;">
+          <div class="memorial-name">Bessie Elizabeth Mooney McCraw</div>
+          <div class="memorial-dates">July 26, 1888 &mdash; November 6, 1969</div>
+          <p class="memorial-quote">
+            "A woman of unwavering grace and resilience, whose legacy of strength and kindness
+            continues to inspire all who knew her."
+          </p>
+          <div class="memorial-location">Henrietta, Rutherford County, North Carolina</div>
+        </div>
+
+        <p class="reveal">
+          Let me tell you about the remarkable woman who sparked my love of cooking — by putting me
+          on a stool at age 5 and teaching me to stir soups and flip eggs. My sweet adopted Granny,
+          Bessie Elizabeth Mooney McCraw, was born on <strong>July 26, 1888</strong>. I have often told
+          the story about how she used to keep a big Colt pistol under her pillow. As a kid, I thought
+          it was really cool, and I never doubted how tough she was. However, as I got older, I reflected
+          on how and why she became the woman she was.
+        </p>
+
+        <p class="reveal">
+          She grew up with seven siblings and then raised five kids — and lost one — during some of the
+          toughest and hardest times imaginable. Consider what this one woman witnessed and survived:
+        </p>
+
+        <div class="history-grid reveal">
+          <div class="history-chip">
+            <div class="hc-event">World War I</div>
+            <div class="hc-age">Age 26–30</div>
+          </div>
+          <div class="history-chip">
+            <div class="hc-event">Spanish Flu</div>
+            <div class="hc-age">Age 30–32</div>
+          </div>
+          <div class="history-chip">
+            <div class="hc-event">Great Depression</div>
+            <div class="hc-age">Age 41–45</div>
+          </div>
+          <div class="history-chip">
+            <div class="hc-event">World War II</div>
+            <div class="hc-age">Age 51–57</div>
+          </div>
+          <div class="history-chip">
+            <div class="hc-event">Korean War</div>
+            <div class="hc-age">Age 64</div>
+          </div>
+          <div class="history-chip">
+            <div class="hc-event">Cuban Missile Crisis</div>
+            <div class="hc-age">Age 74</div>
+          </div>
+          <div class="history-chip">
+            <div class="hc-event">Vietnam War</div>
+            <div class="hc-age">Age 76–81</div>
+          </div>
+        </div>
+
+        <p class="reveal">
+          Growing up in rural North Carolina, she saw the world transform in ways that were unimaginable
+          when she was born. <strong>Automobiles, farm machinery, telephones, refrigeration, radio, and
+          television</strong> didn't come along until she was already an adult. There wasn't even
+          electricity where she lived until the early 1940s.
+        </p>
+
+        <div class="cr-pullquote reveal">
+          Granny's toughness was forged in the crucible of world wars, economic depressions, and
+          technological upheavals — and yet she faced every challenge with grace and resilience.
+        </div>
+
+        <p class="reveal">
+          Bessie McCraw, my Granny, was a truly remarkable woman who embodied the best qualities of
+          the human spirit. Despite living through some of the most tumultuous times in modern history,
+          she remained steadfast, wise, and kind. She was a family hero whose legacy lives on in the
+          hearts of all of us who loved her.
+        </p>
+
+        <p class="reveal">
+          And it was in <em>her</em> kitchen — at her wood stove, standing on a stool just to reach
+          the counter — where it all began for me.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="cr-divider"></div>
+
+  <!-- LOVE AFFAIR WITH COOKING -->
+  <section class="cr-section cr-section-alt">
+    <div class="cr-section-inner">
+      <div class="cr-section-label reveal">Where It All Started</div>
+      <h2 class="cr-section-title reveal">My Love Affair with <span style="color:#ff8c00;">Home Cooking</span></h2>
+
+      <div class="cr-story">
+        <p class="reveal">
+          My culinary journey began at the tender age of 5, thanks to the warmth and wisdom of my
+          dear Granny. Her kitchen was a magical realm of delightful aromas, comforting flavors, and
+          an abundance of love. Standing on a stool to reach that big, beautiful wood stove, I'd watch
+          in awe as Granny deftly transformed simple ingredients into mouthwatering meals. With a gentle
+          nudge and a reassuring smile, she taught me the art of cooking from the heart.
+        </p>
+
+        <p class="reveal">
+          As I grew older, my passion for cooking only intensified. My love for my Granny and the joy
+          we shared in her kitchen became the foundation of a lifelong adventure in gastronomy. I soon
+          discovered the joy of connecting with people from all walks of life through food, and my
+          kitchen became a bustling cultural melting pot.
+        </p>
+
+        <div class="cr-pullquote reveal">
+          "Over the years, I had the great fortune of learning from wonderful grandmothers hailing from
+          diverse backgrounds — Portugal, Italy, Japan, Greece, Mexico, China, Guatemala, and Vietnam.
+          These cherished experiences enriched my understanding of the world and deepened my appreciation
+          for the universal language of food."
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cr-divider"></div>
+
+  <!-- THE GRANDMOTHERS -->
+  <section class="cr-section">
+    <div class="cr-section-inner">
+      <div class="cr-section-label reveal">A World of Kitchens</div>
+      <h2 class="cr-section-title reveal">The Grandmothers Who <span style="color:#ff8c00;">Shaped My Cooking</span></h2>
+
+      <div class="cr-story">
+        <p class="reveal">
+          Each of these women opened their kitchens — and their hearts — and left a permanent mark on
+          how I cook, eat, and think about food. Every lesson was a glimpse into a different world.
+        </p>
+      </div>
+
+      <div class="grandmothers-grid reveal">
+        <div class="gma-card">
+          <div class="gma-origin">Portugal</div>
+          <div class="gma-name">Avo</div>
+          <div class="gma-taught">Succulent seafood dishes, including the perfected art of Shrimp Mozambique.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">Italy</div>
+          <div class="gma-name">Nonna</div>
+          <div class="gma-taught">Homemade pasta from scratch and rich, slow-cooked sauces that could stop traffic.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">Japan</div>
+          <div class="gma-name">Obaachan</div>
+          <div class="gma-taught">The secrets of sushi and tempura — patience, precision, and respect for the ingredient.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">Greece</div>
+          <div class="gma-name">Yiayia</div>
+          <div class="gma-taught">The joys of Mediterranean cooking — bright flavors, olive oil, and food built for sharing.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">Mexico</div>
+          <div class="gma-name">Abuelita</div>
+          <div class="gma-taught">Fragrant mole, Pozole, and tamales made with a reverence for tradition that can't be learned from a recipe card.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">China</div>
+          <div class="gma-name">Popo</div>
+          <div class="gma-taught">The delicate balance of flavors in a wok — heat, timing, and the wisdom not to overthink it.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">Guatemala</div>
+          <div class="gma-name">Abuelita</div>
+          <div class="gma-taught">The vibrant, complex world of Central American cuisine — bold, earthy, and deeply personal.</div>
+        </div>
+        <div class="gma-card">
+          <div class="gma-origin">Vietnam</div>
+          <div class="gma-name">Bà ngoại</div>
+          <div class="gma-taught">Aromatic pho and fresh spring rolls — the art of building layers of flavor from almost nothing.</div>
+        </div>
+      </div>
+
+      <div class="cr-story">
+        <p class="reveal" style="margin-top: 1.5rem;">
+          Each culinary adventure offered a glimpse into the rich tapestry of human connection —
+          bridging the gap between cultures through the simple act of cooking together. And there were
+          so many others. The kitchen, it turns out, is the most universal room in the world.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cr-divider"></div>
+
+  <!-- CLOSING -->
+  <section class="cr-section cr-section-alt">
+    <div class="cr-section-inner">
+      <div class="cr-section-label reveal">The Bottom Line</div>
+      <h2 class="cr-section-title reveal">One Delicious Meal <span style="color:#ff8c00;">at a Time</span></h2>
+
+      <div class="cr-story">
+        <p class="reveal">
+          As I reflect on my lifelong love affair with home cooking, I cherish the memories of laughter,
+          love, and unforgettable flavors that have filled my life. With every dish I create, I honor the
+          timeless wisdom of grandmothers who opened their kitchens and hearts to me.
+        </p>
+
+        <p class="reveal">
+          The kitchen is where creativity meets memory. Crafting a meal from scratch is an artistic
+          endeavor — you experiment with flavors, textures, and techniques, and somewhere in the middle
+          of it, you find yourself. Whether it's a classic family recipe or something I've never made
+          before, cooking is how I connect with the people who shaped me, and how I continue to connect
+          with the people I love.
+        </p>
+
+        <div class="cr-pullquote reveal">
+          By embracing the art of home cooking, I've enriched my life one delicious meal at a time —
+          with family, friends, and the memory of every grandmother who ever trusted me in their kitchen.
+        </div>
+
+        <p class="reveal" style="text-align: center; margin-top: 2.5rem;">
+          <a href="foodie.html" style="display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(255,140,0,0.1); border: 1px solid rgba(255,140,0,0.35); color: #ff8c00; padding: 0.9rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: all 0.25s;">
+            ← Back to The Foodie
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 <a href="index.html">CyberBarrett</a> &mdash; cyberbarrett.com</div>
+      <div class="footer-tag">Hand-crafted HTML · GitHub Pages</div>
+    </div>
+  </footer>
+
+  <script>
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
+var toggle=document.getElementById('navToggle');
+var links=document.getElementById('navLinks');
+if(toggle&&links){
+    toggle.addEventListener('click',function(){links.classList.toggle('open');});
+    links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+}
+var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});},800);
+  </script>
+
+</body>
+</html>
