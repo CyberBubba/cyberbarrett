@@ -260,32 +260,45 @@
       color: var(--cyan);
     }
 
-    /* ---- FEATURED POST (published) ---- */
+    /* ---- POST CARDS (published, horizontal) ---- */
     .sb-featured {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
-      margin-bottom: 4rem;
+      margin-bottom: 1.25rem;
       text-decoration: none;
-      display: block;
+      display: flex;
+      flex-direction: row;
       transition: border-color 0.25s, box-shadow 0.25s;
     }
     .sb-featured:hover {
       border-color: rgba(0,170,255,0.4);
-      box-shadow: 0 8px 48px rgba(0,170,255,0.12);
+      box-shadow: 0 6px 32px rgba(0,170,255,0.12);
     }
 
     .sb-featured-img {
-      width: 100%; max-height: 320px;
-      object-fit: cover; display: block;
+      width: 210px;
+      flex-shrink: 0;
+      object-fit: cover;
+      display: block;
     }
 
-    .sb-featured-inner { padding: 2rem 2.25rem 2.25rem; }
+    @media (max-width: 580px) {
+      .sb-featured { flex-direction: column; }
+      .sb-featured-img { width: 100%; height: 180px; }
+    }
+
+    .sb-featured-inner {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
     .sb-featured-meta {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-      align-items: center; margin-bottom: 1rem;
+      display: flex; flex-wrap: wrap; gap: 0.45rem;
+      align-items: center; margin-bottom: 0.75rem;
     }
 
     .sb-feat-tag {
@@ -293,9 +306,9 @@
       border: 1px solid rgba(0,170,255,0.2);
       color: var(--electric);
       font-family: 'Space Mono', monospace;
-      font-size: 0.62rem; letter-spacing: 0.1em;
+      font-size: 0.6rem; letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0.25rem 0.7rem; border-radius: 20px;
+      padding: 0.22rem 0.65rem; border-radius: 20px;
     }
     .sb-feat-tag.hot {
       background: rgba(0,255,224,0.06);
@@ -304,51 +317,52 @@
     }
     .sb-feat-date {
       font-family: 'Space Mono', monospace;
-      font-size: 0.62rem; color: var(--muted);
+      font-size: 0.6rem; color: var(--muted);
       margin-left: auto;
     }
 
     .sb-featured-title {
       font-family: 'Space Mono', monospace;
-      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
       font-weight: 700; letter-spacing: -0.02em;
       line-height: 1.2; color: var(--white);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
     .sb-featured-sub {
       background: linear-gradient(100deg, var(--electric), var(--cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      display: block; font-size: 0.62em;
+      display: block; font-size: 0.6em;
       font-family: 'Space Mono', monospace;
       font-weight: 400;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .sb-featured-excerpt {
       color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.75;
-      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      margin-bottom: 1rem;
     }
 
     .sb-read-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(0,170,255,0.1);
-      border: 1px solid rgba(0,170,255,0.3);
+      gap: 0.4rem;
+      background: rgba(0,170,255,0.08);
+      border: 1px solid rgba(0,170,255,0.25);
       color: var(--electric);
-      padding: 0.7rem 1.5rem;
-      border-radius: 8px;
+      padding: 0.5rem 1.1rem;
+      border-radius: 7px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-family: 'Space Mono', monospace;
       transition: all 0.2s;
+      align-self: flex-start;
     }
     .sb-featured:hover .sb-read-btn {
-      background: rgba(0,170,255,0.18);
+      background: rgba(0,170,255,0.16);
     }
 
     /* ---- ON THE HORIZON divider ---- */
@@ -517,13 +531,13 @@
 
       <!-- FEATURED POST -->
       <a href="soapbox-gulf-of-america.html" class="sb-featured reveal">
-        <img src="images/GOA.jpg" alt="Gulf of America" class="sb-featured-img">
+        <img src="images/GOA_map.webp" alt="Gulf of America" class="sb-featured-img">
         <div class="sb-featured-inner">
           <div class="sb-featured-meta">
             <span class="sb-feat-tag">American History</span>
             <span class="sb-feat-tag hot">Politics &amp; Society</span>
             <span class="sb-feat-tag">Gulf Coast Living</span>
-            <span class="sb-feat-date">Originally written 2024 · Still relevant</span>
+            <span class="sb-feat-date">Originally written 2025 · Still relevant</span>
           </div>
           <h2 class="sb-featured-title">Gulf of America<span class="sb-featured-sub">A Fact Check Worth Reading</span></h2>
           <p class="sb-featured-excerpt">
@@ -535,7 +549,7 @@
       </a>
 
       <!-- ON THE HORIZON -->
-      <div class="sb-horizon-label reveal">
+      <div class="sb-horizon-label reveal" style="margin-top: 3rem;">
         <span>On the horizon</span>
       </div>
 
