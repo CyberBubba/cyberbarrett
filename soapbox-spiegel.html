@@ -222,6 +222,72 @@
     }
 
     /* References */
+    /* Spiegel Grove Then & Now */
+    .sg-then-now {
+      display: flex;
+      align-items: stretch;
+      gap: 1rem;
+      margin: 2rem 0 0.5rem;
+    }
+    .sg-tn-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .sg-tn-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid rgba(0,200,180,0.2);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.5);
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .sg-tn-img:hover { transform: scale(1.015); }
+    .sg-tn-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+    .sg-tn-label-now { color: #00c8b4; }
+    .sg-tn-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding-bottom: 1.5rem;
+      flex-shrink: 0;
+    }
+    .sg-tn-line {
+      width: 1px;
+      flex: 1;
+      background: linear-gradient(to bottom, transparent, rgba(0,200,180,0.35));
+    }
+    .sg-tn-line:last-child {
+      background: linear-gradient(to top, transparent, rgba(0,200,180,0.35));
+    }
+    .sg-tn-vs {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(0,200,180,0.5);
+      letter-spacing: 0.1em;
+    }
+    @media (max-width: 560px) {
+      .sg-then-now { flex-direction: column; }
+      .sg-tn-divider { flex-direction: row; padding-bottom: 0; padding-right: 0; height: 24px; }
+      .sg-tn-line { flex: 1; height: 1px; width: auto;
+        background: linear-gradient(to right, transparent, rgba(0,200,180,0.35)) !important; }
+      .sg-tn-line:last-child {
+        background: linear-gradient(to left, transparent, rgba(0,200,180,0.35)) !important; }
+      .sg-tn-img { height: 200px; }
+    }
+
     .sb-refs {
       margin-top: 3rem;
       padding-top: 1.5rem;
@@ -440,6 +506,24 @@
               upright in about <strong>130 feet of water</strong> — a much more accessible and iconic
               destination than the sideways wreck I explored in 2003.
             </p>
+
+            <!-- Spiegel Grove Then & Now -->
+            <div class="sg-then-now">
+              <div class="sg-tn-card">
+                <img src="images/SpiegelGrove_then.jpg" alt="USS Spiegel Grove lying on her starboard side — 2002/2003" class="sg-tn-img">
+                <div class="sg-tn-label">Then · On Her Side · 2002–2005</div>
+              </div>
+              <div class="sg-tn-divider">
+                <div class="sg-tn-line"></div>
+                <div class="sg-tn-vs">vs</div>
+                <div class="sg-tn-line"></div>
+              </div>
+              <div class="sg-tn-card">
+                <img src="images/SpiegelGrove_now.jpg" alt="USS Spiegel Grove upright on the ocean floor today" class="sg-tn-img">
+                <div class="sg-tn-label sg-tn-label-now">Now · Upright · 2005–Present</div>
+              </div>
+            </div>
+            <p class="sb-photo-caption">Hurricane Dennis did what the engineers couldn't — then the salvage crew finished the job. Same ship, entirely different dive.</p>
 
             <div class="sb-pullquote">
               "I dove her sideways. Now she's upright. I plan to go back for the reunion dive and see
