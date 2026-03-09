@@ -134,6 +134,35 @@
       font-style: italic;
     }
 
+    /* ---- SCUBA PAIR ---- */
+    .gg-scuba-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .gg-scuba-photo {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+    }
+    .gg-scuba-photo img {
+      width: 100%; display: block;
+      height: 280px; object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease;
+    }
+    .gg-scuba-photo:hover img { transform: scale(1.03); }
+    .gg-scuba-caption {
+      font-size: 0.78rem; color: var(--muted);
+      font-style: italic; text-align: center;
+      margin: 0.4rem 0 1.5rem;
+    }
+    @media (max-width: 580px) {
+      .gg-scuba-pair { grid-template-columns: 1fr; }
+      .gg-scuba-photo img { height: 220px; }
+    }
+
     /* ---- BAMA STORY CARD ---- */
     .gg-bama-card {
       background: rgba(0,200,180,0.05);
@@ -325,6 +354,17 @@
         <div class="gg-photo-caption">In the water with a manatee — exactly where I want to be. Three decades of these encounters and they never get old.</div>
       </div>
 
+      <!-- Scuba Pair -->
+      <div class="gg-scuba-pair reveal">
+        <div class="gg-scuba-photo">
+          <img src="images/Scuba_me001.jpeg" alt="Barrett scuba diving in the Gulf">
+        </div>
+        <div class="gg-scuba-photo">
+          <img src="images/Scuba_me002.jpeg" alt="Barrett underwater — advanced scuba diver">
+        </div>
+      </div>
+      <p class="gg-scuba-caption">30+ years of advanced diving — the underwater world is where everything makes sense.</p>
+
       <div class="gg-label teal">Save the Manatee Club</div>
       <div class="gg-body">
         <p>
@@ -495,6 +535,12 @@
           <span class="gg-tip-icon">🚗</span>
           <span class="gg-tip-text"><strong>No vehicles on nesting beaches.</strong> Vehicles compact the sand over nests and can kill eggs and hatchlings. Stay off nesting areas entirely.</span>
         </div>
+      </div>
+
+      <!-- Hatchling Photo -->
+      <div class="gg-photo-feature reveal" style="margin-top: 2rem;">
+        <img src="images/Turtle_hatchling001.jpg" alt="Sea turtle hatchlings making their way to the Gulf" style="border-color: rgba(212,160,74,0.3);">
+        <div class="gg-photo-caption" style="border-left-color:#d4a04a;">This is what it's all for — hatchlings making their first run to the Gulf. Every rule above exists for this moment.</div>
       </div>
 
       <!-- Emergency Hotline -->

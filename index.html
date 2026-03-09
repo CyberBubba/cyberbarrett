@@ -587,6 +587,69 @@
             font-style: normal;
         }
 
+        /* Then & Now */
+        .then-now {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-shrink: 0;
+        }
+        .tn-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .tn-img {
+            width: 148px;
+            height: 178px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 12px;
+            border: 2px solid rgba(0,170,255,0.35);
+            box-shadow: 0 0 24px rgba(0,170,255,0.18), 0 8px 24px rgba(0,0,0,0.45);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tn-img:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 0 36px rgba(0,170,255,0.3), 0 12px 32px rgba(0,0,0,0.5);
+        }
+        .tn-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .tn-label-now {
+            color: var(--electric);
+        }
+        .tn-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            padding-bottom: 1.4rem;
+        }
+        .tn-line {
+            width: 1px;
+            height: 42px;
+            background: linear-gradient(to bottom, transparent, rgba(0,170,255,0.35));
+        }
+        .tn-line:last-child {
+            background: linear-gradient(to top, transparent, rgba(0,170,255,0.35));
+        }
+        .tn-vs {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(0,170,255,0.5);
+            letter-spacing: 0.1em;
+        }
+        @media (max-width: 520px) {
+            .then-now { gap: 0.75rem; }
+            .tn-img { width: 118px; height: 142px; }
+        }
+
         .about-pills {
             flex: 0 0 auto;
             display: grid;
@@ -1051,8 +1114,21 @@
                 </blockquote>
                 <cite>— Barrett Holt, CyberBarrett</cite>
             </div>
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <img src="images/Medallion001.jpg" alt="Barrett Holt — CyberBarrett" style="width: 280px; height: 280px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(0,170,255,0.4); box-shadow: 0 0 32px rgba(0,170,255,0.25), 0 8px 32px rgba(0,0,0,0.5);">
+            <!-- Then & Now -->
+            <div class="then-now">
+              <div class="tn-card">
+                <img src="images/Me-Navy.jpg" alt="Barrett Holt — U.S. Navy" class="tn-img">
+                <div class="tn-label">Then · U.S. Navy</div>
+              </div>
+              <div class="tn-divider">
+                <div class="tn-line"></div>
+                <div class="tn-vs">vs</div>
+                <div class="tn-line"></div>
+              </div>
+              <div class="tn-card">
+                <img src="images/Now.JPG" alt="Barrett Holt — CyberBarrett today" class="tn-img">
+                <div class="tn-label tn-label-now">Now · CyberBarrett</div>
+              </div>
             </div>
         </div>
     </section>
