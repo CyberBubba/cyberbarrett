@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond the Stage | CyberBarrett</title>
+  <meta name="description" content="Sailor, guitarist, horseman, photographer — Barrett Holt beyond the concert halls and radio studios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+        /* Page-specific styles */
+        .page-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+            border-bottom: 1px solid var(--card-border);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .page-hero .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+            background: linear-gradient(135deg, var(--electric) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 3rem 0 2rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--electric);
+            display: inline-block;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--white);
+            max-width: 900px;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 170, 255, 0.05);
+            border-left: 3px solid var(--electric);
+            border-radius: 8px;
+        }
+
+        /* Special callout boxes */
+        .artist-callout {
+            background: rgba(0, 170, 255, 0.08);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .artist-callout.charlie-daniels {
+            border-color: var(--cyan);
+            background: rgba(0, 255, 224, 0.06);
+        }
+
+        .artist-callout.randy-travis {
+            border-color: var(--electric);
+            background: rgba(0, 170, 255, 0.06);
+        }
+
+        .artist-callout h3 {
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .badge.dear-friend {
+            background: var(--cyan);
+            color: var(--navy);
+        }
+
+        .badge.classmate {
+            background: var(--electric);
+            color: var(--navy);
+        }
+
+        .callout-description {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .callout-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .photo-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--electric);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.3);
+        }
+
+        .photo-card.charlie:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 224, 0.3);
+        }
+
+        .photo-card.randy:hover {
+            border-color: var(--electric);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-caption {
+            padding: 1rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--electric);
+            text-align: center;
+            position: relative;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-card.charlie .photo-caption,
+        .photo-card.randy .photo-caption {
+            color: var(--cyan);
+        }
+
+        .badge-container {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            z-index: 10;
+        }
+
+        /* Reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Container width */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 2rem 1rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-header {
+                font-size: 1.8rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .callout-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+    
+    .bts-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--electric); text-decoration: none;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 2rem; transition: gap 0.2s;
+    }
+    .bts-back:hover { gap: 0.85rem; }
+    .bts-back svg { width: 16px; height: 16px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" id="siteNav">
+    <a href="index.html" class="nav-logo"><span class="cb">Cyber</span>Barrett</a>
+    <ul id="navLinks">
+        <li><a href="index.html#topics">Topics</a></li>
+        <li><a href="soapbox.html">Soap Box</a></li>
+        <li class="nav-has-drop">
+            <a href="conservation.html">Conservation &#9662;</a>
+            <ul class="nav-drop">
+                <li><a href="manatees.html">&#x1F43E; Manatees</a></li>
+                <li><a href="sea-turtles.html">&#x1F422; Sea Turtles</a></li>
+            </ul>
+        </li>
+        <li><a href="genealogy.html">Genealogy</a></li>
+        <li class="nav-has-drop">
+            <a href="#">Useful Links &#9662;</a>
+            <ul class="nav-drop">
+                <li><a href="documents.html">Documents</a></li>
+                <li><a href="tutorials.html">Tutorials</a></li>
+            </ul>
+        </li>
+        <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+        </li>
+        <li><a href="genealogy.html">Genealogy</a></li>
+        <li class="nav-has-drop">
+            <a href="#">Useful Links &#9662;</a>
+            <ul class="nav-drop">
+                <li><a href="documents.html">Documents</a></li>
+                <li><a href="tutorials.html">Tutorials</a></li>
+            </ul>
+        </li>
+        <li><a href="index.html#connect">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="page-hero">
+    <div class="grid-bg"></div>
+    <div class="blob-hero"></div>
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">
+        <a href="backstage.html">&#8592; Backstage</a>
+        <span style="opacity:0.4;">/</span>
+        Beyond the Stage
+      </div>
+      <h1 class="page-title">Beyond the <span style="color:var(--electric);">Stage</span></h1>
+      <p class="page-subtitle">Sailor. Guitarist. Horseman. Photographer. The man behind the industry credentials.</p>
+    </div>
+  </div>
+
+  <main style="max-width:1100px; margin:0 auto; padding:3rem 2rem 5rem;">
+
+    <!-- Section 2: Beyond the Stage -->
+        <section class="reveal">
+            <h2 class="section-header" style="margin-top: 4rem;">Beyond the Stage</h2>
+            
+            <div class="intro-text">
+                <p>Beyond the concert halls and radio studios, Barrett has lived a full and adventurous life. A passionate sailor, accomplished guitarist, avid photographer, and devoted horseman — these images capture the man behind the industry credentials: someone who pursued excellence in every aspect of life.</p>
+            </div>
+
+            <!-- Sailing Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                Sailing Adventures
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing001jpg.jpg" alt="Barrett sailboat racing">
+                    <div class="photo-caption">On the Water</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing002.jpg" alt="Barrett sailing moment two">
+                    <div class="photo-caption">Full Sail</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing003.jpg" alt="Barrett sailing moment three">
+                    <div class="photo-caption">Racing</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-Sailing004.jpg" alt="Barrett sailing moment four">
+                    <div class="photo-caption">Open Water</div>
+                </div>
+            </div>
+
+            <!-- Guitar Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                The Guitarist
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-guitar001.jpg" alt="Barrett playing guitar">
+                    <div class="photo-caption">Crafting Music</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/Barrett-guitar002.jpg" alt="Barrett with guitar performance">
+                    <div class="photo-caption">In Performance</div>
+                </div>
+            </div>
+
+            <!-- Horse Riding Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                Love of Horsemanship
+            </h3>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/Me-LoveHorseriding.jpg" alt="Barrett horseback riding" style="object-position: top;">
+                    <div class="photo-caption">Horsemanship</div>
+                </div>
+                <div class="photo-card reveal">
+                    <img src="images/BarrettHorseman.jpg" alt="A younger Barrett astride a dapple gray horse in a New England field" style="object-position: top;">
+                    <div class="photo-caption">In the Saddle</div>
+                </div>
+            </div>
+
+            <!-- Photography Section -->
+            <h3 style="font-size: 1.5rem; color: var(--white); margin: 2.5rem 0 1.5rem 0;">
+                Through the Lens
+            </h3>
+            <p style="color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem;">
+                Barrett's home studio isn't just about audio. Cameras, lenses, and a sharp eye for the moment —
+                photography has been part of his life for decades. Whether capturing a Patriots game from the sideline seats
+                or documenting the world around him, Barrett approaches photography the same way he approaches everything:
+                with genuine enthusiasm and a Nikon in hand.
+            </p>
+            <div class="photo-grid">
+                <div class="photo-card reveal">
+                    <img src="images/BarrettPhotographer.jpg" alt="Barrett at Gillette Stadium, Nikon camera raised, capturing a Patriots game">
+                    <div class="photo-caption">Game Day — Nikon Ready</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Mentions -->
+        <section class="intro-text reveal" style="margin-top: 3rem;">
+            <p><strong>Additional Connections:</strong> Barrett has enjoyed a private tour of Graceland, connecting him to the roots of rock and roll, and has toured the historic Mount Vernon, reflecting his appreciation for American history and heritage. These experiences, combined with his decades in country music, paint a picture of a life richly lived.</p>
+        </section>
+
+  </main>
+
+  <footer style="background: var(--navy-2); padding: 2rem; text-align: center; color: var(--muted); margin-top: 4rem; border-top: 1px solid var(--card-border);">
+    <div class="footer-disclaimer" style="margin-bottom:0.5rem;">For informational purposes only. <a href="disclaimer.html" style="color:rgba(255,255,255,0.4);">Full Disclaimer &rarr;</a></div>
+    <p>&copy; 2026 CyberBarrett &mdash; cyberbarrett.com | Hand-crafted HTML &middot; GitHub Pages</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

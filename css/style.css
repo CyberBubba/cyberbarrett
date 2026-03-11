@@ -113,6 +113,80 @@ body::before {
     #nav ul a, .nav-links a { font-size:1rem; padding:0.75rem 1rem; }
 }
 
+/* ---- NAV DROPDOWNS ---- */
+.nav-has-drop { position: relative; }
+
+.nav-has-drop > a { cursor: pointer; user-select: none; }
+
+.nav-drop {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 170px;
+    background: rgba(4,13,28,0.97);
+    border: 1px solid rgba(0,170,255,0.18);
+    border-radius: 10px;
+    padding: 0.5rem 0;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,170,255,0.06);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    flex-direction: column;
+    gap: 0;
+}
+
+.nav-has-drop:hover .nav-drop,
+.nav-has-drop.open .nav-drop {
+    display: flex;
+}
+
+.nav-drop li { list-style: none; }
+
+.nav-drop a {
+    display: block;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    border-radius: 0;
+    color: rgba(255,255,255,0.75) !important;
+}
+
+.nav-drop a:hover {
+    background: rgba(0,170,255,0.1) !important;
+    color: var(--electric) !important;
+}
+
+.nav-drop::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    background: rgba(4,13,28,0.97);
+    border-left: 1px solid rgba(0,170,255,0.18);
+    border-top: 1px solid rgba(0,170,255,0.18);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    rotate: 135deg;
+}
+
+@media (max-width: 680px) {
+    .nav-drop {
+        position: static;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        border-left: 2px solid rgba(0,170,255,0.2);
+        border-radius: 0;
+        background: transparent;
+        padding: 0 0 0 1rem;
+        margin: 0.25rem 0;
+    }
+    .nav-has-drop:hover .nav-drop,
+    .nav-has-drop.open .nav-drop { display: flex; }
+    .nav-drop::before { display: none; }
+}
+
 /* ---- PAGE HERO (for sub-pages) ---- */
 .page-hero {
     padding: 8rem 2.5rem 5rem;
