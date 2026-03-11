@@ -435,12 +435,14 @@ body::before {
 
 .section-sub { color:var(--muted); font-size:1rem; line-height:1.75; max-width:580px; }
 
+/* Scroll reveal — base state (hidden) */
 .reveal {
-    opacity:0; transform:translateY(36px);
-    transition:opacity 0.75s cubic-bezier(.4,0,.2,1),
-                transform 0.75s cubic-bezier(.4,0,.2,1);
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1),
+                transform 0.7s cubic-bezier(.4,0,.2,1);
 }
-.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ---- FOOTER ---- */
 footer {
@@ -511,6 +513,7 @@ footer {
     .hub-card { grid-column: span 1 !important; }
 }
 
-/* Ensure reveal elements always become visible (touch/scroll edge case fallback) */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+/* Fallback: ensure reveal always fires on touch/scroll edge cases (prefers-reduced-motion) */
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+}

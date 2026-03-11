@@ -80,6 +80,14 @@
 
 /* ---- REVEAL ON SCROLL ---- */
 (function () {
+  // Stagger entrance delays for cards within grid containers.
+  // Cap at index 7 so long lists don't wait forever (~0.42s max delay).
+  document.querySelectorAll('.fc-grid').forEach(function (grid) {
+    grid.querySelectorAll('.reveal').forEach(function (card, i) {
+      card.style.transitionDelay = (Math.min(i, 7) * 0.07) + 's';
+    });
+  });
+
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
 
@@ -90,7 +98,7 @@
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.06 });
 
   els.forEach(function (el) { observer.observe(el); });
 })();

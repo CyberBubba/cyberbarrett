@@ -80,6 +80,20 @@
       transition: all 0.3s ease; position: relative; overflow: hidden;
     }
 
+    /* Shine sweep on hover (::before) */
+    .fc-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      transform: translateX(-120%) skewX(-15deg);
+      pointer-events: none; z-index: 2;
+    }
+    .fc-card:hover::before { animation: fcShine 0.65s ease forwards; }
+    @keyframes fcShine {
+      to { transform: translateX(380%) skewX(-15deg); }
+    }
+
+    /* Top border gradient (::after) */
     .fc-card::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       opacity: 0; transition: opacity 0.3s;
