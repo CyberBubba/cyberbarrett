@@ -2,6 +2,15 @@
    CYBERBARRETT.COM — Main JavaScript
    ================================================================ */
 
+/* ---- NAV SCROLL (sticky glass effect) ---- */
+(function () {
+  const nav = document.getElementById('siteNav') || document.getElementById('nav');
+  if (!nav) return;
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+})();
+
 /* ---- NAV HAMBURGER ---- */
 (function () {
   const toggle = document.getElementById('navToggle');
@@ -23,10 +32,9 @@
     const menu    = item.querySelector('.nav-drop');
     if (!trigger || !menu) return;
 
-    // Prevent the parent link from navigating if it's a '#' href
+    // Always prevent navigation for dropdown triggers — reach the hub via the dropdown items
     trigger.addEventListener('click', function (e) {
-      const href = trigger.getAttribute('href');
-      if (href === '#') e.preventDefault();
+      e.preventDefault();
 
       const isOpen = item.classList.contains('open');
 

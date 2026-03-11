@@ -45,14 +45,14 @@ body::before {
 }
 
 /* ---- NAV ---- */
-#nav {
+#nav, .site-nav {
     position: fixed; top:0; left:0; right:0; z-index:1000;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 2.5rem;
     transition: all 0.35s ease;
 }
 
-#nav.scrolled {
+#nav.scrolled, .site-nav.scrolled {
     background: rgba(4,13,28,0.95);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid rgba(0,170,255,0.12);

@@ -20,6 +20,7 @@
         <li class="nav-has-drop">
             <a href="conservation.html">Conservation &#9662;</a>
             <ul class="nav-drop">
+                <li><a href="conservation.html">Overview</a></li>
                 <li><a href="manatees.html">Manatees</a></li>
                 <li><a href="sea-turtles.html">Sea Turtles</a></li>
             </ul>
@@ -39,11 +40,40 @@
     </button>
 </nav>
 
-<section class="hero">
-  <div class="hero-content">
-    <span class="hero-eyebrow">Genealogy Research</span>
-    <h1 class="hero-title">Family <span class="grad">History</span></h1>
-    <p class="hero-sub">Tracing the Holt-Baldwin line from Appalachian hollows to the 1620 Mayflower. Real research, real records, real stories.</p>
+<section class="page-hero">
+  <div class="grid-bg"></div>
+  <div class="blob-hero"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">Genealogy Research</span>
+    <h1 class="page-title">Family <span class="grad">History</span></h1>
+    <p class="page-sub">Tracing the Holt-Baldwin line from Appalachian hollows to the 1620 Mayflower. Real research, real records, real stories.</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="full-width-section" style="background: #071428; padding: 3.5rem 2.5rem 2rem;">
+  <div class="container" style="max-width: 780px;">
+    <p style="font-size: 1.05rem; color: rgba(255,255,255,0.88); line-height: 1.85; margin-bottom: 1.25rem;">Welcome to the genealogy section of my site! I am so glad you are here. For me, tracing my family history has always been about more than just filling in boxes on a chart; it is a way to pull back the curtain on the past and really get to know the people who paved the way for my own life.</p>
+    <p style="font-size: 1rem; color: var(--muted); line-height: 1.85; margin-bottom: 2rem;">Genealogy is the study of our direct biological lineage. It is the process of following the thread of our ancestors back through time to see where they lived, what they did, and how they survived the challenges of their eras. When I look at my family tree, I don&#8217;t just see names&#8212;I see the collective journey that eventually led to me.</p>
+
+    <h2 style="font-family:'Space Mono',monospace; font-size:1rem; color:var(--electric); letter-spacing:0.14em; text-transform:uppercase; margin:0 0 1.25rem; border-bottom:1px solid rgba(0,170,255,0.15); padding-bottom:0.6rem;">Some Fun History &amp; Facts</h2>
+
+    <div style="display:grid; gap:1rem; margin-bottom:2rem;">
+      <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:1.1rem 1.4rem;">
+        <p style="margin:0; font-size:0.96rem; line-height:1.8; color:var(--muted);"><strong style="color:var(--white);">It is an ancient tradition:</strong> Humans have been obsessed with their roots for thousands of years. In many cultures, knowing your &ldquo;begats&rdquo; was a matter of survival, used to prove everything from land rights to royal succession. The longest documented family tree in the world belongs to the philosopher Confucius; it spans over 80 generations and more than 2,500 years!</p>
+      </div>
+      <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:1.1rem 1.4rem;">
+        <p style="margin:0; font-size:0.96rem; line-height:1.8; color:var(--muted);"><strong style="color:var(--white);">The &ldquo;Double&rdquo; Effect:</strong> Have you ever stopped to think about the math involved in your existence? You have two parents, four grandparents, and eight great-grandparents. Every time you go back a single generation, the number of your ancestors doubles. By the time you reach ten generations back (roughly 250 to 300 years ago), you have over 1,000 direct ancestors who all had to survive and meet for you to be here today.</p>
+      </div>
+      <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:1.1rem 1.4rem;">
+        <p style="margin:0; font-size:0.96rem; line-height:1.8; color:var(--muted);"><strong style="color:var(--white);">A Worldwide Connection:</strong> If you are researching American roots, you might be looking for a link to the Mayflower. Even though only 102 passengers were on that ship in 1620, it is estimated that about 35 million people alive today are their direct descendants. It is incredible how one small group can blossom into such a massive global family.</p>
+      </div>
+      <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:1.1rem 1.4rem;">
+        <p style="margin:0; font-size:0.96rem; line-height:1.8; color:var(--muted);"><strong style="color:var(--white);">Clues in our Names:</strong> Surnames weren&#8217;t always a thing. In Europe, they only became common during the Middle Ages as populations grew. They often give us a direct window into an ancestor&#8217;s life&#8212;&ldquo;Smith&rdquo; for a blacksmith, &ldquo;Hill&rdquo; for someone who lived on one, or &ldquo;Jackson&rdquo; for the son of Jack.</p>
+      </div>
+    </div>
+
+    <p style="font-size: 1rem; color: var(--muted); line-height: 1.85; border-left: 3px solid var(--electric); padding-left: 1.2rem;">My goal here is to focus strictly on my direct ancestors and provide the kind of exhaustive detail&#8212;like marriage records and vital dates&#8212;needed for serious research like tracing Melungeon roots, or societies like the Mayflower Society. I hope you enjoy exploring these stories, and the histories, as much as I&#8217;ve enjoyed uncovering them!</p>
   </div>
 </section>
 
@@ -172,26 +202,12 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <p>&copy; 2026 CyberBarrett. All rights reserved.</p>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">&copy; 2026 <a href="index.html">CyberBarrett</a> &mdash; cyberbarrett.com</div>
+    <div class="footer-tag">Hand-crafted HTML &middot; GitHub Pages</div>
   </div>
 </footer>
-
-<script>
-var nav=document.getElementById('nav');
-window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);});
-var toggle=document.getElementById('navToggle');
-var links=document.getElementById('navLinks');
-toggle.addEventListener('click',function(){links.classList.toggle('open');});
-links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
-var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.05,rootMargin:'0px 0px 0px 0px'});
-document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
-// Fallback: ensure all reveals become visible after 800ms (handles mobile edge cases)
-setTimeout(function(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});},800);
-</script>
-
-
   <script src="js/main.js"></script>
 </body>
 </html>
