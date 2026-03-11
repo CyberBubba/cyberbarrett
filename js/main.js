@@ -15,12 +15,34 @@
 (function () {
   const toggle = document.getElementById('navToggle');
   const links  = document.getElementById('navLinks');
-  if (toggle && links) {
-    toggle.addEventListener('click', function () {
-      links.classList.toggle('open');
-      toggle.classList.toggle('open');
-    });
+  if (!toggle || !links) return;
+
+  function toggleMenu(e) {
+    e.stopPropagation(); // prevent doc click-outside from firing on same event
+    links.classList.toggle('open');
+    toggle.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', links.classList.contains('open'));
   }
+
+  toggle.addEventListener('click', toggleMenu);
+
+  // Fallback for Android browsers that are slow to fire click
+  toggle.addEventListener('touchend', function (e) {
+    e.preventDefault(); // prevent the ghost click that follows touchend
+    toggleMenu(e);
+  });
+
+  // Close mobile nav when a leaf link is tapped
+  links.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      // Only close if it's not a dropdown trigger (those use preventDefault)
+      if (!a.closest('.nav-has-drop')) {
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
 })();
 
 /* ---- NAV DROPDOWNS (click to open, click outside to close) ---- */

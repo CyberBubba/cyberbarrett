@@ -54,6 +54,7 @@ body::before {
 
 #nav.scrolled, .site-nav.scrolled {
     background: rgba(4,13,28,0.95);
+    -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid rgba(0,170,255,0.12);
     padding: 0.65rem 2.5rem;
@@ -90,13 +91,19 @@ body::before {
 .nav-links { display:flex; gap:0.15rem; align-items:center; }
 
 .nav-hamburger {
-    display:none; flex-direction:column; gap:5px;
-    background:none; border:none; cursor:pointer; padding:4px;
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    background:none; border:none; cursor:pointer;
+    padding:11px 8px;          /* 44px tall tap target for mobile */
+    min-width:44px; min-height:44px;
+    touch-action: manipulation; /* eliminates 300ms tap delay on Android */
+    -webkit-tap-highlight-color: transparent;
+    position:relative; z-index:1001;
 }
 
 .nav-hamburger span {
-    display:block; width:22px; height:2px;
-    background:var(--electric); border-radius:2px; transition:all 0.3s;
+    display:block; width:24px; height:2px;
+    background:var(--electric); border-radius:2px;
+    transition:all 0.3s; pointer-events:none;
 }
 
 @media (max-width:680px) {
