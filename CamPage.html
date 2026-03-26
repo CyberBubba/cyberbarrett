@@ -70,14 +70,124 @@ body.dark .topbar{background:#061220;}
 .dp-sun-emoji{font-size:1.15rem;}.dp-sun-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.45);}
 .dp-sun-time{font-size:.8rem;font-weight:600;color:#fff;}
 .dp-daylen{font-size:.66rem;color:rgba(255,255,255,.45);text-align:center;}
-.dp-flag-row{display:flex;align-items:center;gap:10px;margin-bottom:5px;}
-.dp-flag-sw{width:30px;height:22px;border-radius:4px;border:2px solid rgba(255,255,255,.18);flex-shrink:0;}
-.dp-flag-st{font-size:.88rem;font-weight:700;color:#fff;}
 .dp-flag-desc{font-size:.68rem;color:rgba(255,255,255,.55);line-height:1.4;}
-.dp-flag-note{font-size:.58rem;color:rgba(255,255,255,.35);margin-top:6px;}
 .dp-flag-note a{color:var(--gold);text-decoration:none;}
+
+.beach-flag-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.flag-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(244,164,41,.25);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.flag-card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0,0,0,.28);
+  border-color: rgba(244,164,41,.45);
+}
+
+.flag-card-image {
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background: #0b1c33;
+}
+
+.flag-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.flag-card-body {
+  padding: 14px 14px 16px;
+}
+
+.flag-card-status {
+  font-size: .92rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.flag-card-text {
+  font-size: .78rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,.78);
+  margin-bottom: 12px;
+}
+
+.flag-card-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(244,164,41,.16);
+  border: 1px solid rgba(244,164,41,.35);
+  color: var(--gold);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.flag-info-box {
+  padding: 12px 14px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.flag-info-title {
+  font-size: .82rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.flag-info-box p {
+  font-size: .75rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,.78);
+  margin-bottom: 10px;
+}
+
+.flag-info-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.flag-info-list li {
+  font-size: .74rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,.86);
+}
+
+.flag-info-list a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.flag-info-list a:hover {
+  text-decoration: underline;
+}
+
 .dp-links{list-style:none;display:flex;flex-direction:column;gap:2px;}
 .dp-links a{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:6px;font-size:.74rem;color:rgba(255,255,255,.75);text-decoration:none;transition:background .15s,color .15s;}
+
 .dp-links a:hover{background:rgba(255,255,255,.09);color:var(--gold);}
 .dl-icon{font-size:.78rem;width:16px;text-align:center;}
 .dl-arrow{margin-left:auto;font-size:.58rem;opacity:.45;}
@@ -267,41 +377,76 @@ body.dark .footer-name{color:#7dd3fc;}
 <!-- INFO DRAWER -->
 <div class="info-drawer" id="infoDrawer">
   <div class="drawer-inner">
+
     <div class="drawer-panel">
-      <div class="dp-title">🌤 Gulf Shores Weather</div>
-      <div id="dpWeather"><div class="shimmer"></div><div class="shimmer w80"></div><div class="shimmer w60"></div></div>
-    </div>
-    <div class="drawer-panel">
-      <div class="dp-title">🌊 Today's Tides</div>
-      <div id="dpTides"><div class="shimmer"></div><div class="shimmer w80"></div></div>
-    </div>
-    <div class="drawer-panel">
-      <div class="dp-title">☀️ Sunrise &amp; Sunset</div>
-      <div id="dpSun"><div class="shimmer"></div><div class="shimmer w60"></div></div>
-    </div>
-    <div class="drawer-panel">
-      <div class="dp-title">🚩 Beach Flag</div>
-      <!-- MANUAL UPDATE: change data-color to: green | yellow | red | double-red | purple -->
-      <div id="dpFlag" data-color="green" data-status="Green Flag" data-desc="Low hazard. Calm conditions. Great day for the beach!">
-        <div class="dp-flag-row">
-          <div class="dp-flag-sw" id="flagSwatch"></div>
-          <div class="dp-flag-st" id="flagStatus"></div>
-        </div>
-        <div class="dp-flag-desc" id="flagDesc"></div>
-        <div class="dp-flag-note">Check <a href="https://www.gulfshoresal.gov/residents/beach_information/beach_flag_program.php" target="_blank">City of Gulf Shores</a> for official status.</div>
+      <div class="dp-title">Gulf Shores Weather</div>
+      <div id="dpWeather">
+        <div class="shimmer"></div>
+        <div class="shimmer w80"></div>
+        <div class="shimmer w60"></div>
       </div>
     </div>
+
     <div class="drawer-panel">
-      <div class="dp-title">🔗 Quick Links</div>
+      <div class="dp-title">Today's Tides</div>
+      <div id="dpTides">
+        <div class="shimmer"></div>
+        <div class="shimmer w80"></div>
+      </div>
+    </div>
+
+    <div class="drawer-panel">
+      <div class="dp-title">Sunrise &amp; Sunset</div>
+      <div id="dpSun">
+        <div class="shimmer"></div>
+        <div class="shimmer w60"></div>
+      </div>
+    </div>
+
+    <div class="drawer-panel beach-flag-panel">
+      <div class="dp-title">Beach Flag Status</div>
+
+      <a
+        class="flag-card-link"
+        href="https://www.gulfshoresal.gov/1136/Beach-Safety"
+        target="_blank"
+        rel="noopener"
+        aria-label="Check City of Gulf Shores official current beach status"
+      >
+        <div class="flag-card-image">
+          <img src="images/hero007.jpg" alt="Gulf Shores beach flag information">
+        </div>
+
+        <div class="flag-card-body">
+          <div class="flag-card-status">Check official current status</div>
+          <div class="flag-card-text">Check City of Gulf Shores for official current status.</div>
+          <span class="flag-card-button">View official status</span>
+        </div>
+      </a>
+
+      <div class="flag-info-box">
+        <div class="flag-info-title">Know before you go!</div>
+        <p>Checking beach conditions is easy! Before entering the water, please check current conditions in one of the following ways:</p>
+        <ul class="flag-info-list">
+          <li>Call <a href="tel:2519687873">251-968-SURF (7873)</a>.</li>
+          <li>Visit <a href="https://www.gulfshoresal.gov/" target="_blank" rel="noopener">www.gulfshoresAL.gov</a>.</li>
+          <li>Text <strong>"ALBEACHES"</strong> to <strong>888-777</strong> to receive daily beach conditions via text message.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drawer-panel">
+      <div class="dp-title">Quick Links</div>
       <ul class="dp-links">
-        <li><a href="https://www.gulfshoresal.gov" target="_blank" rel="noopener"><span class="dl-icon">🏖️</span>City of Gulf Shores<span class="dl-arrow">↗</span></a></li>
-        <li><a href="https://www.bamabeachcams.com" target="_blank" rel="noopener"><span class="dl-icon">📷</span>Bama Beach Cams<span class="dl-arrow">↗</span></a></li>
-        <li><a href="https://radar.weather.gov/station/KMOB/standard" target="_blank" rel="noopener"><span class="dl-icon">🌧️</span>Mobile NWS Radar<span class="dl-arrow">↗</span></a></li>
-        <li><a href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8735180" target="_blank" rel="noopener"><span class="dl-icon">📈</span>NOAA Tides<span class="dl-arrow">↗</span></a></li>
-        <li><a href="https://www.surf-forecast.com/breaks/Gulf-Shores/forecasts/latest" target="_blank" rel="noopener"><span class="dl-icon">🏄</span>Surf Forecast<span class="dl-arrow">↗</span></a></li>
-        <li><a href="https://www.orangebeach.com" target="_blank" rel="noopener"><span class="dl-icon">🍊</span>Orange Beach<span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.gulfshoresal.gov" target="_blank" rel="noopener"><span class="dl-icon">🌐</span><span>City of Gulf Shores</span><span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.bamabeachcams.com" target="_blank" rel="noopener"><span class="dl-icon">📹</span><span>Bama Beach Cams</span><span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://radar.weather.gov/station/KMOB/standard" target="_blank" rel="noopener"><span class="dl-icon">🌧️</span><span>Mobile NWS Radar</span><span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8735180" target="_blank" rel="noopener"><span class="dl-icon">🌊</span><span>NOAA Tides</span><span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.surf-forecast.com/breaks/Gulf-Shores/forecasts/latest" target="_blank" rel="noopener"><span class="dl-icon">🏄</span><span>Surf Forecast</span><span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.orangebeach.com" target="_blank" rel="noopener"><span class="dl-icon">📍</span><span>Orange Beach</span><span class="dl-arrow">↗</span></a></li>
       </ul>
     </div>
+
   </div>
 </div>
 
@@ -570,7 +715,7 @@ let dataLoaded = false;
 drawerTrigger.addEventListener('click', () => {
   const open = infoDrawer.classList.toggle('open');
   drawerTrigger.classList.toggle('open', open);
-  if (open && !dataLoaded) { dataLoaded = true; loadWeather(); loadTides(); loadSun(); loadFlag(); }
+  if (open && !dataLoaded) { dataLoaded = true; loadWeather(); loadTides(); loadSun(); }
 });
 
 /* Banner */
@@ -707,14 +852,6 @@ async function loadSun(){
   }catch(e){el.innerHTML=`<div style="font-size:.74rem;color:rgba(255,255,255,.5)">Sun data unavailable</div>`;}
 }
 
-function loadFlag(){
-  const colors={'green':{hex:'#22c55e',status:'Green Flag',desc:'Low hazard. Calm conditions. Great day for the beach!'},'yellow':{hex:'#eab308',status:'Yellow Flag',desc:'Medium hazard. Moderate surf or currents.'},'red':{hex:'#ef4444',status:'Red Flag',desc:'High hazard. High surf or strong currents.'},'double-red':{hex:'#b91c1c',status:'Double Red Flag',desc:'Water closed. No swimming.'},'purple':{hex:'#a855f7',status:'Purple Flag',desc:'Dangerous marine life present.'}};
-  const el=document.getElementById('dpFlag');
-  const info=colors[el.dataset.color]||colors['green'];
-  document.getElementById('flagSwatch').style.background=info.hex;
-  document.getElementById('flagStatus').textContent=el.dataset.status||info.status;
-  document.getElementById('flagDesc').textContent=el.dataset.desc||info.desc;
-}
 </script>
 </body>
 </html>
