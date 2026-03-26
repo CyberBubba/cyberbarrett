@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CyberBarrett — Gulf Shores Live Cams</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
+<style>
+:root {
+  --sand:#f5ede0;--sand-dark:#e8d8c4;--sand-deep:#c8a882;
+  --ocean:#0a3d6b;--ocean-mid:#1565a8;--ocean-light:#2e8bc0;
+  --gold:#f4a429;--teal:#0d9488;
+  --text:#1a1a2e;--text-soft:#4a5568;
+  --card-bg:#ffffff;--border:rgba(10,61,107,0.12);
+  --shadow:0 8px 32px rgba(10,61,107,0.14);
+  --shadow-lg:0 20px 60px rgba(10,61,107,0.22);
+  --radius:16px;
+}
+body.dark {
+  --sand:#0a1628;--sand-dark:#0f1f38;--sand-deep:#1e3a5f;
+  --ocean:#38bdf8;--ocean-mid:#0ea5e9;--ocean-light:#7dd3fc;
+  --gold:#fbbf24;--text:#e2e8f0;--text-soft:#94a3b8;
+  --card-bg:#0f1f38;--border:rgba(56,189,248,0.15);
+  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.6);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text);min-height:100vh;transition:background .4s ease,color .4s ease;overflow-x:hidden;}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:200;background:var(--ocean);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px;box-shadow:0 2px 20px rgba(10,61,107,.4);}
+body.dark .topbar{background:#061220;}
+.topbar-brand{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--gold);letter-spacing:.02em;text-decoration:none;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.drawer-trigger{display:flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;cursor:pointer;transition:background .2s;letter-spacing:.03em;}
+.drawer-trigger:hover{background:rgba(255,255,255,.18);}
+.dt-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 2px rgba(74,222,128,.35);animation:blink 2s ease-in-out infinite;}
+.dt-arrow{font-size:.6rem;transition:transform .3s ease;}
+.drawer-trigger.open .dt-arrow{transform:rotate(180deg);}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.theme-btn:hover{background:rgba(255,255,255,.2);}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 2px rgba(74,222,128,.35);}50%{opacity:.6;box-shadow:0 0 0 5px rgba(74,222,128,.1);}}
+
+/* INFO DRAWER */
+.info-drawer{position:fixed;top:52px;left:0;right:0;z-index:190;background:#061e3a;border-bottom:2px solid rgba(244,164,41,.35);box-shadow:0 8px 32px rgba(0,0,0,.5);max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1);}
+.info-drawer.open{max-height:340px;}
+.drawer-inner{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.05);}
+@media(max-width:900px){.drawer-inner{grid-template-columns:repeat(2,1fr);}.info-drawer.open{max-height:700px;}}
+.drawer-panel{background:rgba(6,28,58,.92);padding:18px 20px;backdrop-filter:blur(12px);}
+.dp-title{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.dp-weather-main{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.dp-weather-icon{font-size:2rem;line-height:1;}
+.dp-temp{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#fff;line-height:1;}
+.dp-desc{font-size:.74rem;color:rgba(255,255,255,.65);margin-top:2px;}
+.dp-weather-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;}
+.dp-wg-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.45);}
+.dp-wg-val{font-size:.78rem;font-weight:600;color:#fff;}
+.dp-tide-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.dp-tide-item{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.05);}
+.dp-tide-type{display:flex;align-items:center;gap:5px;color:#fff;font-weight:500;}
+.dp-tide-hi{color:#38bdf8;}.dp-tide-lo{color:#94a3b8;}
+.dp-tide-time{color:rgba(255,255,255,.55);font-size:.7rem;}
+.dp-tide-ht{color:var(--gold);font-weight:700;font-size:.74rem;}
+.dp-sun-row{display:flex;gap:8px;margin-bottom:6px;}
+.dp-sun-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;border-radius:8px;background:rgba(244,164,41,.07);border:1px solid rgba(244,164,41,.18);}
+.dp-sun-emoji{font-size:1.15rem;}.dp-sun-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.45);}
+.dp-sun-time{font-size:.8rem;font-weight:600;color:#fff;}
+.dp-daylen{font-size:.66rem;color:rgba(255,255,255,.45);text-align:center;}
+.dp-flag-row{display:flex;align-items:center;gap:10px;margin-bottom:5px;}
+.dp-flag-sw{width:30px;height:22px;border-radius:4px;border:2px solid rgba(255,255,255,.18);flex-shrink:0;}
+.dp-flag-st{font-size:.88rem;font-weight:700;color:#fff;}
+.dp-flag-desc{font-size:.68rem;color:rgba(255,255,255,.55);line-height:1.4;}
+.dp-flag-note{font-size:.58rem;color:rgba(255,255,255,.35);margin-top:6px;}
+.dp-flag-note a{color:var(--gold);text-decoration:none;}
+.dp-links{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.dp-links a{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:6px;font-size:.74rem;color:rgba(255,255,255,.75);text-decoration:none;transition:background .15s,color .15s;}
+.dp-links a:hover{background:rgba(255,255,255,.09);color:var(--gold);}
+.dl-icon{font-size:.78rem;width:16px;text-align:center;}
+.dl-arrow{margin-left:auto;font-size:.58rem;opacity:.45;}
+.shimmer{height:12px;border-radius:6px;background:linear-gradient(90deg,rgba(255,255,255,.07) 25%,rgba(255,255,255,.16) 50%,rgba(255,255,255,.07) 75%);background-size:200% 100%;animation:shim 1.5s ease infinite;margin-bottom:5px;}
+.shimmer.w80{width:80%;}.shimmer.w60{width:60%;}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:420px;position:relative;overflow:hidden;}
+@media(max-width:768px){.hero{grid-template-columns:1fr;}.hero-cam-side{min-height:240px;}}
+.hero-text-side{background:linear-gradient(145deg,#082f5c 0%,var(--ocean-mid) 60%,#0e5fa0 100%);padding:48px 44px 48px 36px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+.hero-text-side::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-30deg,transparent,transparent 40px,rgba(255,255,255,.018) 40px,rgba(255,255,255,.018) 41px);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(244,164,41,.14);border:1px solid rgba(244,164,41,.38);border-radius:999px;padding:5px 14px 5px 10px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;width:fit-content;}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.22);animation:blink 2s ease-in-out infinite;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;letter-spacing:-.01em;}
+.hero-title span{color:var(--gold);display:block;}
+.hero-sub{font-size:.92rem;color:rgba(255,255,255,.72);line-height:1.65;margin-bottom:24px;max-width:340px;}
+.hero-banner{display:flex;align-items:center;gap:10px;padding:9px 15px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;width:fit-content;}
+.banner-text{font-size:.8rem;color:rgba(255,255,255,.82);font-weight:500;min-width:200px;transition:opacity .3s ease,transform .3s ease;}
+.hero-avatar-wrap{position:absolute;bottom:22px;right:28px;}
+.hero-avatar{width:108px;height:108px;border-radius:50%;border:3px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.35),0 0 0 6px rgba(244,164,41,.12);overflow:hidden;background:rgba(255,255,255,.1);}
+.hero-avatar img{width:100%;height:100%;object-fit:cover;}
+.hero-cam-side{position:relative;background:#020c18;overflow:hidden;}
+.hero-cam-side iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;}
+.hero-live-badge{position:absolute;top:14px;left:14px;z-index:5;display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.52);backdrop-filter:blur(8px);border:1px solid rgba(74,222,128,.38);border-radius:999px;padding:5px 11px;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;}
+.hero-live-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 2s ease-in-out infinite;}
+.hero-cam-goto{position:absolute;top:14px;right:14px;z-index:5;display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;background:rgba(244,164,41,.88);color:var(--ocean);font-size:.7rem;font-weight:700;letter-spacing:.04em;text-decoration:none;text-transform:uppercase;transition:background .2s;}
+.hero-cam-goto:hover{background:var(--gold);}
+.hero-cam-label{position:absolute;bottom:0;left:0;right:0;padding:32px 18px 14px;background:linear-gradient(to top,rgba(0,0,0,.72),transparent);z-index:5;}
+.hero-cam-label strong{display:block;font-size:.98rem;color:#fff;margin-bottom:2px;}
+.hero-cam-label span{font-size:.74rem;color:rgba(255,255,255,.65);}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;padding:30px 32px 14px;flex-wrap:wrap;gap:10px;}
+.section-label{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--ocean);}
+body.dark .section-label{color:#7dd3fc;}
+.section-sub{font-size:.78rem;color:var(--text-soft);margin-top:3px;}
+.strip-controls{display:flex;align-items:center;gap:8px;}
+.scroll-hint{font-size:.72rem;color:var(--text-soft);opacity:.65;}
+.strip-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--card-bg);color:var(--ocean);font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all .18s ease;}
+.strip-btn:hover{background:var(--ocean);color:#fff;border-color:var(--ocean);}
+
+/* STRIP WRAPPER */
+.cam-strip-wrapper{position:relative;padding:4px 32px 32px;}
+.cam-strip-wrapper::before,.cam-strip-wrapper::after{content:'';position:absolute;top:0;bottom:32px;width:52px;z-index:5;pointer-events:none;}
+.cam-strip-wrapper::before{left:32px;background:linear-gradient(to right,var(--sand),transparent);}
+.cam-strip-wrapper::after{right:32px;background:linear-gradient(to left,var(--sand),transparent);}
+.cam-strip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:8px 4px 14px;cursor:grab;-webkit-overflow-scrolling:touch;}
+.cam-strip:active{cursor:grabbing;}
+.cam-strip::-webkit-scrollbar{height:4px;}
+.cam-strip::-webkit-scrollbar-track{background:var(--sand-dark);border-radius:2px;}
+.cam-strip::-webkit-scrollbar-thumb{background:var(--sand-deep);border-radius:2px;}
+
+/* SECTION DIVIDER */
+.section-divider{padding:8px 32px 14px;}
+.section-divider-label{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ocean);margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+body.dark .section-divider-label{color:#7dd3fc;}
+.section-divider-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.section-divider-sub{font-size:.76rem;color:var(--text-soft);}
+
+/* EMBED CARD */
+.cam-card-embed{flex:0 0 380px;scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;background:#020c18;border:2px solid rgba(244,164,41,.3);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;user-select:none;position:relative;}
+.embed-thumb{position:relative;padding-bottom:56.25%;background:#020c18;flex-shrink:0;}
+.embed-thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.embed-label{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;background:#061e3a;}
+.embed-name{font-size:.88rem;font-weight:600;color:#fff;}
+.embed-loc{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:1px;}
+.embed-goto{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;background:rgba(244,164,41,.15);border:1px solid rgba(244,164,41,.3);color:var(--gold);font-size:.7rem;font-weight:600;text-decoration:none;letter-spacing:.03em;transition:background .18s;white-space:nowrap;}
+.embed-goto:hover{background:rgba(244,164,41,.3);}
+.embed-live-badge{position:absolute;top:10px;left:12px;z-index:5;display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.52);backdrop-filter:blur(6px);border:1px solid rgba(74,222,128,.35);border-radius:999px;padding:4px 10px;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;}
+.embed-live-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 2s ease-in-out infinite;}
+
+/* LINK-OUT CARD */
+.cam-card-out{flex:0 0 272px;scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;background:var(--card-bg);border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:transform .22s ease,box-shadow .22s ease;text-decoration:none;color:inherit;display:flex;flex-direction:column;user-select:none;}
+.cam-card-out:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow-lg);}
+.cam-thumb{height:154px;position:relative;overflow:hidden;flex-shrink:0;}
+.g1 .cam-thumb{background:linear-gradient(135deg,#0a3d6b,#1565a8,#2e8bc0);}
+.g2 .cam-thumb{background:linear-gradient(135deg,#0a4a6e,#1262a0,#1a8cbf);}
+.g3 .cam-thumb{background:linear-gradient(135deg,#0e3d5c,#0d7a6e,#0fa888);}
+.g4 .cam-thumb{background:linear-gradient(135deg,#1a3a6e,#1b5ba8,#3480c0);}
+.g5 .cam-thumb{background:linear-gradient(135deg,#0a3550,#0a5980,#1280a8);}
+.g6 .cam-thumb{background:linear-gradient(135deg,#003a4e,#006080,#0090a8);}
+.cam-thumb::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-35deg,transparent,transparent 18px,rgba(255,255,255,.025) 18px,rgba(255,255,255,.025) 19px);}
+.cam-thumb::after{content:'';position:absolute;top:-50%;left:-70%;width:45%;height:200%;background:linear-gradient(to right,transparent,rgba(255,255,255,.08),transparent);transform:skewX(-18deg);animation:sweep 4.5s ease-in-out infinite;}
+@keyframes sweep{0%{left:-70%}100%{left:140%}}
+.cam-out-live{position:absolute;top:9px;left:11px;z-index:3;display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.42);backdrop-filter:blur(5px);border:1px solid rgba(74,222,128,.35);border-radius:999px;padding:3px 8px;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;}
+.cam-out-live::before{content:'';width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s ease-in-out infinite;}
+.cam-thumb-name{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:rgba(255,255,255,.9);text-align:center;padding:0 14px;text-shadow:0 2px 10px rgba(0,0,0,.4);transition:opacity .2s;}
+.cam-hover-overlay{position:absolute;inset:0;z-index:4;background:rgba(10,61,107,.58);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;backdrop-filter:blur(2px);}
+.cam-card-out:hover .cam-hover-overlay{opacity:1;}
+.cam-card-out:hover .cam-thumb-name{opacity:0;}
+.cam-cta{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:999px;background:var(--gold);color:#0a3d6b;font-weight:700;font-size:.8rem;letter-spacing:.03em;box-shadow:0 4px 16px rgba(0,0,0,.28);transform:translateY(5px);transition:transform .2s;}
+.cam-card-out:hover .cam-cta{transform:translateY(0);}
+.cam-info{padding:11px 14px;display:flex;justify-content:space-between;align-items:center;}
+.cam-name{font-weight:600;font-size:.88rem;color:var(--text);}
+.cam-loc{font-size:.72rem;color:var(--text-soft);margin-top:1px;}
+.cam-arrow{font-size:.78rem;color:var(--sand-deep);transition:transform .18s,color .18s;}
+.cam-card-out:hover .cam-arrow{transform:translateX(3px);color:var(--ocean);}
+
+/* HERO CAM SIDE — image + cinematic scroller */
+.hero-cam-side{position:relative;background:#020c18;overflow:hidden;}
+
+/* Cinematic scroll container — centered, full height */
+.hero-scroller{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:32px 28px;
+  z-index:3;
+  overflow:hidden;
+}
+
+.hero-scroller-line{
+  position:absolute;
+  left:0;right:0;
+  text-align:center;
+  padding:0 28px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,2vw,1.35rem);
+  font-weight:700;
+  color:#fff;
+  text-shadow:0 2px 16px rgba(0,0,0,0.7),0 1px 4px rgba(0,0,0,0.5);
+  line-height:1.4;
+  opacity:0;
+  transform:translateY(60px);
+  transition:none;
+}
+
+.hero-scroller-line .hl{color:var(--gold);}
+
+/* Osprey card — nature teal gradient */
+.g-osprey .cam-thumb{background:linear-gradient(135deg,#0a3d2e,#0d7a52,#14a86e)!important;}
+.g-bama .cam-thumb{background:linear-gradient(135deg,#3d1a0a,#a84314,#c85a1a)!important;}
+
+/* ══════════════════════════════════════
+   GULF SHORES NARRATIVE SECTION
+══════════════════════════════════════ */
+.gs-narrative{background:linear-gradient(180deg,var(--sand-dark) 0%,var(--sand) 100%);border-top:1px solid var(--border);padding:56px 32px 64px;margin-top:8px;}
+body.dark .gs-narrative{background:linear-gradient(180deg,#061220 0%,#0a1628 100%);}
+.gsn-header{text-align:center;margin-bottom:48px;}
+.gsn-header-inner{max-width:720px;margin:0 auto;}
+.gsn-eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin-bottom:10px;}
+.gsn-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;color:var(--ocean);margin-bottom:18px;line-height:1.15;}
+body.dark .gsn-title{color:#7dd3fc;}
+.gsn-intro{font-size:1.02rem;color:var(--text-soft);line-height:1.75;font-style:italic;}
+.gsn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1136px;margin:0 auto;}
+.gsn-grid .gsn-card:nth-child(4){grid-column:1;}
+.gsn-grid .gsn-card:nth-child(5){grid-column:2;}
+@media(max-width:900px){
+  .gsn-grid{grid-template-columns:repeat(2,1fr);}
+  .gsn-grid .gsn-card:nth-child(4),.gsn-grid .gsn-card:nth-child(5){grid-column:auto;}
+}
+@media(max-width:600px){.gsn-grid{grid-template-columns:1fr;}.gs-narrative{padding:40px 16px 48px;}}
+.gsn-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px 30px;box-shadow:var(--shadow);border-left:4px solid var(--ocean-light);transition:transform .2s ease,box-shadow .2s ease;}
+body.dark .gsn-card{border-left-color:#38bdf8;}
+.gsn-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.gsn-card-icon{font-size:2rem;margin-bottom:12px;display:block;line-height:1;}
+.gsn-card-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ocean);margin-bottom:14px;line-height:1.3;}
+body.dark .gsn-card-title{color:#7dd3fc;}
+.gsn-card-body{font-size:.88rem;color:var(--text-soft);line-height:1.75;margin-bottom:10px;}
+.gsn-card-body:last-child{margin-bottom:0;}
+.gsn-card-body strong{color:var(--text);font-weight:600;}
+.gsn-card-body em{color:var(--ocean-light);font-style:italic;}
+
+.footer{margin-top:8px;padding:18px 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-brand{display:flex;align-items:center;gap:10px;}
+.footer-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid var(--sand-deep);}
+.footer-avatar img{width:100%;height:100%;object-fit:cover;}
+.footer-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--ocean);}
+body.dark .footer-name{color:#7dd3fc;}
+.footer-copy{font-size:.72rem;color:var(--text-soft);}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="topbar-brand" href="#">CyberBarrett</a>
+  <div class="topbar-right">
+    <button class="drawer-trigger" id="drawerTrigger">
+      <span class="dt-dot"></span>Live Beach Info<span class="dt-arrow">▼</span>
+    </button>
+    <button class="theme-btn" id="themeBtn" title="Toggle dark mode">🌞</button>
+  </div>
+</nav>
+
+<!-- INFO DRAWER -->
+<div class="info-drawer" id="infoDrawer">
+  <div class="drawer-inner">
+    <div class="drawer-panel">
+      <div class="dp-title">🌤 Gulf Shores Weather</div>
+      <div id="dpWeather"><div class="shimmer"></div><div class="shimmer w80"></div><div class="shimmer w60"></div></div>
+    </div>
+    <div class="drawer-panel">
+      <div class="dp-title">🌊 Today's Tides</div>
+      <div id="dpTides"><div class="shimmer"></div><div class="shimmer w80"></div></div>
+    </div>
+    <div class="drawer-panel">
+      <div class="dp-title">☀️ Sunrise &amp; Sunset</div>
+      <div id="dpSun"><div class="shimmer"></div><div class="shimmer w60"></div></div>
+    </div>
+    <div class="drawer-panel">
+      <div class="dp-title">🚩 Beach Flag</div>
+      <!-- MANUAL UPDATE: change data-color to: green | yellow | red | double-red | purple -->
+      <div id="dpFlag" data-color="green" data-status="Green Flag" data-desc="Low hazard. Calm conditions. Great day for the beach!">
+        <div class="dp-flag-row">
+          <div class="dp-flag-sw" id="flagSwatch"></div>
+          <div class="dp-flag-st" id="flagStatus"></div>
+        </div>
+        <div class="dp-flag-desc" id="flagDesc"></div>
+        <div class="dp-flag-note">Check <a href="https://www.gulfshoresal.gov/residents/beach_information/beach_flag_program.php" target="_blank">City of Gulf Shores</a> for official status.</div>
+      </div>
+    </div>
+    <div class="drawer-panel">
+      <div class="dp-title">🔗 Quick Links</div>
+      <ul class="dp-links">
+        <li><a href="https://www.gulfshoresal.gov" target="_blank" rel="noopener"><span class="dl-icon">🏖️</span>City of Gulf Shores<span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.bamabeachcams.com" target="_blank" rel="noopener"><span class="dl-icon">📷</span>Bama Beach Cams<span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://radar.weather.gov/station/KMOB/standard" target="_blank" rel="noopener"><span class="dl-icon">🌧️</span>Mobile NWS Radar<span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8735180" target="_blank" rel="noopener"><span class="dl-icon">📈</span>NOAA Tides<span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.surf-forecast.com/breaks/Gulf-Shores/forecasts/latest" target="_blank" rel="noopener"><span class="dl-icon">🏄</span>Surf Forecast<span class="dl-arrow">↗</span></a></li>
+        <li><a href="https://www.orangebeach.com" target="_blank" rel="noopener"><span class="dl-icon">🍊</span>Orange Beach<span class="dl-arrow">↗</span></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text-side">
+    <div class="hero-badge"><span class="badge-dot"></span>Live from Gulf Shores, Alabama</div>
+    <h1 class="hero-title">Gulf Shores<span>Live Cams</span></h1>
+    <p class="hero-sub">Your real-time window onto the sand, surf, and skyline of the Alabama Gulf Coast — curated by CyberBarrett.</p>
+    <div class="hero-banner">
+      <span>🌊</span>
+      <span class="banner-text" id="bannerText">Streaming the Gulf Coast in real time...</span>
+    </div>
+    <div class="hero-avatar-wrap" id="heroAvatar">
+      <div class="hero-avatar">
+        <img src="images/hero001.png" alt="CyberBarrett">
+      </div>
+    </div>
+  </div>
+  <div class="hero-cam-side" id="heroCamSide">
+    <!-- Background image -->
+    <div style="position:absolute;inset:0;background:url('images/hero004.jpg') center/cover no-repeat;z-index:1;"></div>
+    <!-- Gradient overlays for depth -->
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,18,38,0.55) 0%,rgba(4,18,38,0.2) 45%,rgba(4,18,38,0.72) 100%);z-index:2;"></div>
+    <!-- Cinematic scroll text -->
+    <div class="hero-scroller">
+      <div class="hero-scroller-line" id="scrollerLine"></div>
+    </div>
+    <div class="hero-cam-label" style="z-index:4;">
+      <strong>Gulf Shores &amp; Orange Beach</strong>
+      <span>Alabama Gulf Coast — Live &amp; in the moment</span>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE EMBED CAMS SECTION -->
+<div class="section-header">
+  <div>
+    <div class="section-label">Live Embedded Cams</div>
+    <div class="section-sub">Playing directly on this page — drag to scroll</div>
+  </div>
+  <div class="strip-controls">
+    <span class="scroll-hint">← scroll →</span>
+    <button class="strip-btn" id="scrollLeft1">◀</button>
+    <button class="strip-btn" id="scrollRight1">▶</button>
+  </div>
+</div>
+
+<div class="cam-strip-wrapper">
+  <div class="cam-strip" id="strip1">
+
+    <!-- RTSP: Phoenix X -->
+    <div class="cam-card-embed">
+      <div class="embed-thumb">
+        <span class="embed-live-badge">Live</span>
+        <iframe src="https://rtsp.me/embed/DHd8kEGe/" allowfullscreen allow="autoplay; fullscreen" loading="lazy"></iframe>
+      </div>
+      <div class="embed-label">
+        <div><div class="embed-name">Phoenix X</div><div class="embed-loc">Orange Beach · Brett/Robinson</div></div>
+        <a class="embed-goto" href="https://www.brett-robinson.com/phoenix-gulf-towers-web-cam/" target="_blank" rel="noopener">Full View ↗</a>
+      </div>
+    </div>
+
+    <!-- RTSP: Phoenix IX -->
+    <div class="cam-card-embed">
+      <div class="embed-thumb">
+        <span class="embed-live-badge">Live</span>
+        <iframe src="https://rtsp.me/embed/KQ9Q6ZDS/" allowfullscreen allow="autoplay; fullscreen" loading="lazy"></iframe>
+      </div>
+      <div class="embed-label">
+        <div><div class="embed-name">Phoenix IX</div><div class="embed-loc">Orange Beach · Brett/Robinson</div></div>
+        <a class="embed-goto" href="https://www.brett-robinson.com/phoenix-gulf-towers-web-cam/" target="_blank" rel="noopener">Full View ↗</a>
+      </div>
+    </div>
+
+    <!-- RTSP: Phoenix All Suites -->
+    <div class="cam-card-embed">
+      <div class="embed-thumb">
+        <span class="embed-live-badge">Live</span>
+        <iframe src="https://rtsp.me/embed/DYzRASYn/" allowfullscreen allow="autoplay; fullscreen" loading="lazy"></iframe>
+      </div>
+      <div class="embed-label">
+        <div><div class="embed-name">Phoenix All Suites</div><div class="embed-loc">Orange Beach · Brett/Robinson</div></div>
+        <a class="embed-goto" href="https://www.brett-robinson.com/phoenix-gulf-towers-web-cam/" target="_blank" rel="noopener">Full View ↗</a>
+      </div>
+    </div>
+
+    <!-- Wetmet: Phoenix Gulf Towers -->
+    <div class="cam-card-embed">
+      <div class="embed-thumb">
+        <span class="embed-live-badge">Live</span>
+        <iframe src="https://api.wetmet.net/widgets/stream/frame.php?uid=5da7ce0cd284c9bc597bd3777dc4ac00" allowfullscreen allow="autoplay; fullscreen" loading="lazy"></iframe>
+      </div>
+      <div class="embed-label">
+        <div><div class="embed-name">Phoenix Gulf Towers</div><div class="embed-loc">Orange Beach · Brett/Robinson</div></div>
+        <a class="embed-goto" href="https://www.brett-robinson.com/phoenix-gulf-towers-web-cam/" target="_blank" rel="noopener">Full View ↗</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 4-ITEM ROW: image | card | card | image -->
+<div class="section-divider">
+  <div class="section-divider-label">More Live Cams</div>
+  <div class="section-divider-sub">Click the center cards to watch live on YouTube</div>
+</div>
+
+<div style="display:flex;gap:18px;padding:4px 32px 24px;align-items:stretch;">
+
+  <!-- Decorative left image -->
+  <div style="flex:1;min-width:0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+    <div style="height:100%;min-height:210px;background:url('images/hero005.webp') center/cover no-repeat;border-radius:var(--radius);"></div>
+  </div>
+
+  <!-- Card 2: Beach Club Resort -->
+  <a class="cam-card-out g2" href="https://www.youtube.com/live/pJqrjIuvGFE" target="_blank" rel="noopener" style="flex:1;min-width:0;">
+    <div class="cam-thumb">
+      <span class="cam-out-live">Live</span>
+      <div class="cam-thumb-name">Beach Club Resort &amp; Spa</div>
+      <div class="cam-hover-overlay"><div class="cam-cta">Watch on YouTube ↗</div></div>
+    </div>
+    <div class="cam-info">
+      <div><div class="cam-name">Beach Club Resort &amp; Spa</div><div class="cam-loc">Gulf Shores · YouTube Live</div></div>
+      <span class="cam-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- Card 3: Gulf Shores Live Cam -->
+  <a class="cam-card-out g3" href="https://www.youtube.com/live/l2em7gqBj00" target="_blank" rel="noopener" style="flex:1;min-width:0;">
+    <div class="cam-thumb">
+      <span class="cam-out-live">Live</span>
+      <div class="cam-thumb-name">Gulf Shores Live Cam</div>
+      <div class="cam-hover-overlay"><div class="cam-cta">Watch on YouTube ↗</div></div>
+    </div>
+    <div class="cam-info">
+      <div><div class="cam-name">Gulf Shores Live Cam</div><div class="cam-loc">Gulf Shores · YouTube Live</div></div>
+      <span class="cam-arrow">→</span>
+    </div>
+  </a>
+
+  <!-- Decorative right image -->
+  <div style="flex:1;min-width:0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+    <div style="height:100%;min-height:210px;background:url('images/hero006.webp') center/cover no-repeat;border-radius:var(--radius);"></div>
+  </div>
+
+</div>
+
+<!-- FEATURED CAMS -->
+<div class="section-divider" style="padding-top:24px;">
+  <div class="section-divider-label">Featured Cams</div>
+  <div class="section-divider-sub">Two Gulf Coast favorites — click to view live</div>
+</div>
+
+<div style="display:flex;gap:18px;padding:4px 32px 32px;flex-wrap:wrap;">
+
+  <a class="cam-card-out g-bama" href="https://www.bamabeachcams.com/" target="_blank" rel="noopener" style="flex:1;min-width:260px;max-width:400px;">
+    <div class="cam-thumb">
+      <span class="cam-out-live">Live</span>
+      <div class="cam-thumb-name">🎥 Bama Beach Cams</div>
+      <div class="cam-hover-overlay"><div class="cam-cta">View All Cams ↗</div></div>
+    </div>
+    <div class="cam-info">
+      <div>
+        <div class="cam-name">Bama Beach Cams</div>
+        <div class="cam-loc">Gulf Shores · Sea-N-Suds &amp; More</div>
+      </div>
+      <span class="cam-arrow">→</span>
+    </div>
+  </a>
+
+  <a class="cam-card-out g-osprey" href="https://www.youtube.com/live/qSEC1qj5xYM" target="_blank" rel="noopener" style="flex:1;min-width:260px;max-width:400px;">
+    <div class="cam-thumb">
+      <span class="cam-out-live">Live</span>
+      <div class="cam-thumb-name">🦅 Wolf Bay Osprey Cam</div>
+      <div class="cam-hover-overlay"><div class="cam-cta">Watch on YouTube ↗</div></div>
+    </div>
+    <div class="cam-info">
+      <div>
+        <div class="cam-name">Wolf Bay Osprey Cam</div>
+        <div class="cam-loc">Orange Beach · City of Orange Beach &amp; Nature Conservancy</div>
+      </div>
+      <span class="cam-arrow">→</span>
+    </div>
+  </a>
+
+</div>
+
+<!-- GULF SHORES NARRATIVE SECTION -->
+<div class="gs-narrative">
+
+  <!-- Section header -->
+  <div class="gsn-header">
+    <div class="gsn-header-inner">
+      <div class="gsn-eyebrow">Discover the Destination</div>
+      <h2 class="gsn-title">The Story of Gulf Shores</h2>
+      <p class="gsn-intro">A trip to gorgeous Gulf Shores is always a treat, and while many come for the sun and surf, this place has a backstory worth digging into. The stories of the past are what make it such a captivating destination today — and they're certainly worth learning more about.</p>
+    </div>
+  </div>
+
+  <!-- 5 topic cards — 3 top row, 2 bottom row centered -->
+  <div class="gsn-grid">
+
+    <div class="gsn-card">
+      <div class="gsn-card-icon">🏔️</div>
+      <h3 class="gsn-card-title">Walking on Ancient Mountains</h3>
+      <p class="gsn-card-body">Have you ever wondered why the sand here is so smooth it looks like it belongs in a snow globe? That powdery, sugar-white sand is made of tiny quartz crystals that began their journey in the Appalachian Mountains. Over millions of years, rivers carried those crystals all the way down to the coast.</p>
+      <p class="gsn-card-body">The result is sand so fine it feels like velvet under your feet. Notice a little <em>"squeak"</em> when you walk? That's the sound of super-pure quartz grains rubbing together — and it stays cool even on the hottest summer days. Every step on this beach is a step across ancient geology.</p>
+    </div>
+
+    <div class="gsn-card">
+      <div class="gsn-card-icon">⚔️</div>
+      <h3 class="gsn-card-title">Early Inhabitants &amp; the Defense of the Bay</h3>
+      <p class="gsn-card-body">The history of this area goes back thousands of years. It was first home to Native tribes including the Alabamus, Cherokee, Choctaw, Chickasaw, and Creek — groups who thrived on the rich bounty of the sea and lush coastal soils. By the early 1500s, Spanish explorers had arrived in the region.</p>
+      <p class="gsn-card-body">Those early Spaniards laid the initial foundations of what became Historic Fort Morgan, later rebuilt in the 1800s. Together with nearby Fort Gaines, these sites witnessed fierce conflicts between Union and Confederate soldiers fighting to control the harbor entrance during the Civil War. Today, visitors can still walk the tunnels and barracks that stand as a testament to that era.</p>
+    </div>
+
+    <div class="gsn-card">
+      <div class="gsn-card-icon">🎣</div>
+      <h3 class="gsn-card-title">From Fishing Village to City</h3>
+      <p class="gsn-card-body">For much of the 19th and early 20th centuries, Gulf Shores was a sparse community of farmers and fishermen who caught just about everything — especially shrimp and oysters. By the late 1800s, the arrival of the railroad brought the first wave of tourists and new residents to the area.</p>
+      <p class="gsn-card-body">The region truly began to transform in the late 1930s. The completion of the Intracoastal Waterway in 1937 boosted commercial activity, and Gulf State Park opened in 1939 with a bathhouse and casino for visitors. Incorporation began in 1956, and the Town of Gulf Shores received official recognition in 1958 — originally encompassing just 206 acres along the canal.</p>
+    </div>
+
+    <div class="gsn-card">
+      <div class="gsn-card-icon">🌀</div>
+      <h3 class="gsn-card-title">Growth, Resilience &amp; Modern Life</h3>
+      <p class="gsn-card-body">The 1960s brought a surge in family travel and beachside cottage construction. But Gulf Shores has been tested repeatedly by nature — hurricanes Frederic in 1979, Ivan in 2004, Katrina in 2005, and Sally in 2020 each caused devastating damage. After Frederic leveled much of the town, a wave of redevelopment gave rise to the high-rise condominiums and retail corridors seen today, and the town was elevated to the City of Gulf Shores.</p>
+      <p class="gsn-card-body">That cycle of destruction and renewal is woven into the city's identity — a community that rebuilds stronger, more vibrant, and more beautiful each time the storms pass.</p>
+    </div>
+
+    <div class="gsn-card">
+      <div class="gsn-card-icon">🦐</div>
+      <h3 class="gsn-card-title">Gulf Life — Food, Nature &amp; Tradition</h3>
+      <p class="gsn-card-body">Today, Gulf Shores is a premier destination where food, recreation, and ecology are tightly connected. The Bon Secour National Wildlife Refuge protects 7,000 acres of habitat for migratory songbirds and endangered sea turtles — a remarkable natural treasure just minutes from the beach.</p>
+      <p class="gsn-card-body">The local culture remains rooted in the Gulf, nowhere more visible than at the <strong>Gulf Shores International Shrimp Festival</strong> — an annual tradition since 1971 that now draws upward of 200,000 visitors. From the Mardi Gras parade to the white-sand beaches, Gulf Shores is a place built around the water, where the rhythms of the coast shape every part of daily life.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">
+    <div class="footer-avatar"><img src="images/hero003.png" alt="CyberBarrett"></div>
+    <span class="footer-name">CyberBarrett.com</span>
+  </div>
+  <span class="footer-copy">© <span id="year"></span> CyberBarrett.com — Gulf Shores Live Experience</span>
+</footer>
+
+<script>
+/* Year */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Theme */
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  themeBtn.textContent = document.body.classList.contains('dark') ? '🌙' : '🌞';
+});
+
+/* Drawer */
+const drawerTrigger = document.getElementById('drawerTrigger');
+const infoDrawer    = document.getElementById('infoDrawer');
+let dataLoaded = false;
+drawerTrigger.addEventListener('click', () => {
+  const open = infoDrawer.classList.toggle('open');
+  drawerTrigger.classList.toggle('open', open);
+  if (open && !dataLoaded) { dataLoaded = true; loadWeather(); loadTides(); loadSun(); loadFlag(); }
+});
+
+/* Banner */
+const bannerMsgs = [
+  'Streaming the Gulf Coast in real time...',
+  'Spectacular views of the Gulf of America.',
+  'Gulf Shores & Orange Beach — live, unfiltered shoreline.',
+  'Powered by CyberBarrett.com — tie-dye approved.'
+];
+let bIdx = 0;
+const bannerEl = document.getElementById('bannerText');
+bannerEl.style.transition = 'opacity .3s ease, transform .3s ease';
+setInterval(() => {
+  bIdx = (bIdx + 1) % bannerMsgs.length;
+  bannerEl.style.opacity = '0';
+  bannerEl.style.transform = 'translateY(-5px)';
+  setTimeout(() => {
+    bannerEl.textContent = bannerMsgs[bIdx];
+    bannerEl.style.opacity = '1';
+    bannerEl.style.transform = 'translateY(0)';
+  }, 320);
+}, 5000);
+
+/* Cinematic hero scroller */
+const scrollerLines = [
+  '<span class="hl">Gulf Shores, Alabama</span> — home to sugar-white quartz beaches and warm, crystal-clear Gulf waters.',
+  'From sunrise walks to sunset views, <span class="hl">Gulf Shores</span> delivers the perfect beach escape and memories that last a lifetime.',
+  'Discover <span class="hl">Gulf Shores</span> — where coastal charm, warm breezes, and brilliant white sand come together beautifully.',
+  'Along the shores of <span class="hl">Gulf Shores</span>, beauty unfolds in every breeze, every tide, and every golden sunset.',
+  'Spectacular views of the <span class="hl">Gulf of America</span> — enjoy the natural beauty and polished coastal atmosphere.'
+];
+
+let sIdx = 0;
+const scrollerEl = document.getElementById('scrollerLine');
+
+function runScrollerLine() {
+  const line = scrollerLines[sIdx];
+  scrollerEl.innerHTML = line;
+  // Reset to bottom
+  scrollerEl.style.transition = 'none';
+  scrollerEl.style.opacity = '0';
+  scrollerEl.style.transform = 'translateY(70px)';
+
+  // Small delay then animate up through center and out
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      // Phase 1: rise in from bottom to center, fade in
+      scrollerEl.style.transition = 'opacity 1.2s ease, transform 5s ease';
+      scrollerEl.style.opacity = '1';
+      scrollerEl.style.transform = 'translateY(-30px)';
+
+      // Phase 2: after 4s, fade out upward
+      setTimeout(() => {
+        scrollerEl.style.transition = 'opacity 1s ease, transform 1.5s ease';
+        scrollerEl.style.opacity = '0';
+        scrollerEl.style.transform = 'translateY(-90px)';
+      }, 4200);
+
+      // Next line
+      setTimeout(() => {
+        sIdx = (sIdx + 1) % scrollerLines.length;
+        runScrollerLine();
+      }, 5800);
+    });
+  });
+}
+
+// Start after a short delay so image loads first
+setTimeout(runScrollerLine, 800);
+
+/* Strip scroll buttons */
+function makeStrip(strip, leftBtn, rightBtn) {
+  document.getElementById(leftBtn).addEventListener('click',  () => strip.scrollBy({left:-320,behavior:'smooth'}));
+  document.getElementById(rightBtn).addEventListener('click', () => strip.scrollBy({left: 320,behavior:'smooth'}));
+  let drag=false, sx=0, ss=0;
+  strip.addEventListener('mousedown', e=>{drag=true;sx=e.pageX;ss=strip.scrollLeft;strip.style.userSelect='none';});
+  document.addEventListener('mousemove', e=>{if(!drag)return;strip.scrollLeft=ss-(e.pageX-sx);});
+  document.addEventListener('mouseup', ()=>{drag=false;strip.style.userSelect='';});
+}
+makeStrip(document.getElementById('strip1'),'scrollLeft1','scrollRight1');
+
+/* Scroll the second strip too */
+const s2 = document.getElementById('strip2');
+let drag2=false,sx2=0,ss2=0;
+s2.addEventListener('mousedown',e=>{drag2=true;sx2=e.pageX;ss2=s2.scrollLeft;s2.style.userSelect='none';});
+document.addEventListener('mousemove',e=>{if(!drag2)return;s2.scrollLeft=ss2-(e.pageX-sx2);});
+document.addEventListener('mouseup',()=>{drag2=false;s2.style.userSelect='';});
+
+/* GSAP */
+window.addEventListener('load', () => {
+  if (typeof gsap === 'undefined') return;
+  gsap.from('.hero-text-side > *', {opacity:0,y:22,duration:.7,stagger:.1,ease:'power2.out',delay:.1});
+  gsap.from('.hero-cam-side',      {opacity:0,x:28,duration:.8,ease:'power2.out',delay:.2});
+  gsap.from('.cam-card-embed, .cam-card-out', {opacity:0,y:18,duration:.5,stagger:.05,ease:'power2.out',delay:.3});
+});
+
+/* ── LIVE DATA ── */
+const LAT=30.2460, LON=-87.7010;
+
+function wmoInfo(c){const m={0:['☀️','Clear'],1:['🌤','Mainly clear'],2:['⛅','Partly cloudy'],3:['☁️','Overcast'],45:['🌫','Foggy'],51:['🌦','Light drizzle'],53:['🌦','Drizzle'],61:['🌧','Light rain'],63:['🌧','Rain'],65:['🌧','Heavy rain'],80:['🌦','Showers'],95:['⛈','Thunderstorm']};return m[c]||['🌡','Unknown'];}
+function wDir(d){return['N','NE','E','SE','S','SW','W','NW'][Math.round(d/45)%8];}
+function fmt12(iso){const d=new Date(iso);let h=d.getHours(),m=d.getMinutes(),ap=h>=12?'PM':'AM';h=h%12||12;return`${h}:${String(m).padStart(2,'0')} ${ap}`;}
+
+async function loadWeather(){
+  const el=document.getElementById('dpWeather');
+  try{
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,relative_humidity_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FChicago`);
+    const d=await r.json(); const c=d.current;
+    const [icon,desc]=wmoInfo(c.weather_code);
+    el.innerHTML=`<div class="dp-weather-main"><div class="dp-weather-icon">${icon}</div><div><div class="dp-temp">${Math.round(c.temperature_2m)}°</div><div class="dp-desc">${desc}</div></div></div><div class="dp-weather-grid"><div><div class="dp-wg-label">Feels Like</div><div class="dp-wg-val">${Math.round(c.apparent_temperature)}°F</div></div><div><div class="dp-wg-label">Humidity</div><div class="dp-wg-val">${c.relative_humidity_2m}%</div></div><div><div class="dp-wg-label">Wind</div><div class="dp-wg-val">${Math.round(c.wind_speed_10m)} mph</div></div><div><div class="dp-wg-label">Direction</div><div class="dp-wg-val">${wDir(c.wind_direction_10m)}</div></div></div>`;
+  }catch(e){el.innerHTML=`<div style="font-size:.74rem;color:rgba(255,255,255,.5)">Weather unavailable</div>`;}
+}
+
+async function loadTides(){
+  const el=document.getElementById('dpTides');
+  try{
+    const t=new Date(),pad=n=>String(n).padStart(2,'0');
+    const date=`${t.getFullYear()}${pad(t.getMonth()+1)}${pad(t.getDate())}`;
+    const r=await fetch(`https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=predictions&application=cyberbarrett&begin_date=${date}&end_date=${date}&datum=MLLW&station=8735180&time_zone=lst_ldt&interval=hilo&units=english&format=json`);
+    const d=await r.json();
+    if(!d.predictions?.length)throw new Error();
+    el.innerHTML=`<ul class="dp-tide-list">${d.predictions.map(p=>{const hi=p.type==='H';return`<li class="dp-tide-item"><span class="dp-tide-type"><span class="${hi?'dp-tide-hi':'dp-tide-lo'}">${hi?'▲':'▼'}</span>${hi?'High':'Low'} Tide</span><span class="dp-tide-time">${fmt12(p.t.replace(' ','T'))}</span><span class="dp-tide-ht">${parseFloat(p.v).toFixed(1)} ft</span></li>`;}).join('')}</ul>`;
+  }catch(e){el.innerHTML=`<div style="font-size:.74rem;color:rgba(255,255,255,.5)">Tide data unavailable</div>`;}
+}
+
+async function loadSun(){
+  const el=document.getElementById('dpSun');
+  try{
+    const r=await fetch(`https://api.sunrise-sunset.org/json?lat=${LAT}&lng=${LON}&formatted=0`);
+    const d=await r.json(); if(d.status!=='OK')throw new Error();
+    const toLocal=iso=>new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Chicago'});
+    const sec=d.results.day_length;
+    el.innerHTML=`<div class="dp-sun-row"><div class="dp-sun-item"><span class="dp-sun-emoji">🌅</span><span class="dp-sun-label">Sunrise</span><span class="dp-sun-time">${toLocal(d.results.sunrise)}</span></div><div class="dp-sun-item"><span class="dp-sun-emoji">🌇</span><span class="dp-sun-label">Sunset</span><span class="dp-sun-time">${toLocal(d.results.sunset)}</span></div></div><div class="dp-daylen">Daylight: ${Math.floor(sec/3600)}h ${Math.floor((sec%3600)/60)}m</div>`;
+  }catch(e){el.innerHTML=`<div style="font-size:.74rem;color:rgba(255,255,255,.5)">Sun data unavailable</div>`;}
+}
+
+function loadFlag(){
+  const colors={'green':{hex:'#22c55e',status:'Green Flag',desc:'Low hazard. Calm conditions. Great day for the beach!'},'yellow':{hex:'#eab308',status:'Yellow Flag',desc:'Medium hazard. Moderate surf or currents.'},'red':{hex:'#ef4444',status:'Red Flag',desc:'High hazard. High surf or strong currents.'},'double-red':{hex:'#b91c1c',status:'Double Red Flag',desc:'Water closed. No swimming.'},'purple':{hex:'#a855f7',status:'Purple Flag',desc:'Dangerous marine life present.'}};
+  const el=document.getElementById('dpFlag');
+  const info=colors[el.dataset.color]||colors['green'];
+  document.getElementById('flagSwatch').style.background=info.hex;
+  document.getElementById('flagStatus').textContent=el.dataset.status||info.status;
+  document.getElementById('flagDesc').textContent=el.dataset.desc||info.desc;
+}
+</script>
+</body>
+</html>
