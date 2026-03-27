@@ -73,8 +73,13 @@ body.dark .topbar{background:#061220;}
   .info-drawer.open{
     max-height:calc(100vh - 52px);
   }
-}.drawer-inner{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.05);}
-@media(max-width:900px){.drawer-inner{grid-template-columns:repeat(2,1fr);}.info-drawer.open{max-height:700px;}}
+.drawer-inner{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.05);
+  padding-bottom:12px;
+}@media(max-width:900px){.drawer-inner{grid-template-columns:repeat(2,1fr);}.info-drawer.open{max-height:700px;}}
 .drawer-panel{background:rgba(6,28,58,.92);padding:18px 20px;backdrop-filter:blur(12px);}
 .dp-title{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .dp-weather-main{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
@@ -121,19 +126,22 @@ body.dark .topbar{background:#061220;}
   border-color: rgba(244,164,41,.45);
 }
 
-.flag-card-image {
+.flag-card-image{
   aspect-ratio: 16 / 7;
   overflow: hidden;
-  background: #0b1c33;
+  background: #ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
 }
 
-.flag-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.flag-card-image img{
+  width:100%;
+  height:100%;
+  object-fit: contain;
+  display:block;
 }
-
 .flag-card-body {
   padding: 14px 14px 16px;
 }
@@ -428,26 +436,28 @@ body.dark .footer-name{color:#7dd3fc;}
       </div>
     </div>
 
+
     <div class="drawer-panel beach-flag-panel">
-      <div class="dp-title">Beach Flag Status</div>
+  <div class="dp-title">Beach Flag Status</div>
 
-      <a
-        class="flag-card-link"
-        href="https://www.gulfshoresal.gov/1136/Beach-Safety"
-        target="_blank"
-        rel="noopener"
-        aria-label="Check City of Gulf Shores official current beach status"
-      >
-        <div class="flag-card-image">
-          <img src="images/hero007.jpg" alt="Gulf Shores beach flag information">
-        </div>
+  <a
+    class="flag-card-link"
+    href="https://www.gulfshoresal.gov/1136/Beach-Safety"
+    target="_blank"
+    rel="noopener"
+    aria-label="Check City of Gulf Shores official current beach status"
+  >
+    <div class="flag-card-image">
+      <img src="images/hero007.jpg" alt="Gulf Shores beach flag information">
+    </div>
 
-        <div class="flag-card-body">
-          <div class="flag-card-status">Check official current status</div>
-          <div class="flag-card-text">Check City of Gulf Shores for official current status.</div>
-          <span class="flag-card-button">View official status</span>
-        </div>
-      </a>
+    <div class="flag-card-body">
+      <div class="flag-card-status">Check official current status</div>
+      <div class="flag-card-text">Check City of Gulf Shores for official current status.</div>
+      <span class="flag-card-button">View official status</span>
+    </div>
+  </a>
+</div>
 
       <div class="flag-info-box">
         <div class="flag-info-title">Know before you go!</div>
