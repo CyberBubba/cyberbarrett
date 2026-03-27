@@ -110,20 +110,10 @@ body.dark .topbar{background:#061220;}
 }
 
 .flag-card-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
   border-radius: 14px;
   overflow: hidden;
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(244,164,41,.25);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
-
-.flag-card-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(0,0,0,.28);
-  border-color: rgba(244,164,41,.45);
 }
 
 .flag-card-image{
@@ -429,46 +419,45 @@ body.dark .footer-name{color:#7dd3fc;}
     </div>
 
     <div class="drawer-panel">
-      <div class="dp-title">Sunrise &amp; Sunset</div>
-      <div id="dpSun">
-        <div class="shimmer"></div>
-        <div class="shimmer w60"></div>
-      </div>
-    </div>
+  <div class="dp-title">Sunrise &amp; Sunset</div>
+  <div id="dpSun">
+    <div class="shimmer"></div>
+    <div class="shimmer w60"></div>
+  </div>
+
+  <div class="flag-info-box">
+    <div class="flag-info-title">Beach Conditions Info</div>
+    <p>Checking beach conditions is easy! Before entering the water, please check current conditions in one of the following ways:</p>
+    <ul class="flag-info-list">
+      <li>Call <a href="tel:2519687873">251-968-SURF (7873)</a>.</li>
+      <li>Visit <a href="https://www.gulfshoresal.gov/" target="_blank" rel="noopener">www.gulfshoresAL.gov</a>.</li>
+      <li>Text <strong>ALBEACHES</strong> to <strong>888-777</strong> to receive daily beach conditions via text message.</li>
+    </ul>
+  </div>
+</div>
 
 
     <div class="drawer-panel beach-flag-panel">
   <div class="dp-title">Beach Flag Status</div>
 
-  <a
-    class="flag-card-link"
-    href="https://www.gulfshoresal.gov/1136/Beach-Safety"
-    target="_blank"
-    rel="noopener"
-    aria-label="Check City of Gulf Shores official current beach status"
-  >
+  <div class="flag-card-link">
     <div class="flag-card-image">
       <img src="images/hero007.jpg" alt="Gulf Shores beach flag information">
     </div>
 
     <div class="flag-card-body">
-      <div class="flag-card-status">Check official current status</div>
-      <div class="flag-card-text">Check City of Gulf Shores for official current status.</div>
-      <span class="flag-card-button">View official status</span>
+      <div class="flag-card-status">Beach Flag Warning System</div>
+      <div class="flag-card-text">Review the beach flag meanings, then use the official Gulf Shores source for current conditions.</div>
+      <a
+        class="flag-card-button"
+        href="https://www.gulfshoresal.gov/1136/Beach-Safety"
+        target="_blank"
+        rel="noopener"
+        aria-label="View official Gulf Shores beach safety page"
+      >View official status</a>
     </div>
-  </a>
+  </div>
 </div>
-
-      <div class="flag-info-box">
-        <div class="flag-info-title">Know before you go!</div>
-        <p>Checking beach conditions is easy! Before entering the water, please check current conditions in one of the following ways:</p>
-        <ul class="flag-info-list">
-          <li>Call <a href="tel:2519687873">251-968-SURF (7873)</a>.</li>
-          <li>Visit <a href="https://www.gulfshoresal.gov/" target="_blank" rel="noopener">www.gulfshoresAL.gov</a>.</li>
-          <li>Text <strong>"ALBEACHES"</strong> to <strong>888-777</strong> to receive daily beach conditions via text message.</li>
-        </ul>
-      </div>
-    </div>
 
     <div class="drawer-panel">
       <div class="dp-title">Quick Links</div>
