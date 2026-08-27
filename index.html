@@ -587,6 +587,114 @@
             font-style: normal;
         }
 
+        /* Bio crawl (Star Wars style opener) */
+        .bio-crawl-stage {
+            position: relative;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            padding: 2.5rem 2rem;
+            overflow: hidden;
+            background:
+                radial-gradient(1px 1px at 8% 22%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 18% 68%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1.5px 1.5px at 32% 15%, rgba(255,255,255,0.85), transparent),
+                radial-gradient(1px 1px at 44% 82%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1.5px 1.5px at 58% 38%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 68% 12%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 78% 58%, rgba(255,255,255,0.85), transparent),
+                radial-gradient(1.5px 1.5px at 88% 28%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 92% 78%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 12% 90%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 50% 92%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.5), transparent),
+                linear-gradient(180deg, #01050d, #050d1c 60%, #01050d);
+            background-repeat: no-repeat;
+            transition: height 0.4s ease;
+        }
+
+        .bio-crawl-track {
+            position: relative;
+            max-width: 620px;
+            margin: 0 auto;
+            color: #f4c04a;
+            font-family: 'Space Mono', monospace;
+            text-align: left;
+        }
+
+        .bio-crawl-track p {
+            margin-bottom: 1.15em;
+            font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+            line-height: 1.75;
+        }
+
+        .bio-crawl-track p:last-child { margin-bottom: 0; }
+
+        .bio-crawl-sign {
+            margin-top: 0.5em !important;
+            font-size: 0.72rem !important;
+            letter-spacing: 0.12em;
+            color: var(--cyan) !important;
+            text-transform: uppercase;
+        }
+
+        .bio-crawl-skip {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 3;
+            background: rgba(4,13,28,0.75);
+            border: 1px solid var(--card-border);
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+        }
+
+        .bio-crawl-stage.crawl-active .bio-crawl-skip {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .bio-crawl-skip:hover {
+            color: var(--cyan);
+            border-color: var(--cyan);
+        }
+
+        .bio-crawl-stage.crawl-active {
+            height: 460px;
+            perspective: 420px;
+        }
+
+        .bio-crawl-stage.crawl-active .bio-crawl-track {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 90%;
+            text-align: center;
+            transform: translateX(-50%) rotateX(26deg) translateY(0);
+            transform-origin: 50% 100%;
+        }
+
+        .bio-crawl-stage.crawl-running .bio-crawl-track {
+            animation: bioCrawl var(--crawl-dur, 60s) linear forwards;
+        }
+
+        @keyframes bioCrawl {
+            from { transform: translateX(-50%) rotateX(26deg) translateY(0); }
+            to   { transform: translateX(-50%) rotateX(26deg) translateY(var(--crawl-dist, -1400px)); }
+        }
+
+        @media (max-width: 768px) {
+            .bio-crawl-stage.crawl-active { height: 380px; }
+        }
+
         /* Then & Now */
         .then-now {
             display: flex;
@@ -1123,14 +1231,16 @@
     <section id="about">
         <div class="about-inner reveal">
             <div class="about-quote">
-                <blockquote>
-                    "47 years of marriage, two awesome children, US Navy, IT Wizard, pilot, DJ and radio personality,
-                    computer store owner, general contractor, advanced+ scuba diver, paramedic, sailboat racer, boat captain,
-                    estate planner, photographer, meditator, foodie &amp; home chef, nutrition nut, and musician,
-                    I've been playing guitar since I was 7. Mayflower descendant, genealogist, ULC Minister,
-                    and tie-dye enthusiast — there's always more going on than meets the eye."
-                </blockquote>
-                <cite>— Barrett Holt, CyberBarrett</cite>
+                <div class="bio-crawl-stage" id="bioCrawlStage">
+                    <div class="bio-crawl-track" id="bioCrawlTrack">
+                        <p>If you stretch my timeline out, it covers eight decades and two different centuries, and during all that time I have never quite mastered the art of sitting still. They say a typical life only has three or four chapters, but I have spent mine letting a restless curiosity run the entire show.</p>
+                        <p>Over the years, that drive to explore has taken me across some wild terrain. After school was the Navy, followed by working the streets and trauma bays in emergency medicine, owning businesses, and doing everything from building houses to building computers to writing the software for them, going all the way from black-and-white text screens to AI research (#OldGeek). I have spent years behind a morning radio microphone, flown airplanes, raced sailboats, and captained motor cruisers. I have traveled through most of the states and lived in fourteen of them, spending time on hundreds of beaches, across deserts, and on seas and oceans. I even had the chance to tell Johnny Cash in person that “I've Been Everywhere” was my favorite song. Best of all, I have shared nearly five decades of marriage with an amazing lady and helped raise our two awesome kids, which remains my true source of joy and my greatest accomplishment of all.</p>
+                        <p>The way I see it, and what feels right, is that none of this is just a random collection of titles. It is simply what happens when you dive headfirst into whatever catches your interest, whether that means picking a guitar since age seven, writing books, cooking great food, or proving four centuries of family history. Advanced scuba diver, author, genealogist, tie-dye enthusiast, and yes, there is always a fair chance of something completely new and always more going on beneath the surface.</p>
+                        <p>This site is more than just a look at those chapters. It is a space for sharing my stories, the lessons, the discoveries, and the wonder. It is also a testament to the gratitude I carry for all the people, experiences, and kindnesses that shaped them, and why it all matters.</p>
+                        <p class="bio-crawl-sign">— Barrett Holt, CyberBarrett</p>
+                    </div>
+                    <button type="button" class="bio-crawl-skip" id="bioCrawlSkip">Skip →</button>
+                </div>
             </div>
             <!-- Then & Now -->
             <div class="then-now">
@@ -1601,6 +1711,52 @@
             }
             setTimeout(typewriterCycle, 1200);
         }
+
+        // Bio crawl (Star Wars style opener)
+        (function () {
+            var stage = document.getElementById('bioCrawlStage');
+            var track = document.getElementById('bioCrawlTrack');
+            var skipBtn = document.getElementById('bioCrawlSkip');
+            if (!stage || !track) return;
+
+            var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var played = false;
+
+            function endCrawl() {
+                stage.classList.remove('crawl-active', 'crawl-running');
+            }
+
+            function startCrawl() {
+                if (played || reduceMotion) return;
+                played = true;
+                stage.classList.add('crawl-active');
+                requestAnimationFrame(function () {
+                    var words = track.textContent.trim().split(/\s+/).length;
+                    var duration = Math.min(90, Math.max(45, Math.round(words / 5)));
+                    var dist = -(track.scrollHeight + stage.offsetHeight + 60);
+                    stage.style.setProperty('--crawl-dur', duration + 's');
+                    stage.style.setProperty('--crawl-dist', dist + 'px');
+                    requestAnimationFrame(function () {
+                        stage.classList.add('crawl-running');
+                    });
+                });
+            }
+
+            track.addEventListener('animationend', endCrawl);
+            if (skipBtn) { skipBtn.addEventListener('click', endCrawl); }
+
+            if (!reduceMotion) {
+                var crawlObs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        if (e.isIntersecting) {
+                            startCrawl();
+                            crawlObs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.35 });
+                crawlObs.observe(stage);
+            }
+        })();
     </script>
 
 
