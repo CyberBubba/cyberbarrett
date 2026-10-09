@@ -1396,6 +1396,51 @@ body.dark .footer-name { color:#7dd3fc; }
   .hurricane-wrap{ padding:20px 16px 4px; }
   .hurricane-title{ font-size:1.05rem; }
 }
+
+/* COMPACT HURRICANE EMBED — WEATHER DRAWER */
+.dp-hurricane {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.dp-hurricane-head {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+}
+.dp-hurricane-label {
+  font-size:.74rem;
+  font-weight:700;
+  color:#fff;
+}
+.hurricane-badge.sm {
+  padding:3px 8px;
+  font-size:.58rem;
+  background:rgba(239,68,68,.18);
+  border-color:rgba(239,68,68,.4);
+}
+.dp-hurricane-embed {
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:8px;
+  overflow:hidden;
+  background:#000;
+}
+.dp-hurricane-embed iframe {
+  position:absolute; inset:0; width:100%; height:100%; border:0;
+}
+.dp-hurricane-link {
+  display:block;
+  text-align:center;
+  margin-top:8px;
+  font-size:.68rem;
+  font-weight:600;
+  color:var(--gold);
+  text-decoration:none;
+}
+.dp-hurricane-link:hover { text-decoration:underline; }
 </style>
 
 </head>
@@ -1422,6 +1467,23 @@ body.dark .footer-name { color:#7dd3fc; }
         <div class="shimmer"></div>
         <div class="shimmer w80"></div>
         <div class="shimmer w60"></div>
+      </div>
+
+      <div class="dp-hurricane">
+        <div class="dp-hurricane-head">
+          <span class="hurricane-badge sm"><span class="hurricane-dot"></span>Live</span>
+          <span class="dp-hurricane-label">🌀 Hurricane Coverage</span>
+        </div>
+        <div class="dp-hurricane-embed">
+          <iframe
+            src="https://www.youtube.com/embed/wt6SIE7BXS8"
+            title="FOX Weather live stream"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+        <a class="dp-hurricane-link" href="#hurricaneLive">Full Coverage ↓</a>
       </div>
     </div>
 
@@ -1522,7 +1584,7 @@ body.dark .footer-name { color:#7dd3fc; }
 </section>
 
 <!-- HURRICANE LIVE COVERAGE -->
-<div class="hurricane-wrap">
+<div class="hurricane-wrap" id="hurricaneLive">
   <div class="hurricane-card">
     <div class="hurricane-head">
       <span class="hurricane-badge"><span class="hurricane-dot"></span>Live</span>
