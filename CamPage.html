@@ -1307,26 +1307,7 @@ body.dark .footer-name { color:#7dd3fc; }
   color:var(--text-soft);
 }
 
-/* HURRICANE LIVE COVERAGE */
-.hurricane-wrap {
-  padding: 28px 32px 8px;
-}
-.hurricane-card {
-  max-width: 1000px;
-  margin: 0 auto;
-  background: linear-gradient(160deg, #7f1d1d, #450a0a);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-}
-.hurricane-head {
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding: 18px 22px;
-  flex-wrap: wrap;
-}
+/* HURRICANE LIVE BADGE/DOT — shared with compact weather-drawer embed */
 .hurricane-badge {
   display:flex;
   align-items:center;
@@ -1351,50 +1332,6 @@ body.dark .footer-name { color:#7dd3fc; }
 @keyframes hurricaneBlink {
   0%,100% { opacity:1; box-shadow:0 0 0 3px rgba(255,82,82,.35); }
   50% { opacity:.55; box-shadow:0 0 0 6px rgba(255,82,82,.12); }
-}
-.hurricane-title {
-  font-family:'Playfair Display',serif;
-  font-weight:900;
-  font-size:1.3rem;
-  color:#fff;
-}
-.hurricane-sub {
-  font-size:.82rem;
-  color:rgba(255,255,255,.75);
-  margin-top:2px;
-}
-.hurricane-embed {
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  background:#000;
-}
-.hurricane-embed iframe {
-  position:absolute; inset:0; width:100%; height:100%; border:0;
-}
-.hurricane-links {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  padding:16px 22px 20px;
-}
-.hurricane-links a {
-  font-size:.76rem;
-  font-weight:600;
-  letter-spacing:.03em;
-  color:#fff;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:999px;
-  padding:7px 14px;
-  text-decoration:none;
-  transition: background .2s;
-}
-.hurricane-links a:hover { background:rgba(255,255,255,.22); }
-
-@media (max-width:600px){
-  .hurricane-wrap{ padding:20px 16px 4px; }
-  .hurricane-title{ font-size:1.05rem; }
 }
 
 /* COMPACT HURRICANE EMBED — WEATHER DRAWER */
@@ -1483,7 +1420,6 @@ body.dark .footer-name { color:#7dd3fc; }
             loading="lazy">
           </iframe>
         </div>
-        <a class="dp-hurricane-link" href="#hurricaneLive">Full Coverage ↓</a>
       </div>
     </div>
 
@@ -1582,32 +1518,6 @@ body.dark .footer-name { color:#7dd3fc; }
     </div>
   </div>
 </section>
-
-<!-- HURRICANE LIVE COVERAGE -->
-<div class="hurricane-wrap" id="hurricaneLive">
-  <div class="hurricane-card">
-    <div class="hurricane-head">
-      <span class="hurricane-badge"><span class="hurricane-dot"></span>Live</span>
-      <div>
-        <div class="hurricane-title">🌀 Hurricane Coverage — Gulf Coast</div>
-        <div class="hurricane-sub">Live storm tracking from FOX Weather. Stay safe out there, Gulf Shores.</div>
-      </div>
-    </div>
-    <div class="hurricane-embed">
-      <iframe
-        src="https://www.youtube.com/embed/wt6SIE7BXS8"
-        title="FOX Weather live stream"
-        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="hurricane-links">
-      <a href="https://www.nhc.noaa.gov/" target="_blank" rel="noopener">National Hurricane Center ↗</a>
-      <a href="https://radar.weather.gov/station/KMOB/standard" target="_blank" rel="noopener">NWS Mobile Radar ↗</a>
-      <a href="https://www.gulfshoresal.gov" target="_blank" rel="noopener">City of Gulf Shores Alerts ↗</a>
-    </div>
-  </div>
-</div>
 
 <!-- LIVE EMBED CAMS SECTION -->
 <div class="section-header">
